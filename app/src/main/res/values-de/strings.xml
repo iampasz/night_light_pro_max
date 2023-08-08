@@ -1,0 +1,115 @@
+<resources>
+    <string name="app_name">Nachtlicht</string>
+
+    <string name="animal0">Bär</string>
+    <string name="animal4">Schweinchen</string>
+    <string name="animal5">Hase</string>
+    <string name="animal6">Kitty</string>
+    <string name="animal8">Mond</string>
+    <string name="animal7">Schaf</string>
+    <string name="animal1">Hase</string>
+    <string name="animal9">Schmetterling</string>
+    <string name="animal10">Panda</string>
+    <string name="animal11">Löwe</string>
+    <string name="animal12">Frosch</string>
+    <string name="animal13">Maus</string>
+    <string name="kaktus">Kaktus</string>
+    <string name="hipopotam">" Nilpferd"</string>
+
+    <string name="dinosaur">Dinosaurier</string>
+    <string name="unicorn">Unicorn</string>
+    <string name="bunny">Hase</string>
+    <string name="yettie">Yettie</string>
+
+    <string name="squirrel">Eichhörnchen</string>
+    <string name="elephant">Elefant</string>
+    <string name="giraffe">" Giraffe"</string>
+    <string name="owl">" Eule"</string>
+
+    <string name="answer_yes">" Herunterladen"</string>
+    <string name="answer_no">Stornieren</string>
+    <string name="question">" Neue App für Kinder"</string>
+
+    <string name="santa">Weihnachtsmann</string>
+
+    <!--<string name="banner_ad_unit_id">ca-app-pub-1657105281106558/1086836420</string>-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="youtube">YouTube</string>
+    <string name="youtubed">Our channel on YouTube.</string>
+    <string name="youtubel">https://www.youtube.com/channel/UCFLTUyHzDv91C-LV0bPskZA</string>
+
+    <string name="instagram">Instagram</string>
+    <string name="instagramd">We are in instagram.</string>
+    <string name="instagraml">https://www.instagram.com/apps_for_kids2</string>
+
+
+    <string name="snail">Schnecke</string>
+
+    <string name="chiken">" Hähnchen"</string>
+    <string name="monkey">" Affe"</string>
+
+
+    <string name="fox">" Fuchs"</string>
+
+    <string name="bnl">" Bestes Nachtlicht"</string>
+    <string name="bnld">App Nightlight OHNE ADS</string>
+    <string name="bnll">market://details?id=com.sarnavsky.pasz.nightlight.pro</string>
+
+    <string name="abcru">ABC color picture (RU)</string>
+    <string name="abcrud">ABC for kids, voice letters + animal names (Russian alphabet)</string>
+    <string name="abcrul">market://details?id=com.sarnavsky.pasz.azbuka.ru</string>
+
+    <string name="abcua">ABC Alphabet for children color(UA)</string>
+    <string name="abcuad">Ukrainian alphabet for children, sound letters + animal name (Ukrainian alphabet)</string>
+    <string name="abcual">market://details?id=com.sarnavsky.pasz.azbuka</string>
+
+    <string name="abcen">English alphabet</string>
+    <string name="abcend">English alphabet for children the sound of letters and animals(English alphabet)</string>
+    <string name="abcenl">market://details?id=com.sarnavsky.pasz.azbuka.eng</string>
+
+    <string name="abcenс">English flashcards</string>
+    <string name="abcendс">English flashcards for children. The study of words in the English language on the cards</string>
+    <string name="abcenlс">market://details?id=com.sarnavsky.pasz.english</string>
+
+    <string name="star_anim_off">" Hintergrundanimation ist deaktiviert"</string>
+    <string name="star_off">" Hintergrund aus"</string>
+    <string name="star_on">Hintergrund an</string>
+
+    <string name="timer5">" Timer an - 5 Minuten"</string>
+    <string name="timer10">" Timer an - 10 Minuten"</string>
+    <string name="timer6">Timer an - 1 Stunde</string>
+    <string name="timer4">Timer an - 4 Stunden</string>
+    <string name="timer_off">Der Timer ist ausgeschaltet</string>
+
+    <string name="melody">" Wiegenlied inklusive - 1 mal"</string>
+    <string name="melody_loop">" Wiegenlied inklusive - Schleife"</string>
+    <string name="melody_off">" Wiegenlied ist ausgeschaltet"</string>
+
+    <string name="bgcolor_green">Hintergrundfarbe - grün</string>
+    <string name="bgcolor_purple">Hintergrundfarbe - lila</string>
+    <string name="bgcolor_orange">Hintergrundfarbe - Orange</string>
+    <string name="bgcolor_c">" Hintergrundfarbe - himmelblau"</string>
+    <string name="bgcolor_durk">Hintergrundfarbe - dunkel</string>
+    <string name="bgcolor_blue">Hintergrundfarbe - blau</string>
+
+    <string name="lights">" Helligkeit - 25%"</string>
+    <string name="lights2">" Helligkeit - 75%"</string>
+    <string name="lights3">" Helligkeit - 100%"</string>
+
+    <string name="auto_change">" Automatisches Einschalten"</string>
+    <string name="auto_change_off">" Automatische Abschaltung"</string>
+
+    <string name="close">" Bildschirm gesperrt"</string>
+    <string name="open">Bildschirm entsperrt</string>
+    <string name="animal3">Pinguin</string>
+    <string name="animal2">Welt der Klänge</string>
+
+    <string name="caution_title">Vorsicht!</string>
+    <string name="caution">Verwenden Sie einen Nachtanzünder für eine lange Zeit nicht</string>
+    <string name="caution_agree">zeig es nicht nochmal</string>
+    <string name="caution_ok">OKAY</string>
+
+    <string name="positive">GET FREE</string>
+
+</resources>

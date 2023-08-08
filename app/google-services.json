@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1069574636402",
+    "project_id": "nlpm-beacc",
+    "storage_bucket": "nlpm-beacc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069574636402:android:7c64a22db69ece773e53eb",
+        "android_client_info": {
+          "package_name": "com.appsforkids.pasz.nightlightpromax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069574636402-ur1jthc7nsrach355rufmp59d2mq4fta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Hv6GId7H5vs86Ph_4gwgamui9KVYRnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069574636402-ur1jthc7nsrach355rufmp59d2mq4fta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

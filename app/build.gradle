@@ -1,0 +1,77 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+apply plugin: 'realm-android'
+android {
+    namespace 'com.appsforkids.pasz.nightlightpromax'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.appsforkids.pasz.nightlightpromax"
+        minSdk 19
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_9
+        targetCompatibility JavaVersion.VERSION_1_9
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
+
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
+    implementation 'com.romandanylyk:pageindicatorview:0.0.6'
+
+
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    implementation 'fr.nicolaspomepuy:discreetapprate:2.0.4@aar'
+
+    implementation 'com.github.Haegon:EasyNativeDialog-for-Android:0.3.0'
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation 'com.google.firebase:firebase-analytics'
+
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.android.gms:play-services-ads:22.1.0'
+    implementation 'com.android.billingclient:billing:6.0.1'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    realm {
+        syncEnabled = true
+    }
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+}

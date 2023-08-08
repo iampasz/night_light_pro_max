@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="app_name">Нічник</string>
+
+    <string name="animal0">Ведмежа</string>
+    <string name="animal3">Пінгвін</string>
+    <string name="animal2">Звуки світу</string>
+    <string name="animal4">Свинка</string>
+    <string name="animal5">Зайчик</string>
+    <string name="animal6">Котик</string>
+    <string name="animal8">Місяць</string>
+    <string name="animal7">Вівця</string>
+    <string name="animal1">Кролик</string>
+    <string name="animal9">Метелик</string>
+    <string name="animal10">Панда</string>
+    <string name="animal11">Лев</string>
+    <string name="animal12">Жабка</string>
+    <string name="animal13">Мишеня</string>
+    <string name="kaktus">Кактус</string>
+    <string name="hipopotam">Бегемотик</string>
+
+    <string name="dinosaur">Динозавр</string>
+    <string name="unicorn">Єдиноріг</string>
+    <string name="bunny">Кролик</string>
+    <string name="yettie">Йетти</string>
+    <string name="squirrel">Білочка</string>
+    <string name="elephant">Слоник</string>
+
+    <string name="chiken">Курча</string>
+    <string name="monkey">Мавпеня</string>
+
+    <string name="santa">Дід мороз</string>
+
+
+
+    <string name="answer_yes">Завантажити</string>
+    <string name="answer_no">Відміна</string>
+    <string name="question">Новий додаток Англійська для діток</string>
+
+    <!--<string name="banner_ad_unit_id">ca-app-pub-1657105281106558/1086836420</string>-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <string name="snail">Равлик</string>
+    <string name="fox">Лисичка</string>
+
+    <string name="giraffe">Жираф</string>
+    <string name="owl">Сова</string>
+
+
+
+    <string name="bnl">Best Nightlight</string>
+    <string name="bnld">Додаток нічник БЕЗ РЕКЛАМИ</string>
+    <string name="bnll">market://details?id=com.sarnavsky.pasz.nightlight.pro</string>
+
+    <string name="abcru">Азбука цветная с картинками </string>
+    <string name="abcrud">Азбука для деток, озвучка букв + названия животных (Русский алфавит)</string>
+    <string name="abcrul">market://details?id=com.sarnavsky.pasz.azbuka.ru</string>
+
+    <string name="abcua">АБВ Абетка кольорова для дітей</string>
+    <string name="abcuad">Українська абетка для діток, озвучування літер + назви тваринок (Українська абетка)</string>
+    <string name="abcual">market://details?id=com.sarnavsky.pasz.azbuka</string>
+
+    <string name="abcen">Английский алфавит</string>
+    <string name="abcend">Английский алфавит дял детей, озвучивание букв и животных(Английский алфавит)</string>
+    <string name="abcenl">market://details?id=com.sarnavsky.pasz.azbuka.eng</string>
+
+    <string name="abcenс">Англійські картки</string>
+    <string name="abcendс">Англійські картки для діток. Вивчення англійських слів по картках</string>
+    <string name="abcenlс">market://details?id=com.sarnavsky.pasz.english</string>
+
+    <string name="youtube">YouTube</string>
+    <string name="youtubed">Наш канал на ютубі.</string>
+    <string name="youtubel">https://www.youtube.com/channel/UCFLTUyHzDv91C-LV0bPskZA</string>
+
+    <string name="instagram">Instagram</string>
+    <string name="instagramd">Ми в інстаграмі.</string>
+    <string name="instagraml">https://www.instagram.com/apps_for_kids2</string>
+
+
+    <string name="star_anim_off">Анімацію тла вимкнено</string>
+    <string name="star_off">Тло відключене</string>
+    <string name="star_on">Тло включене</string>
+
+    <string name="timer5">Таймер ввімкнено - 5 хвилин</string>
+    <string name="timer10">Таймер ввімкнено - 10 хвилин</string>
+    <string name="timer6">Таймер ввімкнено - 1 година</string>
+    <string name="timer4">Таймер ввімкнено - 4 години</string>
+    <string name="timer_off">Таймер вимкнено</string>
+
+    <string name="melody">Колискову ввімкнено - програє 1 раз</string>
+    <string name="melody_loop">Колискову ввімкнено - гратиме постійно</string>
+    <string name="melody_off">Колискову вимкнено</string>
+
+    <string name="bgcolor_green">Колір тла - зелений</string>
+    <string name="bgcolor_purple">Колір тла - фіолетовий</string>
+    <string name="bgcolor_orange">Колір тла - оранжевий</string>
+    <string name="bgcolor_c">Колір тла - голубий</string>
+    <string name="bgcolor_durk">Колір тла - темний</string>
+    <string name="bgcolor_blue">Колір тла - синій</string>
+
+    <string name="lights">Яскравість - 25%</string>
+    <string name="lights2">Яскравість - 75%</string>
+    <string name="lights3">Яскравість - 100%</string>
+
+    <string name="auto_change">Автоматична зміна нічників - ввімкнена</string>
+    <string name="auto_change_off">Автоматична зміна нічників - вимкнена</string>
+
+    <string name="close">Екран заблоковано</string>
+    <string name="open">Екран розблоковано</string>
+
+    <string name="caution_title">Увага!</string>
+    <string name="caution">Не використовуйти один і той самий нічник постійно</string>
+    <string name="caution_agree">не показувати знову</string>
+    <string name="caution_ok">ЗРОЗУМІЛО</string>
+
+    <string name="positive">GET FREE</string>
+
+
+</resources>
