@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.billingclient.api.Purchase;
 import com.appsforkids.pasz.nightlightpromax.Billing.BillingClientWrapper;
+import com.appsforkids.pasz.nightlightpromax.Fragments.ImageGridFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.ImageListFragment;
+import com.appsforkids.pasz.nightlightpromax.Fragments.ImageOnlineListFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.GSON.MyGson;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ChekProductList;
@@ -35,19 +37,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-
         Realm.init(this);
-
-
         realm = Realm.getDefaultInstance();
 
-
         if (realm.where(Light.class).findFirst() == null) {
-
             addToRealm();
         }
-
-
 
         Button open_fr = findViewById(R.id.open_fr);
         Button open_pager = findViewById(R.id.open_pager);
@@ -57,11 +52,12 @@ public class MainActivity extends AppCompatActivity {
         read_json.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getJson("https://koko-oko.com//images/ng/images.json");
+               // getJson("https://koko-oko.com//images/ng/images.json");
+
+                getSupportFragmentManager().beginTransaction().add(R.id.my_container, new ImageOnlineListFragment()).commit();
+
             }
         });
-
-
 
         open_pager.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         open_fr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().add(R.id.my_container, new ImageListFragment()).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.my_container, new ImageGridFragment()).commit();
             }
         });
 

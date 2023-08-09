@@ -21,8 +21,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button2"
@@ -44,28 +46,28 @@
         android:id="@+id/open_fr"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:text="OPEN FRAGMENT"
+        android:text="GALLEREY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/open_pager" />
 
     <Button
         android:id="@+id/open_pager"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:text="Open Pager"
+        android:text="TORN ON NIGHTLIGHT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/open_fr" />
+        app:layout_constraintTop_toTopOf="@+id/purchase_status" />
 
     <Button
         android:id="@+id/read_json"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:text="READ JSON"
+        android:text="ONLINE GALLERY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/open_pager" />
+        app:layout_constraintTop_toBottomOf="@+id/open_fr" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
