@@ -116,5 +116,10 @@
     <string name="ok" translatable="false">ok</string>
 
 
+    <string name="downloaded" translatable="false">downloaded</string>
+    <string name="galery" translatable="false">galery</string>
+    <string name="message_1" translatable="false">message_1</string>
+
+
 
 </resources>

@@ -18,7 +18,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -51,32 +50,39 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class MainFragment extends Fragment implements Brights.MyInterface {
 
+    @BindView(R2.id.pager) ViewPager2 pager;
+    @BindView(R2.id.starsButton) ImageView starsButton;
+    @BindView(R2.id.sunButton) ImageView sunButton;
+    @BindView(R2.id.lullabyButton) ImageView lullabyButton;
+    @BindView(R2.id.fon1) ImageView fon1;
+    @BindView(R2.id.fon1) ImageView fon2;
+    @BindView(R2.id.fon3) ImageView fon3;
+    @BindView(R2.id.timerButton) ImageView timerButton;
+    @BindView(R2.id.melody_bt) ImageView melody_bt;
+    @BindView(R2.id.bgcolor) ImageView bgcolorButton;
+    @BindView(R2.id.automate) ImageView automate;
+    @BindView(R2.id.bottom_text) TextView bottom_text;
+    @BindView(R2.id.autoButton) ImageView autoButton;
+    @BindView(R2.id.gallery_bt) ImageView gallery_bt;
+    @BindView(R2.id.lockScrean) FrameLayout lockScrean;
+    @BindView(R2.id.main) ConstraintLayout fonLayout;
+    @BindView(R2.id.flow) Flow flow;
+    @BindView(R2.id.indicator) CircleIndicator3 indicator;
 
-    ViewPager2 mPager;
-    ImageView starsButton;
-    ImageView sunButton;
-    ImageView lullabyButton;
-    ImageView fon1;
-    ImageView fon2;
-    ImageView fon3;
-    ImageView timerButton;
     ImageView lockButton;
-    ImageView bgcolorButton;
-    ImageView automate;
-    TextView bottom_text;
-    ImageView adsView;
-    ImageView autoButton;
-    ConstraintLayout fonLayout;
+
     CountDownTimer offMessage;
     CountDownTimer globalTimer;
     CountDownTimer cdt;
-    FrameLayout lockScrean;
+
     int current_item = 2;
     boolean timerStatus = false;
     int fonStatus = 0;
@@ -84,11 +90,9 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
     int bgStatus = 0;
     MyAdapter mAdapter;
     RealmResults<Light> mylight;
-    private Timer mTimer, mSleepTimer, autoChange;
-    private MyTimerTask mMyTimerTask;
-    private MySleepTimer mMySleepTimer;
-    //private MyAutoTimer mAutoTimer;
-    private Animation mFadeInAnimation, mFadeOutAnimation;
+    private Timer  autoChange;
+
+    private Animation  mFadeOutAnimation;
     boolean checkAutomate = true;
     boolean coution;
     boolean chekMenu = true;
@@ -96,10 +100,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
     CheckBox cbPositiveNull;
     AnimationSet set, set2;
     MediaPlayer mediaPlayer;
-    Flow flow;
-    CircleIndicator3 indicator;
 
-    // public AdView mAdView;
+
 
     int mCounter;
     int useCounter = 0;
@@ -129,62 +131,24 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(getActivity());
 
-        Log.i("LONGPROCESS", "onViewCreated");
-
-
-        mPager = view.findViewById(R.id.pager);
-        starsButton = view.findViewById(R.id.stars_button);
-        sunButton = view.findViewById(R.id.sunButton);
-        lullabyButton = view.findViewById(R.id.lullaby_button);
-        fon1 = view.findViewById(R.id.fon1);
-        fon2 = view.findViewById(R.id.fon2);
-        fon3 = view.findViewById(R.id.fon3);
-        timerButton = view.findViewById(R.id.timerButton);
-        lockButton = view.findViewById(R.id.lockButton);
-        bgcolorButton = view.findViewById(R.id.bgcolor);
-        automate = view.findViewById(R.id.automate);
-        bottom_text = view.findViewById(R.id.bottom_text);
-        adsView = view.findViewById(R.id.ads);
-        autoButton = view.findViewById(R.id.autoButton);
-        fonLayout = view.findViewById(R.id.main);
-        lockScrean = view.findViewById(R.id.lockScrean);
-        flow = view.findViewById(R.id.flow);
-
-
-        Button close_bt = view.findViewById(R.id.close_bt);
-
-        close_bt.setOnClickListener(new View.OnClickListener() {
+        melody_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().remove(MainFragment.this).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new TabAudiotFragment()).commit();
             }
         });
-
-        // mAdView = view.findViewById(R.id.adView);
-
+        gallery_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new TabImageFragment()).commit();
+            }
+        });
         startGlobalTimer();
-
-        Log.i("LONGPROCESS", "startGlobalTimer");
-
-
         saveNoAdsCount(-1);
-
         addCounter = getNoAdsCount();
-
         adRequest = new AdRequest.Builder().build();
-
-        Log.i("LONGPROCESS", "adRequest");
-
-
-        //loadRewardedAd();
-
-
-        //loadInterstitial();
-
-
-        // getBrightsPreference();
-
 
         lockScrean.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -196,16 +160,16 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
             }
         });
 
-        lockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                clearAlpha();
-                //lockButton.setAlpha(1f);
-
-                lockButton();
-            }
-        });
+//        lockButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                clearAlpha();
+//                //lockButton.setAlpha(1f);
+//
+//                lockButton();
+//            }
+//        });
 
 
         if (useCounter >= 5) {
@@ -216,7 +180,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
         Log.i("LONGPROCESS", "mediaPlayer");
 
 
-        mFadeInAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fadein);
+       // mFadeInAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fadein);
         mFadeOutAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fadeout);
 
         RotateAnimation rotate = new RotateAnimation(0, 360,
@@ -265,12 +229,11 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
         Log.i("LONGPROCESS", "mAdapter");
 
 
-        mPager.setAdapter(mAdapter);
+        pager.setAdapter(mAdapter);
 
         Log.i("LONGPROCESS", " mPager.setAdapter(mAdapter);");
 
 
-//
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            mPager.setOnScrollChangeListener(new View.OnScrollChangeListener() {
 //                @Override
@@ -281,11 +244,11 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
 //            });
 //        }
 //
-        mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                bottom_text.setText(mylight.get(mPager.getCurrentItem()).getMytext());
+                //bottom_text.setText(mylight.get(mPager.getCurrentItem()).getMytext());
 
                 // Light light = new Light(R.drawable.acsept_button, R.string.answer_no);
 
@@ -295,8 +258,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
         Log.i("LONGPROCESS", " indicator");
 
 
-        indicator = view.findViewById(R.id.indicator);
-        indicator.setViewPager(mPager);
+
+        indicator.setViewPager(pager);
 
 // optional
         mAdapter.registerAdapterDataObserver(indicator.getAdapterDataObserver());
@@ -304,26 +267,23 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
         Log.i("LONGPROCESS", " mAdapter.re");
 
 
-        adsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                clearAlpha();
-                adsView.setAlpha(1f);
-                NoAds noAdsFragment = (NoAds) getParentFragmentManager().findFragmentByTag("NO_ADS");
-
-                if (noAdsFragment != null && noAdsFragment.isVisible()) {
-                    getParentFragmentManager().beginTransaction().remove(noAdsFragment).commit();
-                    //adsView.setImageResource(R.drawable.ads);
-                } else {
-                    //adsView.setImageResource(R.drawable.lock);
-                    getParentFragmentManager().beginTransaction().replace(R.id.container, new NoAds(), "NO_ADS").commit();
-
-                }
-
-
-            }
-        });
+//        adsView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                clearAlpha();
+//                adsView.setAlpha(1f);
+//                NoAds noAdsFragment = (NoAds) getParentFragmentManager().findFragmentByTag("NO_ADS");
+//
+//                if (noAdsFragment != null && noAdsFragment.isVisible()) {
+//                    getParentFragmentManager().beginTransaction().remove(noAdsFragment).commit();
+//                    //adsView.setImageResource(R.drawable.ads);
+//                } else {
+//                    //adsView.setImageResource(R.drawable.lock);
+//                    getParentFragmentManager().beginTransaction().replace(R.id.container, new NoAds(), "NO_ADS").commit();
+//                }
+//            }
+//        });
 
         Log.i("LONGPROCESS", " adsView");
 
@@ -659,10 +619,10 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
 
         getBrightsPreference();
 
-        if (checkAutomate == true) {
+        if (checkAutomate) {
             autoButton.setAlpha(1f);
             automate.setVisibility(View.VISIBLE);
-            mPager.setVisibility(View.GONE);
+            pager.setVisibility(View.GONE);
             showToast(getString(R.string.auto_change));
             autoChange = new Timer();
            // mAutoTimer = new MyAutoTimer();
@@ -675,7 +635,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
             if (autoChange != null) {
                 autoChange.cancel();
             }
-            mPager.setVisibility(View.VISIBLE);
+            pager.setVisibility(View.VISIBLE);
             checkAutomate = true;
         }
     }
@@ -796,8 +756,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
     public void saveSettings() {
         SharedPreferences sharedPref = getContext().getSharedPreferences("MYPREFS", 0);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("CURRENT_ITEM", mPager.getCurrentItem());
-        Log.i("SETTINGS", "saveSettings" + mPager.getCurrentItem());
+        editor.putInt("CURRENT_ITEM", pager.getCurrentItem());
+        Log.i("SETTINGS", "saveSettings" + pager.getCurrentItem());
         editor.apply();
     }
 
@@ -825,7 +785,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
     public void getSettings() {
         SharedPreferences sharedPref = getContext().getSharedPreferences("MYPREFS", 0);
         current_item = sharedPref.getInt("CURRENT_ITEM", 0);
-        mPager.setCurrentItem(current_item);
+       // mPager.setCurrentItem(current_item);
         Log.i("SETTINGS", "current_item" + current_item);
     }
 
@@ -866,7 +826,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
 
             bottom_text.setVisibility(View.INVISIBLE);
             flow.setVisibility(View.INVISIBLE);
-            adsView.setVisibility(View.INVISIBLE);
+           // adsView.setVisibility(View.INVISIBLE);
             //mAdView.setVisibility(View.GONE);
             indicator.setVisibility(View.INVISIBLE);
 
@@ -881,7 +841,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
             lockScrean.setClickable(false);
             bottom_text.setVisibility(View.VISIBLE);
             flow.setVisibility(View.VISIBLE);
-            adsView.setVisibility(View.VISIBLE);
+            //adsView.setVisibility(View.VISIBLE);
             indicator.setVisibility(View.VISIBLE);
 
             lockButton.setImageResource(R.drawable.bt_unlock);
@@ -941,10 +901,10 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
 
     private void showButtons() {
         if (chekMenu) {
-            lockButton.setVisibility(View.VISIBLE);
+            //            lockButton.setVisibility(View.VISIBLE);
             bottom_text.setVisibility(View.VISIBLE);
             flow.setVisibility(View.VISIBLE);
-            adsView.setVisibility(View.VISIBLE);
+//            adsView.setVisibility(View.VISIBLE);
             // settings_button.setVisibility(View.VISIBLE);
             //rv.setVisibility(View.VISIBLE);
         } else {
@@ -1017,14 +977,14 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
     }
 
     public void clearAlpha() {
-        starsButton.setAlpha(0.25f);
-        timerButton.setAlpha(0.25f);
-        lullabyButton.setAlpha(0.25f);
-        bgcolorButton.setAlpha(0.25f);
-        sunButton.setAlpha(0.25f);
-        autoButton.setAlpha(0.25f);
-        adsView.setAlpha(0.25f);
-        lockButton.setAlpha(0.25f);
+  //      starsButton.setAlpha(0.25f);
+   //     timerButton.setAlpha(0.25f);
+   //     lullabyButton.setAlpha(0.25f);
+  ///      bgcolorButton.setAlpha(0.25f);
+   //     sunButton.setAlpha(0.25f);
+  //      autoButton.setAlpha(0.25f);
+//        adsView.setAlpha(0.25f);
+//        lockButton.setAlpha(0.25f);
     }
 
     public void loadRewardedAd() {
@@ -1110,6 +1070,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface {
     private RealmResults<Light> getLightersFromRealm() {
 
         return realm.where(Light.class).equalTo("status", true).findAll();
+
     }
 
 

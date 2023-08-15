@@ -39,7 +39,6 @@ public class ImageOnlineListFragment extends Fragment {
     ImageView close_button;
 
 
-
     public ImageOnlineListFragment() {
         super(R.layout.image_online_list_fragment);
     }
@@ -51,7 +50,7 @@ public class ImageOnlineListFragment extends Fragment {
         int spanCount = 3;
 
         //gm = new GridLayoutManager(getContext(),spanCount, RecyclerView.VERTICAL, false);
-       // gm = new GridLayoutManager(getContext(),spanCount, RecyclerView.VERTICAL, false);
+        // gm = new GridLayoutManager(getContext(),spanCount, RecyclerView.VERTICAL, false);
 
         LinearLayoutManager lm = new LinearLayoutManager(getContext());
 
@@ -59,27 +58,17 @@ public class ImageOnlineListFragment extends Fragment {
         close_button = view.findViewById(R.id.close_button);
         rv_cards.setLayoutManager(lm);
 
-       getJson("https://koko-oko.com/json/nlpm.json");
-
-
-
-
-
+        getJson("https://koko-oko.com/json/nlpm.json");
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.widthPixels;
-        height = height/spanCount;
-
-
-
-
-
+        height = height / spanCount;
 
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().remove(ImageOnlineListFragment.this).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new MainFragment()).commit();
             }
         });
 
@@ -91,10 +80,6 @@ public class ImageOnlineListFragment extends Fragment {
             @Override
             public void getJson(String result) {
 
-
-              //  MyGson myGson = new Gson().fromJson(result, MyGson.class);
-               // Log.i("GSON", myGson.getImages().get(0).getInternet_link());
-
                 ArrayList<Light> lightsArray;
                 lightsArray = new ArrayList<>();
 
@@ -102,45 +87,20 @@ public class ImageOnlineListFragment extends Fragment {
 
                 try {
                     String image = new JSONObject(result).getString("images");
-                     jsonArray = new JSONArray(image);
-
-
-
-//                    for(int i=0; i<jsonArray.length(); i++){
-//
-//                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-//                        Light light = new Light();
-//                        light.setInternetLink(jsonObject.getString("internet_link"));
-//                        light.setMypic(-1);
-//                        lightsArray.add(light);
-//
-//                    }
-
-
-                   // JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-                   // Log.i("PARSE_JSON", jsonObject.get("internet_link")+"");
-
+                    jsonArray = new JSONArray(image);
 
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
 
-
-
-                Light light  = new Light();
+                Light light = new Light();
                 light.setMypic(-1);
-               // light.setInternetLink();
-
-               // ImageOnlineAdapter imageOnlineAdapter = new ImageOnlineAdapter(lightsArray, height);
-              //  rv_cards.setAdapter(imageOnlineAdapter);
 
                 MyCategoryImageAdapter myCategoryImageAdapter = new MyCategoryImageAdapter(jsonArray, new DoThis() {
                     @Override
                     public void doThis(int position) {
 
-
                         Bundle bundle = new Bundle();
-
                         try {
                             bundle.putString("json", jsonArray.get(position).toString());
                         } catch (JSONException e) {
@@ -149,7 +109,7 @@ public class ImageOnlineListFragment extends Fragment {
 
                         getParentFragmentManager().beginTransaction()
                                 .setReorderingAllowed(true)
-                                .add(R.id.my_container, ImageListFragment.class, bundle)
+                                .add(R.id.my_container, ImageOnlineGridFragment.class, bundle)
                                 .commit();
 
                     }

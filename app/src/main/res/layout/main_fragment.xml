@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:alpha="0.25"
-        ads:constraint_referenced_ids="stars_button,timerButton,lullaby_button,bgcolor,sunButton,autoButton"
+        ads:constraint_referenced_ids="stars_button,timerButton,bgcolor,sunButton,autoButton,lullaby_button"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent" />
@@ -105,14 +105,6 @@
         android:layout_margin="10dp"
         android:alpha="0.25"
         android:src="@drawable/bt_cl0" />
-
-    <ImageView
-        android:id="@+id/lullaby_button"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_margin="10dp"
-        android:alpha="0.25"
-        android:src="@drawable/bt_nota" />
 
     <ImageView
         android:id="@+id/bgcolor"
@@ -137,14 +129,13 @@
         android:alpha="0.25"
         android:src="@drawable/bt_automatic" />
 
-    <Button
-        android:id="@+id/close_bt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Close"
-        ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+        android:id="@+id/lullaby_button"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:alpha="0.25"
+        android:src="@drawable/bt_unlock" />
 
     <FrameLayout
         android:id="@+id/lockScrean"
@@ -168,7 +159,7 @@
         ads:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/ads"
+            android:id="@+id/gallery_bt"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentTop="false"
@@ -178,7 +169,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:alpha="0.25"
-            android:src="@drawable/bt_ads"
+            android:src="@drawable/gallery"
             android:visibility="visible" />
 
         <TextView
@@ -194,7 +185,7 @@
             android:visibility="invisible" />
 
         <ImageView
-            android:id="@+id/lockButton"
+            android:id="@+id/melody_bt"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentEnd="false"
@@ -204,7 +195,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:alpha="0.25"
-            android:src="@drawable/bt_unlock" />
+            android:src="@drawable/nota" />
 
     </LinearLayout>
 

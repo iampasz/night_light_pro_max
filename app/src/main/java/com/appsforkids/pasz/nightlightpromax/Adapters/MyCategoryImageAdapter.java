@@ -51,6 +51,8 @@ public class MyCategoryImageAdapter extends RecyclerView.Adapter<MyCategoryImage
 
             String name = new JSONObject(jsonArray.get(position).toString()).getString("name");
             holder.text.setText(name);
+            String link_image = new JSONObject(jsonArray.get(position).toString()).getString("image");
+            Picasso.get().load(link_image).into(holder.image);
 
         } catch (JSONException e) {
             throw new RuntimeException(e);

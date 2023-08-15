@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.R;
@@ -23,13 +22,13 @@ import io.realm.RealmResults;
 
 public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.ViewHolder> {
 
-    ArrayList<Light> items;
+    ArrayList<Light> arrayList;
     int size;
     Realm realm = Realm.getDefaultInstance();
 
 
-    public ImageOnlineAdapter(ArrayList<Light> items, int size) {
-        this.items = items;
+    public ImageOnlineAdapter(ArrayList<Light> arrayList, int size) {
+        this.arrayList = arrayList;
         this.size = size;
 
     }
@@ -45,22 +44,26 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        CardView.LayoutParams params = new CardView.LayoutParams(size, (int) (size * 1.5));
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
         holder.frame.setLayoutParams(params);
 
 
-
-        if(items.get(holder.getAbsoluteAdapterPosition()).getMypic()==-1){
-            Picasso.get().load(items.get(holder.getAbsoluteAdapterPosition()).getInternetLink()).into(holder.image);
-            Log.i("PICASO", items.get(holder.getAbsoluteAdapterPosition()).getInternetLink()+"");
-        }else{
-            holder.image.setImageResource(items.get(holder.getAbsoluteAdapterPosition()).getMypic());
-        }
-
-
-        if(items.get(holder.getAbsoluteAdapterPosition()).getStatus()){
+        if(chekNLFromRealm(arrayList.get(position).getInternetLink())){
             holder.checkBox.setChecked(true);
         }
+
+
+        if (arrayList.get(holder.getAbsoluteAdapterPosition()).getMypic() == -1) {
+            Picasso.get().load(arrayList.get(holder.getAbsoluteAdapterPosition()).getInternetLink()).into(holder.image);
+            Log.i("PICASO", arrayList.get(holder.getAbsoluteAdapterPosition()).getInternetLink() + "");
+        } else {
+            holder.image.setImageResource(arrayList.get(holder.getAbsoluteAdapterPosition()).getMypic());
+        }
+
+
+//        if(arrayList.get(holder.getAbsoluteAdapterPosition()).getStatus()){
+//            holder.checkBox.setChecked(true);
+//        }
 
 
         holder.frame.setOnClickListener(new View.OnClickListener() {
@@ -74,11 +77,22 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
             @Override
             public void onClick(View v) {
 
-                Light light = items.get(holder.getAbsoluteAdapterPosition());
 
-                if(light!=null){
-                    changeRealmImages(holder.checkBox.isChecked(), light.getMypic());
+                Log.i("ONLINEADAPTER", "ONLINEADAPTER");
+                if (holder.checkBox.isChecked()) {
+
+                    Log.i("ONLINEADAPTER", "true");
+                    Log.i("ONLINEADAPTER", arrayList.get(position).getInternetLink() + " arrayList.get(position).getInternetLink()");
+                    addToRealm(arrayList.get(position).getInternetLink());
+
+                } else {
+
+                    Log.i("ONLINEADAPTER", "false");
+                    Log.i("ONLINEADAPTER", arrayList.get(position).getInternetLink() + " arrayList.get(position).getInternetLink()");
+                    removeFromRealm(arrayList.get(position).getInternetLink());
+
                 }
+
             }
         });
 
@@ -86,13 +100,13 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return arrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-         ImageView image;
-         FrameLayout frame;
-         CheckBox checkBox;
+        ImageView image;
+        FrameLayout frame;
+        CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,14 +117,53 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
     }
 
     private void changeRealmImages(Boolean chekbox, int mypic) {
-
         realm.beginTransaction();
-        Light currentImage =  realm.where(Light.class).equalTo("mypic", mypic).findFirst();
+        Light currentImage = realm.where(Light.class).equalTo("mypic", mypic).findFirst();
         currentImage.setStatus(chekbox);
 
         realm.commitTransaction();
 
+    }
 
+    private boolean chekNLFromRealm(String link){
+
+        Light light = realm.where(Light.class).equalTo("internetLink",link).findFirst();
+        Boolean answer = false;
+
+        if(light!=null){
+            answer = true;
+        }
+
+        return  answer;
+    }
+
+    private void addToRealm(String link) {
+
+        realm.beginTransaction();
+        Light light = new Light();
+        light.setInternetLink(link);
+        light.setOnline(true);
+        light.setStatus(true);
+        light.setMypic(-1);
+
+        realm.copyToRealm(light);
+
+        Log.i("ONLINEADAPTER", light.getInternetLink() + " getInternetLink");
+        realm.commitTransaction();
+
+        Log.i("ONLINEADAPTER", "addToRealm");
+
+    }
+
+    private void removeFromRealm(String link) {
+
+        realm.beginTransaction();
+        Log.i("ONLINEADAPTER", link + " link");
+        realm.where(Light.class).equalTo("internetLink", link).isNotEmpty("internetLink").findFirst().deleteFromRealm();
+
+        realm.commitTransaction();
+
+        Log.i("ONLINEADAPTER", "removeFromRealm");
 
     }
 

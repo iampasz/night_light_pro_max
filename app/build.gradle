@@ -1,9 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+
+
 }
 
 apply plugin: 'realm-android'
+apply plugin: 'com.jakewharton.butterknife'
+
+
 android {
     namespace 'com.appsforkids.pasz.nightlightpromax'
     compileSdk 33
@@ -73,5 +78,12 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation files('libs/easyandroidanimationslibrary-v0.5.jar')
+
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+
+
 
 }

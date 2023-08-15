@@ -20,8 +20,12 @@ public class Light extends RealmObject {
     int mypic;
     int mytext;
     boolean status;
+    boolean online;
     String internetLink;
 
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
 
     public void setInternetLink(String internetLink) {
         this.internetLink = internetLink;
@@ -53,6 +57,10 @@ public class Light extends RealmObject {
 
     public boolean getStatus() {
         return status;
+    }
+
+    public boolean getOnline() {
+        return online;
     }
 }
 

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class ImageGridFragment extends Fragment  {
+public class ImageOnlineGridFragment extends Fragment  {
 
     GridLayoutManager gm;
 
@@ -34,14 +34,10 @@ public class ImageGridFragment extends Fragment  {
     RecyclerView rv_cards;
     int height;
     ImageView close_button;
-    RealmResults<Light> imageFiles;
 
-    Realm realm = Realm.getDefaultInstance();
-
-    public ImageGridFragment() {
+    public ImageOnlineGridFragment() {
         super(R.layout.image_list_fragment);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -53,41 +49,55 @@ public class ImageGridFragment extends Fragment  {
         close_button = view.findViewById(R.id.close_button);
         rv_cards.setLayoutManager(gm);
 
-        imageFiles = getFromRealm();
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.widthPixels;
         height = height/spanCount;
 
 
-        ImageAdapter imageAdapter = new ImageAdapter(imageFiles, height);
-        rv_cards.setAdapter(imageAdapter);
+        json = requireArguments().getString("json");
+
+
+        ArrayList<Light> lightsArray = new ArrayList<>();
+
+        try {
+            JSONObject pack = new JSONObject(json);
+            JSONArray jsonArray = (JSONArray) pack.get("pack");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                Light light = new Light();
+                light.setInternetLink(jsonObject.getString("internet_link"));
+                light.setMypic(-1);
+                lightsArray.add(light);
+            }
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        ImageOnlineAdapter imageOnlineAdapter = new ImageOnlineAdapter(lightsArray, height);
+        rv_cards.setAdapter(imageOnlineAdapter);
 
 
 
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new MainFragment()).commit();
+                getParentFragmentManager().beginTransaction().remove(ImageOnlineGridFragment.this).commit();
             }
         });
 
 
     }
 
-    private  RealmResults<Light> getFromRealm(){
 
-        RealmResults<Light> realmResults = realm.where(Light.class).findAll();
-        return realmResults;
-
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        realm.close();
     }
 }
 
