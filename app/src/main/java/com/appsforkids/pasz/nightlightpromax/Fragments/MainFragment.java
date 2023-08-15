@@ -48,6 +48,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     ImageView lockButton;
     ImageView gallery_bt;
     ImageView melody_bt;
+    //
 
     //My Background
     ConstraintLayout fonLayout;
