@@ -1,33 +1,26 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments;
 
-import android.annotation.SuppressLint;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 
 
 public class TimerFragment extends Fragment {
 
-    FrameLayout no_button;
-
-    FrameLayout yes_button;
-
-    ConstraintLayout frame_constraine;
+    Button no_button;
+    Button yes_button;
     TextView timer_text;
 
     public static TimerFragment init(){
@@ -38,19 +31,15 @@ public class TimerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.timer_fragment, container,  false);
-       // timer_text = (TextView) getActivity().findViewById(R.id.bottom_text);
+
+        no_button =  view.findViewById(R.id.no_button);
+        yes_button =  view.findViewById(R.id.yes_button);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        no_button = view.findViewById(R.id.no_button);
-        yes_button = view.findViewById(R.id.yes_button);
-
-//        new FadeInAnimation(view).setDuration(300).animate();
-//        new ScaleInAnimation(view).setDuration(500).animate();
 
         Spinner spinner_hours = (Spinner) view.findViewById(R.id.spinner_hours);
         Spinner spinner_minutes = (Spinner) view.findViewById(R.id.spinner_minutes);
@@ -63,6 +52,7 @@ public class TimerFragment extends Fragment {
         Integer[] items_minutes = new Integer[]{0, 1, 5, 10, 20, 30, 40, 50};
         ArrayAdapter<Integer> adapter_minutes = new ArrayAdapter<Integer>(getContext(),R.layout.simple_spinner_item, items_minutes);
         adapter_minutes.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+
         spinner_minutes.setAdapter(adapter_minutes);
         spinner_minutes.setSelection(0);
 
@@ -77,8 +67,15 @@ public class TimerFragment extends Fragment {
         yes_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //((MainActivity)getActivity()).startTimer((int)spinner_hours.getSelectedItem(), (int) spinner_minutes.getSelectedItem());
-                removeThisFragment();
+                MainFragment mainFragment = (MainFragment) getParentFragmentManager().findFragmentByTag("main_fragment");
+
+                if(mainFragment!=null){
+                    mainFragment.startTimer((int)spinner_hours.getSelectedItem(), (int) spinner_minutes.getSelectedItem());
+                    removeThisFragment();
+                }
+                //SHOW ALERT ADS
+                // ((MainActivity)getActivity()).showAlertADS();
+                //((MainActivity) getActivity()).showAds();
             }
         });
 
@@ -88,6 +85,4 @@ public class TimerFragment extends Fragment {
         FragmentManager fm = getParentFragmentManager();
         fm.beginTransaction().remove(TimerFragment.this).commit();
     }
-
-
 }

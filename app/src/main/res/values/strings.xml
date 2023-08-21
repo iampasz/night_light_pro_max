@@ -120,6 +120,13 @@
     <string name="galery" translatable="false">galery</string>
     <string name="message_1" translatable="false">message_1</string>
 
+    <string name="set" translatable="false">Set</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="timer" translatable="false">Timer</string>
+    <string name="colon" translatable="false">:</string>
+    <string name="hours" translatable="false">Hours</string>
+    <string name="minutes" translatable="false">Minutes</string>
+
 
 
 </resources>

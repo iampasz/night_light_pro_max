@@ -2,6 +2,7 @@ package com.appsforkids.pasz.nightlightpromax.Fragments;
 
 import static android.R.anim.linear_interpolator;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
@@ -28,6 +30,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.TabImageFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.TabAudiotFragment;
+import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyAdapter;
 import com.appsforkids.pasz.nightlightpromax.R;
@@ -93,6 +96,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     CountDownTimer countDownTimer;
     RealmResults<Light> mylight;
 
+    CountDownTimer cdt;
+
     CreateMyMediaPlayerUseCase createMyMediaPlayerUseCase = new CreateMyMediaPlayerUseCase();
 
 
@@ -130,8 +135,52 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         bottom_text.setVisibility(View.VISIBLE);
         bottom_text.setText("");
         int mySeconds = (((hours * 60 * 60) + (60 * minutes)) * 1000);
+        closeApp(mySeconds);
         //sendAnalystics("timer", "timer is: " + hours +" and " + minutes);
     }
+
+    public void closeApp(int mySeconds) {
+
+
+        if (cdt != null) {
+            timerStatus = false;
+            cdt.cancel();
+            cdt = null;
+        }
+        if (mySeconds > 0) {
+            timerStatus = true;
+            cdt = new CountDownTimer(mySeconds, 1000) {
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onTick(long l) {
+                    bottom_text.setText(String.format("%02d:%02d:%02d", (l / 1000) / 3600, ((l / 1000) % 3600) / 60, (l / 1000) % 60));
+                }
+
+                @Override
+                public void onFinish() {
+
+                    if(cdt!=null){
+                        cdt.cancel();
+                    }
+
+                    if(globalTimer!=null){
+                        globalTimer.cancel();
+                    }
+
+                   // ((MainActivity) getActivity()).finishMedia();
+                    createMyMediaPlayerUseCase.create(getContext()).stopPlaying();
+
+                    Log.i("FINISH", "App is OFF");
+                    getActivity().finish();
+                }
+            };
+            cdt.start();
+        } else {
+            bottom_text.setText("");
+            bottom_text.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     @Override
     public void onTrigger() {
@@ -333,7 +382,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             if (timer_fragment != null && timer_fragment.isVisible()) {
                 mAdapter.notifyDataSetChanged();
             } else {
-                getParentFragmentManager().beginTransaction().replace(R.id.container, new TimerFragment(), "TIMER_FRAGMENT").commit();
+                getParentFragmentManager().beginTransaction().add(R.id.my_container, new TimerFragment(), "TIMER_FRAGMENT").commit();
             }
         }
 
@@ -528,5 +577,6 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 break;
         }
     }
+
 }
 

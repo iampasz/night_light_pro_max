@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         Realm.init(this);
-        getSupportFragmentManager().beginTransaction().add(R.id.my_container, new MainFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.my_container, new MainFragment(), "main_fragment").commit();
     }
 
     public MyMediaPlayer getPlayer() {
