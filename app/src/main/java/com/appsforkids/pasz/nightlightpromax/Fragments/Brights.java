@@ -42,13 +42,6 @@ public class Brights extends Fragment {
       public void onTrigger();
    }
 
-//   @Nullable
-//   @Override
-//   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//
-//      return inflater.inflate(R.layout.brights_fragment, container, false);
-//   }
-
    public Brights() {
       super(R.layout.brights_fragment);
    }
@@ -198,11 +191,6 @@ public class Brights extends Fragment {
    }
 
    private float getProcent(float bright){
-
-      Log.i("BRIGHTSS", bright+" bright");
-
-      Log.i("BRIGHTSS", (float) 100*((bright +120)/240)+" 100*((bright +120)/240)");
-
       return (float) 100*((bright +120)/240);
    }
 
@@ -226,23 +214,5 @@ public class Brights extends Fragment {
       super.onStop();
       saveBrights(BRIGHTS);
       Log.i("BRIGHTS", BRIGHTS+"");
-
-//      mCallback.onTrigger();
-
-
    }
-
-//   @Override
-//   public void onAttach(Activity activity) {
-//      super.onAttach(activity);
-//
-//      // This makes sure that the container activity has implemented
-//      // the callback interface. If not, it throws an exception
-//      try {
-//         mCallback = (MyInterface ) activity;
-//      } catch (ClassCastException e) {
-//         throw new ClassCastException(activity.toString()
-//                 + " must implement MyInterface ");
-//      }
-//   }
 }

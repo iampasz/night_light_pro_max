@@ -15,7 +15,6 @@ import com.appsforkids.pasz.nightlightpromax.Interfaces.ActionCalback;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,16 +22,16 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
-public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.ListMusicHolder> {
+public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.ListMusicHolder> {
 
     ActionCalback actionCalback;
-    RealmResults<AudioFile> realmResults;
+    ArrayList<AudioFile> realmResults;
     private String nameSong;
 
     int pressedPosition = -1;
     int currentMusicPosition = -1;
 
-    public ListMusicAdapter(ActionCalback actionCalback, RealmResults<AudioFile> realmResults) {
+    public JsonMusicAdapter(ActionCalback actionCalback, ArrayList<AudioFile> realmResults) {
         this.actionCalback = actionCalback;
         this.realmResults = realmResults;
     }
@@ -53,21 +52,21 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
         int absolutePosition = position;
 
         if (chekAudio(realmResults.get(absolutePosition).getInternetLink())) {
-            holder.download_bt.setImageResource(R.drawable.bt_close);
+            holder.download_bt.setVisibility(View.INVISIBLE);
         }
 
         holder.music_name.setText(realmResults.get(absolutePosition).getNameSong());
         holder.music_author.setText(realmResults.get(absolutePosition).getAuthorSong());
 
         if (realmResults.get(absolutePosition).getStatus()) {
-            holder.download_bt.setImageResource(R.drawable.bt_close);
+            holder.download_bt.setVisibility(View.INVISIBLE);
         }
 
         holder.download_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (chekAudio(realmResults.get(absolutePosition).getInternetLink())) {
-
+                    Log.i("CHEK_DOWNLOAD_BUTTON", " true2");
                     try {
                         actionCalback.delete(absolutePosition);
                     } catch (IOException e) {
@@ -75,6 +74,7 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
                     }
                 } else {
                     actionCalback.download(absolutePosition);
+                    Log.i("CHEK_DOWNLOAD_BUTTON", actionCalback + " false");
                 }
 
                 //notifyDataSetChanged();

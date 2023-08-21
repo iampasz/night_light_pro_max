@@ -6,16 +6,16 @@ import io.realm.RealmObject;
 
 public class AudioFile extends RealmObject implements Serializable {
 
-    int id;
-    public String nameSong;
-    public String authorSong;
-    Boolean status = false;
+    private int id;
+    private String nameSong;
+    private String authorSong;
+    private Boolean status = false;
 
-    int resourseLink;
-    String internetLink;
-    String lockalLink;
-    String fileName;
-    Boolean isPlay;
+    private int resourseLink;
+    private String internetLink;
+    private String lockalLink;
+    private String fileName;
+    private Boolean isPlay;
 
     public void setPlay(Boolean play) {
         isPlay = play;

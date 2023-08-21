@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,13 +25,11 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
 
     ArrayList<Light> arrayList;
     int size;
-    Realm realm = Realm.getDefaultInstance();
-
+    Realm realm = new InstanceRealmConfigurationUseCase().connect();
 
     public ImageOnlineAdapter(ArrayList<Light> arrayList, int size) {
         this.arrayList = arrayList;
         this.size = size;
-
     }
 
     @NonNull
@@ -47,11 +46,9 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
         holder.frame.setLayoutParams(params);
 
-
-        if(chekNLFromRealm(arrayList.get(position).getInternetLink())){
+        if (chekNLFromRealm(arrayList.get(position).getInternetLink())) {
             holder.checkBox.setChecked(true);
         }
-
 
         if (arrayList.get(holder.getAbsoluteAdapterPosition()).getMypic() == -1) {
             Picasso.get().load(arrayList.get(holder.getAbsoluteAdapterPosition()).getInternetLink()).into(holder.image);
@@ -59,12 +56,6 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
         } else {
             holder.image.setImageResource(arrayList.get(holder.getAbsoluteAdapterPosition()).getMypic());
         }
-
-
-//        if(arrayList.get(holder.getAbsoluteAdapterPosition()).getStatus()){
-//            holder.checkBox.setChecked(true);
-//        }
-
 
         holder.frame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,21 +67,10 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                Log.i("ONLINEADAPTER", "ONLINEADAPTER");
                 if (holder.checkBox.isChecked()) {
-
-                    Log.i("ONLINEADAPTER", "true");
-                    Log.i("ONLINEADAPTER", arrayList.get(position).getInternetLink() + " arrayList.get(position).getInternetLink()");
                     addToRealm(arrayList.get(position).getInternetLink());
-
                 } else {
-
-                    Log.i("ONLINEADAPTER", "false");
-                    Log.i("ONLINEADAPTER", arrayList.get(position).getInternetLink() + " arrayList.get(position).getInternetLink()");
                     removeFromRealm(arrayList.get(position).getInternetLink());
-
                 }
 
             }
@@ -116,30 +96,22 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
         }
     }
 
-    private void changeRealmImages(Boolean chekbox, int mypic) {
-        realm.beginTransaction();
-        Light currentImage = realm.where(Light.class).equalTo("mypic", mypic).findFirst();
-        currentImage.setStatus(chekbox);
+    private boolean chekNLFromRealm(String link) {
 
-        realm.commitTransaction();
-
-    }
-
-    private boolean chekNLFromRealm(String link){
-
-        Light light = realm.where(Light.class).equalTo("internetLink",link).findFirst();
+        Light light = realm.where(Light.class).equalTo("internetLink", link).findFirst();
         Boolean answer = false;
 
-        if(light!=null){
+        if (light != null) {
             answer = true;
         }
 
-        return  answer;
+        return answer;
     }
 
     private void addToRealm(String link) {
 
         realm.beginTransaction();
+
         Light light = new Light();
         light.setInternetLink(link);
         light.setOnline(true);
@@ -148,23 +120,13 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
 
         realm.copyToRealm(light);
 
-        Log.i("ONLINEADAPTER", light.getInternetLink() + " getInternetLink");
         realm.commitTransaction();
-
-        Log.i("ONLINEADAPTER", "addToRealm");
-
     }
 
     private void removeFromRealm(String link) {
-
         realm.beginTransaction();
-        Log.i("ONLINEADAPTER", link + " link");
         realm.where(Light.class).equalTo("internetLink", link).isNotEmpty("internetLink").findFirst().deleteFromRealm();
-
         realm.commitTransaction();
-
-        Log.i("ONLINEADAPTER", "removeFromRealm");
-
     }
 
     @Override

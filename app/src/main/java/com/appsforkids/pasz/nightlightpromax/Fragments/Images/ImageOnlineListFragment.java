@@ -1,33 +1,29 @@
-package com.appsforkids.pasz.nightlightpromax.Fragments;
+package com.appsforkids.pasz.nightlightpromax.Fragments.Images;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appsforkids.pasz.nightlightpromax.Adapters.ImageOnlineAdapter;
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyCategoryImageAdapter;
-import com.appsforkids.pasz.nightlightpromax.GSON.MyGson;
+import com.appsforkids.pasz.nightlightpromax.Fragments.Images.ImageOnlineGridFragment;
+import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.ReadJson;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ImageOnlineListFragment extends Fragment {
@@ -48,10 +44,6 @@ public class ImageOnlineListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         int spanCount = 3;
-
-        //gm = new GridLayoutManager(getContext(),spanCount, RecyclerView.VERTICAL, false);
-        // gm = new GridLayoutManager(getContext(),spanCount, RecyclerView.VERTICAL, false);
-
         LinearLayoutManager lm = new LinearLayoutManager(getContext());
 
         rv_cards = view.findViewById(R.id.rv_cards);
@@ -75,7 +67,6 @@ public class ImageOnlineListFragment extends Fragment {
     }
 
     public void getJson(String url) {
-
         ReadJson readJson = new ReadJson(new GetJson() {
             @Override
             public void getJson(String result) {
@@ -111,11 +102,9 @@ public class ImageOnlineListFragment extends Fragment {
                                 .setReorderingAllowed(true)
                                 .add(R.id.my_container, ImageOnlineGridFragment.class, bundle)
                                 .commit();
-
                     }
                 });
                 rv_cards.setAdapter(myCategoryImageAdapter);
-
             }
 
             @Override
@@ -124,6 +113,4 @@ public class ImageOnlineListFragment extends Fragment {
         });
         readJson.execute(url);
     }
-
-
 }

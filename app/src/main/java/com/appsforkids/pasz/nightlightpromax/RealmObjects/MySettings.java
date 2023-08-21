@@ -6,20 +6,33 @@ import io.realm.RealmObject;
 
 public class MySettings extends RealmObject implements Serializable {
 
-    int nightlight;
-    int animationPosition = 0;
-    int nightlightPosition;
-    int coins;
-    int backgroundColor;
-    float bright;
-    int rate;
-    boolean adds;
-    int currentMelody;
-    int timerTime;
-    int gradientColor;
-    boolean backgroundTumbler;
-    int suitCounter;
-   String  currentMusic;
+    private int nightlight;
+    private int animationPosition = 0;
+    private int nightlightPosition;
+    private int coins;
+    private int backgroundColor;
+    private float bright;
+    private int rate;
+    private boolean adds;
+    private int currentMelody;
+    private int timerTime;
+    private int gradientColor;
+    private boolean backgroundTumbler;
+    private  int suitCounter;
+
+    private int bgAnimation;
+
+    private String  currentMusic;
+
+    public void saveBackground(int bgAnimation) {
+        this.bgAnimation = bgAnimation;
+    }
+
+    public int getBackground() {
+        return bgAnimation;
+    }
+
+
 
     public void setCurrentMusic(String currentMusic) {
         this.currentMusic = currentMusic;
@@ -126,7 +139,7 @@ public class MySettings extends RealmObject implements Serializable {
         this.coins = this.coins - coins;
     }
 
-    public void setBackgroundColor(int backgroundColor) {
+    public void saveBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 

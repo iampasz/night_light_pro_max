@@ -1,4 +1,4 @@
-package com.appsforkids.pasz.nightlightpromax.Fragments;
+package com.appsforkids.pasz.nightlightpromax.Fragments.Melodies;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.SampleFragmentPagerAdapter;
+import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.InternetListFragment;
+import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.MelodyListFragment;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

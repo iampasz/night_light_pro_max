@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.ImageFile;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     RealmResults<Light> items;
     int size;
-    Realm realm = Realm.getDefaultInstance();
+    Realm realm = new InstanceRealmConfigurationUseCase().connect();
 
 
     public ImageAdapter(RealmResults<Light> items, int size) {
@@ -48,10 +49,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        CardView.LayoutParams params = new CardView.LayoutParams(size, (int) (size * 1.5));
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
         holder.frame.setLayoutParams(params);
 
-
+        if(items.get(position).getStatus()){
+            holder.checkBox.isChecked();
+        }
 
         if(items.get(holder.getAbsoluteAdapterPosition()).getMypic()==-1){
             Picasso.get().load(items.get(holder.getAbsoluteAdapterPosition()).getInternetLink()).into(holder.image);
@@ -60,28 +63,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             holder.image.setImageResource(items.get(holder.getAbsoluteAdapterPosition()).getMypic());
         }
 
-
         if(items.get(holder.getAbsoluteAdapterPosition()).getStatus()){
             holder.checkBox.setChecked(true);
         }
 
-
-        holder.frame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Light light = items.get(holder.getAbsoluteAdapterPosition());
-
-                if(light!=null){
-                    changeRealmImages(holder.checkBox.isChecked(), light.getMypic());
-                }
+                    changeRealmImages(items.get(position).getInternetLink(), holder.checkBox.isChecked());
             }
         });
 
@@ -105,16 +94,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    private void changeRealmImages(Boolean chekbox, int mypic) {
-
+    private void changeRealmImages(String link, boolean status) {
         realm.beginTransaction();
-        Light currentImage =  realm.where(Light.class).equalTo("mypic", mypic).findFirst();
-        currentImage.setStatus(chekbox);
-
+        Light light = realm.where(Light.class).equalTo("internetLink",link).findFirst();
+        light.setStatus(status);
         realm.commitTransaction();
-
-
-
     }
 
     @Override

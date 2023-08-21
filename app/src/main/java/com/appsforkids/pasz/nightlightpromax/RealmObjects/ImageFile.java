@@ -7,8 +7,8 @@ import io.realm.RealmObject;
 public class ImageFile  extends RealmObject{
 
 
-    int imageInternetLink;
-    boolean status;
+    private int imageInternetLink;
+    private boolean status;
 
     public void setStatus(boolean status) {
         this.status = status;
