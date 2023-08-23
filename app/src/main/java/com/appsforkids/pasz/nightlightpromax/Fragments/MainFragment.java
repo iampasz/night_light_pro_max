@@ -8,17 +8,19 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,23 +32,24 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.TabImageFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.TabAudiotFragment;
-import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyAdapter;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.MySettings;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateDefoltLightsUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateMyMediaPlayerUseCase;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetMediaPlayerUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import me.relex.circleindicator.CircleIndicator3;
 
-public class MainFragment extends Fragment implements Brights.MyInterface, View.OnClickListener, View.OnTouchListener
-{
+public class MainFragment extends Fragment implements Brights.MyInterface, View.OnClickListener, View.OnTouchListener {
     //My Buttons
     ImageView starsButton;
     ImageView timerButton;
@@ -62,18 +65,19 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     ImageView fon1;
     ImageView fon2;
     ImageView fon3;
-
     Realm realm;
 
-   // ImageView automate;
+    // ImageView automate;
 
     //Counter
     int bgCount;
-    int bgColorCount;
+    int bgColorCount = 5;
 
     //My AUTO Change nightlighter
 
     private Animation mFadeInAnimation, mFadeOutAnimation;
+
+    // ArrayList<Light> arrayList = new ArrayList<>();
 
 
     Flow flow;
@@ -85,7 +89,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     CountDownTimer globalTimer;
     boolean timerStatus = false;
     int fonStatus = 0;
-    MyAdapter mAdapter;
+    //MyAdapter mAdapter;
 
     boolean checkAutomate = true;
     boolean isAuto = false;
@@ -95,13 +99,11 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     AnimationSet set, set2, automate_set;
     CountDownTimer countDownTimer;
     RealmResults<Light> mylight;
-
     CountDownTimer cdt;
-
+    ArrayList<Light> arrayList;
+    MyAdapter myAdapter;
     CreateMyMediaPlayerUseCase createMyMediaPlayerUseCase = new CreateMyMediaPlayerUseCase();
-
-
-
+    GetMediaPlayerUseCase getMediaPlayerUseCase = new GetMediaPlayerUseCase();
     public MainFragment() {
         super(R.layout.main_fragment);
     }
@@ -110,25 +112,35 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         realm = new InstanceRealmConfigurationUseCase().connect();
+
 
         init(view);
         startGlobalTimer();
         setMyAnimations();
-        setMyViewPager();
+        // setMyViewPager();
         setSettings();
 
-        starsButton.setOnClickListener(this);Realm realm = new InstanceRealmConfigurationUseCase().connect();
+        starsButton.setOnClickListener(this);
+        Realm realm = new InstanceRealmConfigurationUseCase().connect();
         timerButton.setOnClickListener(this);
         bgcolorButton.setOnClickListener(this);
         sunButton.setOnClickListener(this);
-
         lockButton.setOnClickListener(this);
         gallery_bt.setOnClickListener(this);
         melody_bt.setOnClickListener(this);
-
         lockScrean.setOnTouchListener(this);
+
+        mylight = getLightersFromRealm();
+
+        arrayList = new ArrayList<>();
+        arrayList.addAll(getLightersFromRealm());
+        myAdapter = new MyAdapter(arrayList);
+        pager.setAdapter(myAdapter);
+
+        indicator.setViewPager(pager);
+
+        myAdapter.registerAdapterDataObserver(indicator.getAdapterDataObserver());
     }
 
     public void startTimer(int hours, int minutes) {
@@ -159,16 +171,17 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 @Override
                 public void onFinish() {
 
-                    if(cdt!=null){
+                    if (cdt != null) {
                         cdt.cancel();
                     }
 
-                    if(globalTimer!=null){
+                    if (globalTimer != null) {
                         globalTimer.cancel();
                     }
 
-                   // ((MainActivity) getActivity()).finishMedia();
-                    createMyMediaPlayerUseCase.create(getContext()).stopPlaying();
+                    // ((MainActivity) getActivity()).finishMedia();
+                    //createMyMediaPlayerUseCase.create(getContext()).stopPlaying();
+                    getMediaPlayerUseCase.getPlayer(getActivity()).stopPlaying();
 
                     Log.i("FINISH", "App is OFF");
                     getActivity().finish();
@@ -184,7 +197,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
     @Override
     public void onTrigger() {
-        mAdapter.notifyDataSetChanged();
+        //mAdapter.notifyDataSetChanged();
         Log.i("BRIGHTS", "notifyDataSetChanged");
     }
 
@@ -215,6 +228,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
         bottom_text.setText(string);
     }
+
     public void lockButton() {
 
         //closeOpenFragment();
@@ -249,6 +263,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         }
 
     }
+
     private void startGlobalTimer() {
         if (globalTimer != null) {
             globalTimer.start();
@@ -285,6 +300,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             }.start();
         }
     }
+
     private void showButtons() {
         if (chekMenu) {
             //            lockButton.setVisibility(View.VISIBLE);
@@ -298,6 +314,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             bottom_text.setVisibility(View.VISIBLE);
         }
     }
+
     public static ColorMatrixColorFilter brightIt(int fb) {
         ColorMatrix cmB = new ColorMatrix();
         cmB.set(new float[]{
@@ -311,10 +328,12 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         ColorMatrixColorFilter f = new ColorMatrixColorFilter(colorMatrix);
         return f;
     }
+
     public int getBrightsPreference() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("MYPREFS", 0);
         return sharedPref.getInt("BRIGHT", 0);
     }
+
     private void closeOpenFragment() {
         List<Fragment> arrayFragments = getParentFragmentManager().getFragments();
         if (arrayFragments.size() > 0) {
@@ -340,25 +359,56 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         bottom_text = view.findViewById(R.id.bottom_text);
         gallery_bt = view.findViewById(R.id.gallery_bt);
         lockScrean = view.findViewById(R.id.lockScrean);
-        fonLayout = view.findViewById(R.id.main);
+        fonLayout = view.findViewById(R.id.main_fragment);
         flow = view.findViewById(R.id.flow);
         indicator = view.findViewById(R.id.indicator);
-       // automate = view.findViewById(R.id.automate);
+        // automate = view.findViewById(R.id.automate);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity()
+                .getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        if(width>100 && height>2280){
+
+            float size = getResources().getDimension(R.dimen.circle_button_tablet);
+
+            lockButton
+                    .setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) size));
+            starsButton
+                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
+            timerButton.setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
+            bgcolorButton
+                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
+            sunButton
+                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
+            gallery_bt
+                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
+            melody_bt
+                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
+
+        }
+
+
     }
+
     @Override
     public void onClick(View v) {
 
         if (v.getId() == R.id.melody_bt) {
             getParentFragmentManager()
                     .beginTransaction()
-                    .add(R.id.my_container, new TabAudiotFragment())
+                    .add(R.id.main_fragment, new TabAudiotFragment(), "TAB_AUDIO_FRAGMENT")
                     .commit();
         }
 
         if (v.getId() == R.id.gallery_bt) {
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.my_container, new TabImageFragment())
+                    .add(R.id.main_fragment, new TabImageFragment(), "TAB_IMAGES_FRAGMENT")
                     .commit();
         }
 
@@ -368,8 +418,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             //  closeOpenFragment();
 
             bgColorCount++;
-            if(bgColorCount>5){
-                bgColorCount=0;
+            if (bgColorCount > 5) {
+                bgColorCount = 0;
             }
             setBgColor(bgColorCount);
         }
@@ -380,9 +430,9 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             TimerFragment timer_fragment = (TimerFragment) getParentFragmentManager().findFragmentByTag("TIMER_FRAGMENT");
 
             if (timer_fragment != null && timer_fragment.isVisible()) {
-                mAdapter.notifyDataSetChanged();
+                // mAdapter.notifyDataSetChanged();
             } else {
-                getParentFragmentManager().beginTransaction().add(R.id.my_container, new TimerFragment(), "TIMER_FRAGMENT").commit();
+                getParentFragmentManager().beginTransaction().add(R.id.main_fragment, new TimerFragment(), "TIMER_FRAGMENT").commit();
             }
         }
 
@@ -390,9 +440,9 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             // closeOpenFragment();
             Brights brightsFragment = (Brights) getParentFragmentManager().findFragmentByTag("BRIGHTS_FRAGMENT");
             if (brightsFragment != null && brightsFragment.isVisible()) {
-                mAdapter.notifyDataSetChanged();
+                // mAdapter.notifyDataSetChanged();
             } else {
-                getParentFragmentManager().beginTransaction().add(R.id.my_container, new Brights(), "BRIGHTS_FRAGMENT").commit();
+                getParentFragmentManager().beginTransaction().add(R.id.main_fragment, new Brights(), "BRIGHTS_FRAGMENT").commit();
             }
         }
 
@@ -403,8 +453,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             //  closeOpenFragment();
 
             bgCount++;
-            if(bgCount>2){
-                bgCount=0;
+            if (bgCount > 2) {
+                bgCount = 0;
             }
             setBackground(bgCount);
         }
@@ -413,12 +463,14 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             lockButton();
         }
     }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         showButtons();
         startGlobalTimer();
         return false;
     }
+
     private void setMyAnimations() {
 
         mFadeInAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fadein);
@@ -426,7 +478,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
         RotateAnimation rotate = new RotateAnimation(0, 360,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); //2
-        ScaleAnimation scale = new ScaleAnimation(2.0f, 2.0f, 2.0f, 2.0f,
+        ScaleAnimation scale = new ScaleAnimation(4.0f, 4.0f, 4.0f, 4.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(100000); //3
         rotate.setRepeatMode(Animation.INFINITE); //4
@@ -449,20 +501,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         set2.addAnimation(scale);
         set2.addAnimation(rotate2);
     }
-    private void setMyViewPager() {
-        mylight = getLightersFromRealm();
-        mAdapter = new MyAdapter(mylight);
-        pager.setAdapter(mAdapter);
-        pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
-        });
 
-        indicator.setViewPager(pager);
-        mAdapter.registerAdapterDataObserver(indicator.getAdapterDataObserver());
-    };
     @Override
     public void onStop() {
         super.onStop();
@@ -473,16 +512,17 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         mySettings.saveBackgroundColor(bgColorCount);
         realm.commitTransaction();
     }
-    public void setSettings(){
+
+    public void setSettings() {
         MySettings mySettings = realm.where(MySettings.class).findFirst();
-        if(mySettings==null){
+        if (mySettings == null) {
             mySettings = new MySettings();
             mySettings.saveBackground(0);
-            mySettings.saveBackgroundColor(0);
+            mySettings.saveBackgroundColor(bgColorCount);
             realm.beginTransaction();
             realm.copyToRealm(mySettings);
             realm.commitTransaction();
-        }else{
+        } else {
             bgCount = mySettings.getBackground();
             bgColorCount = mySettings.getBackgroundColor();
 
@@ -490,40 +530,42 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             setBgColor(bgColorCount);
         }
     }
+
     private void setBackground(int bgCount) {
-    switch (bgCount) {
-        case 0:
-            fon2.startAnimation(set);
-            fon3.startAnimation(set2);
-            fon2.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            fon3.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            fon1.setVisibility(View.VISIBLE);
-            fon2.setVisibility(View.VISIBLE);
-            fon3.setVisibility(View.VISIBLE);
+        switch (bgCount) {
+            case 0:
+                fon2.startAnimation(set);
+                fon3.startAnimation(set2);
+                fon2.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                fon3.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                fon1.setVisibility(View.VISIBLE);
+                fon2.setVisibility(View.VISIBLE);
+                fon3.setVisibility(View.VISIBLE);
 
-            showToast(getString(R.string.star_on));
-            break;
+                showToast(getString(R.string.star_on));
+                break;
 
-        case 1:
+            case 1:
 
-            fon2.clearAnimation();
-            fon3.clearAnimation();
-            fon2.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            fon3.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                fon2.clearAnimation();
+                fon3.clearAnimation();
+                fon2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                fon3.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            showToast(getString(R.string.star_anim_off));
-            break;
+                showToast(getString(R.string.star_anim_off));
+                break;
 
-        case 2:
+            case 2:
 
-            fon1.setVisibility(View.GONE);
-            fon2.setVisibility(View.GONE);
-            fon3.setVisibility(View.GONE);
-            showToast(getString(R.string.star_off));
+                fon1.setVisibility(View.GONE);
+                fon2.setVisibility(View.GONE);
+                fon3.setVisibility(View.GONE);
+                showToast(getString(R.string.star_off));
 
-            break;
+                break;
+        }
     }
-}
+
     private void setBgColor(int bgColorCount) {
 
         switch (bgColorCount) {
@@ -578,5 +620,11 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         }
     }
 
+
+    public void refresh() {
+        arrayList.clear();
+        arrayList.addAll(getLightersFromRealm());
+        myAdapter.notifyDataSetChanged();
+    }
 }
 

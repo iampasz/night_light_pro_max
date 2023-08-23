@@ -16,12 +16,20 @@ import io.realm.RealmObject;
 //5. в фрагментн доставай из аргументов Light из него картинку и текст и добавляй в поля
 
 public class Light extends RealmObject {
-    private int id;
+    private String id;
     private int mypic;
     private int mytext;
     private boolean status;
     private boolean online;
     private String internetLink;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public void setOnline(boolean online) {
         this.online = online;

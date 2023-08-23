@@ -52,7 +52,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
         holder.frame.setLayoutParams(params);
 
-        if(items.get(position).getStatus()){
+        if(items.get(holder.getAbsoluteAdapterPosition()).getStatus()){
             holder.checkBox.isChecked();
         }
 
@@ -70,7 +70,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    changeRealmImages(items.get(position).getInternetLink(), holder.checkBox.isChecked());
+               // Log.i("REALM_CHEKBOX", items.get(position).getInternetLink()+"");
+                Log.i("REALM_CHEKBOX", holder.checkBox.isChecked()+"");
+                    changeRealmImages( items.get(holder.getAbsoluteAdapterPosition()).getId(), holder.checkBox.isChecked());
             }
         });
 
@@ -94,10 +96,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    private void changeRealmImages(String link, boolean status) {
+    private void changeRealmImages(String id,  boolean status) {
         realm.beginTransaction();
-        Light light = realm.where(Light.class).equalTo("internetLink",link).findFirst();
-        light.setStatus(status);
+       Light light =  realm.where(Light.class).equalTo("id",id).findFirst();
+
+       Log.i("CHANGESTATUS", id+" id");
+
+       light.setStatus(status);
+
         realm.commitTransaction();
     }
 

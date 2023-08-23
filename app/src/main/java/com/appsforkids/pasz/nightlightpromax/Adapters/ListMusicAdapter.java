@@ -163,7 +163,7 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
 
         Realm realm = Realm.getInstance(configuration);
 
-        Log.i("CHEKAUDIO", link);
+//        Log.i("CHEKAUDIO", link);
 
         AudioFile audioFile = realm.where(AudioFile.class).isNotNull("lockalLink").equalTo("internetLink", link).findFirst();
 

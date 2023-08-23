@@ -1,5 +1,7 @@
 package com.appsforkids.pasz.nightlightpromax.Adapters;
 
+import static androidx.viewpager.widget.PagerAdapter.POSITION_NONE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.ColorMatrix;
@@ -17,6 +19,8 @@ import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import io.realm.RealmResults;
 
 /**
@@ -25,10 +29,9 @@ import io.realm.RealmResults;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
 
-    public static RealmResults<Light> mylights;
+    public static ArrayList<Light> mylights;
 
-    public MyAdapter(RealmResults<Light> lights) {
-
+    public MyAdapter(ArrayList<Light> lights) {
         mylights = lights;
     }
 
@@ -101,6 +104,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
         return brights;
 
     }
+
+    public int getItemPosition(Object item) {
+        return POSITION_NONE;
+    }
+
 }
 
 

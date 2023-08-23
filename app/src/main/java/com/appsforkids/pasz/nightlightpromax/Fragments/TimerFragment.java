@@ -67,7 +67,7 @@ public class TimerFragment extends Fragment {
         yes_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainFragment mainFragment = (MainFragment) getParentFragmentManager().findFragmentByTag("main_fragment");
+                MainFragment mainFragment = (MainFragment) getParentFragmentManager().findFragmentByTag("MAIN_FRAGMENT");
 
                 if(mainFragment!=null){
                     mainFragment.startTimer((int)spinner_hours.getSelectedItem(), (int) spinner_minutes.getSelectedItem());

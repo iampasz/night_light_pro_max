@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.ImageOnlineAdapter;
+import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 
@@ -59,6 +60,7 @@ public class ImageOnlineGridFragment extends Fragment  {
                 Light light = new Light();
                 light.setInternetLink(jsonObject.getString("internet_link"));
                 light.setMypic(-1);
+                light.setId(jsonObject.getString("internet_link"));
                 lightsArray.add(light);
             }
 
@@ -72,7 +74,13 @@ public class ImageOnlineGridFragment extends Fragment  {
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                MainFragment mainFragment = (MainFragment) getParentFragmentManager()
+                        .findFragmentByTag("MAIN_FRAGMENT");
+                mainFragment.refresh();
+
                 getParentFragmentManager().beginTransaction().remove(ImageOnlineGridFragment.this).commit();
+
             }
         });
     }

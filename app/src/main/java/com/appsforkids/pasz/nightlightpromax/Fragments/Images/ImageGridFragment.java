@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -65,7 +66,21 @@ public class ImageGridFragment extends Fragment  {
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new MainFragment()).commit();
+
+                TabImageFragment tabImageFragment = (TabImageFragment) getParentFragmentManager()
+                        .findFragmentByTag("TAB_IMAGES_FRAGMENT");
+
+                MainFragment mainFragment = (MainFragment) getParentFragmentManager()
+                        .findFragmentByTag("MAIN_FRAGMENT");
+                mainFragment.refresh();
+
+                assert tabImageFragment != null;
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .remove(tabImageFragment)
+                        .commit();
+
+
             }
         });
     }

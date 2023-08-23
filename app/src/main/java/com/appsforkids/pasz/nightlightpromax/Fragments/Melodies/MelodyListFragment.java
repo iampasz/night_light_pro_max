@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.ListMusicAdapter;
-import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ActionCalback;
 import com.appsforkids.pasz.nightlightpromax.MyMediaPlayer;
 import com.appsforkids.pasz.nightlightpromax.R;
@@ -20,7 +19,7 @@ import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
 import com.appsforkids.pasz.nightlightpromax.WrapContentLinearLayoutManager;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateMyMediaPlayerUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.DeleteFileUseCase;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetAudioFilesFromRealm;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetAudioFilesFromRealmUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetMediaPlayerUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.PlayMelodyUseCase;
@@ -37,7 +36,7 @@ public class MelodyListFragment extends Fragment {
     StopPlayingUseCase stopPlaying = new StopPlayingUseCase();
     PlayMelodyUseCase playMelodyUseCase = new PlayMelodyUseCase();
     CreateMyMediaPlayerUseCase createMyMediaPlayerUseCase = new CreateMyMediaPlayerUseCase();
-    GetAudioFilesFromRealm getAudioFilesFromRealm = new GetAudioFilesFromRealm();
+    GetAudioFilesFromRealmUseCase getAudioFilesFromRealm = new GetAudioFilesFromRealmUseCase();
     DeleteFileUseCase deleteFileUseCase = new DeleteFileUseCase();
     ListMusicAdapter listMusicAdapter;
     MyMediaPlayer myMediaPlayer;
@@ -55,7 +54,7 @@ public class MelodyListFragment extends Fragment {
         myMediaPlayer = getMediaPlayerUseCase.getPlayer(getActivity());
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv_images);
         LinearLayoutManager llm = new WrapContentLinearLayoutManager(getContext());
-        RealmResults<AudioFile> arrayList = getAudioFilesFromRealm.getArray(realm, "lockalLink");
+        RealmResults<AudioFile> arrayList = getAudioFilesFromRealm.getArray(realm);
         ActionCalback actionCalback = new ActionCalback() {
             @Override
             public void play(int position) {
@@ -63,7 +62,14 @@ public class MelodyListFragment extends Fragment {
                     stopPlaying.stop(myMediaPlayer);
                 } else {
                     stopPlaying.stop(myMediaPlayer);
-                    playMelodyUseCase.play(myMediaPlayer, arrayList.get(position).getLockalLink());
+
+                    if (arrayList.get(position).getLockalLink() != null) {
+                        myMediaPlayer.playAudio(arrayList.get(position).getLockalLink());
+                    } else {
+                        if (arrayList.get(position).getAuthorSong() != null) {
+                            myMediaPlayer.playAudio(arrayList.get(position).getResourceLink());
+                        }
+                    }
                 }
             }
 
@@ -97,7 +103,16 @@ public class MelodyListFragment extends Fragment {
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new MainFragment()).commit();
+
+                TabAudiotFragment tabAudiotFragment = (TabAudiotFragment) getParentFragmentManager()
+                        .findFragmentByTag("TAB_AUDIO_FRAGMENT");
+
+                assert tabAudiotFragment != null;
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .remove(tabAudiotFragment)
+                        .commit();
+
             }
         });
     }

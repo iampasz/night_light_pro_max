@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyCategoryImageAdapter;
-import com.appsforkids.pasz.nightlightpromax.Fragments.Images.ImageOnlineGridFragment;
-import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
 import com.appsforkids.pasz.nightlightpromax.R;
@@ -60,7 +58,15 @@ public class ImageOnlineListFragment extends Fragment {
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new MainFragment()).commit();
+
+                TabImageFragment tabImageFragment = (TabImageFragment) getParentFragmentManager()
+                        .findFragmentByTag("TAB_IMAGES_FRAGMENT");
+
+                assert tabImageFragment != null;
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .remove(tabImageFragment)
+                        .commit();
             }
         });
 
@@ -100,7 +106,7 @@ public class ImageOnlineListFragment extends Fragment {
 
                         getParentFragmentManager().beginTransaction()
                                 .setReorderingAllowed(true)
-                                .add(R.id.my_container, ImageOnlineGridFragment.class, bundle)
+                                .replace(R.id.main_fragment, ImageOnlineGridFragment.class, bundle)
                                 .commit();
                     }
                 });

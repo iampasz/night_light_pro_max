@@ -67,7 +67,14 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.close_button){
-            getParentFragmentManager().beginTransaction().replace(R.id.my_container, new MainFragment()).commit();
+            TabAudiotFragment tabAudiotFragment = (TabAudiotFragment) getParentFragmentManager()
+                    .findFragmentByTag("TAB_AUDIO_FRAGMENT");
+
+            assert tabAudiotFragment != null;
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .remove(tabAudiotFragment)
+                    .commit();
         }
     }
 
@@ -121,6 +128,7 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
             public void fileDownloaded(String path) {
 
                 audioFile.setLockalLink(path);
+                audioFile.setStatus(true);
 
                 Realm realm = new InstanceRealmConfigurationUseCase().connect();
 

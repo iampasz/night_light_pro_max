@@ -69,6 +69,7 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
             public void onClick(View v) {
                 if (holder.checkBox.isChecked()) {
                     addToRealm(arrayList.get(position).getInternetLink());
+
                 } else {
                     removeFromRealm(arrayList.get(position).getInternetLink());
                 }
@@ -117,6 +118,7 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
         light.setOnline(true);
         light.setStatus(true);
         light.setMypic(-1);
+        light.setId(link);
 
         realm.copyToRealm(light);
 
