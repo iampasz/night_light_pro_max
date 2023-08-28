@@ -36,7 +36,7 @@
                 android:id="@+id/sun_image"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/bt_sun4" />
+                app:srcCompat="@drawable/bt_sun" />
 
             <SeekBar
                 android:id="@+id/seekBar_s"
@@ -84,7 +84,7 @@
                 android:id="@+id/bear_image"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/bt_bear_b" />
+                app:srcCompat="@drawable/bt_bear" />
 
             <SeekBar
                 android:id="@+id/seekBar_b"

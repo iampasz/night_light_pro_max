@@ -26,15 +26,17 @@ import java.util.ArrayList;
 
 public class ImageOnlineListFragment extends Fragment {
 
-    //GridLayoutManager gm;
-
     RecyclerView rv_cards;
     int height;
     ImageView close_button;
 
+    JSONArray jsonArray;
+
+    MyCategoryImageAdapter myCategoryImageAdapter;
+
 
     public ImageOnlineListFragment() {
-        super(R.layout.image_online_list_fragment);
+        super(R.layout.list_fragment);
     }
 
     @Override
@@ -59,8 +61,12 @@ public class ImageOnlineListFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+//                TabImageFragment tabImageFragment = (TabImageFragment) getParentFragmentManager()
+//                        .findFragmentByTag("TAB_IMAGE_FRAGMENT");
+//
+//                assert tabImageFragment != null;
                 TabImageFragment tabImageFragment = (TabImageFragment) getParentFragmentManager()
-                        .findFragmentByTag("TAB_IMAGES_FRAGMENT");
+                        .findFragmentByTag("TAB_IMAGE_FRAGMENT");
 
                 assert tabImageFragment != null;
                 getParentFragmentManager()
@@ -80,7 +86,7 @@ public class ImageOnlineListFragment extends Fragment {
                 ArrayList<Light> lightsArray;
                 lightsArray = new ArrayList<>();
 
-                JSONArray jsonArray;
+
 
                 try {
                     String image = new JSONObject(result).getString("images");
@@ -93,7 +99,7 @@ public class ImageOnlineListFragment extends Fragment {
                 Light light = new Light();
                 light.setMypic(-1);
 
-                MyCategoryImageAdapter myCategoryImageAdapter = new MyCategoryImageAdapter(jsonArray, new DoThis() {
+                 myCategoryImageAdapter = new MyCategoryImageAdapter(jsonArray, new DoThis() {
                     @Override
                     public void doThis(int position) {
 
@@ -106,8 +112,11 @@ public class ImageOnlineListFragment extends Fragment {
 
                         getParentFragmentManager().beginTransaction()
                                 .setReorderingAllowed(true)
-                                .replace(R.id.main_fragment, ImageOnlineGridFragment.class, bundle)
+                                .replace(R.id.empty, ImageOnlineGridFragment.class, bundle)
                                 .commit();
+
+
+
                     }
                 });
                 rv_cards.setAdapter(myCategoryImageAdapter);
@@ -119,4 +128,6 @@ public class ImageOnlineListFragment extends Fragment {
         });
         readJson.execute(url);
     }
+
+
 }

@@ -38,7 +38,7 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
 
     JsonMusicAdapter jsonMusicAdapter;
     public InternetListFragment() {
-        super(R.layout.my_music_list);
+        super(R.layout.list_fragment);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
         Log.i("CHEKFRAGMENT","InternetListFragment");
 
         close_button = (ImageView) view.findViewById(R.id.close_button);
-        rv = (RecyclerView) view.findViewById(R.id.rv_images);
+        rv = (RecyclerView) view.findViewById(R.id.rv_cards);
         close_button.setOnClickListener(this::onClick);
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());

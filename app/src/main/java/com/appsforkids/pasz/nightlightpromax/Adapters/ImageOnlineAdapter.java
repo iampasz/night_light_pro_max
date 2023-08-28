@@ -43,11 +43,12 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
-        holder.frame.setLayoutParams(params);
+       // FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
+       // holder.frame.setLayoutParams(params);
 
         if (chekNLFromRealm(arrayList.get(position).getInternetLink())) {
             holder.checkBox.setChecked(true);
+            holder.image.setAlpha(1f);
         }
 
         if (arrayList.get(holder.getAbsoluteAdapterPosition()).getMypic() == -1) {
@@ -64,12 +65,21 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
             }
         });
 
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+        holder.frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(holder.checkBox.isChecked()){
+                    holder.checkBox.setChecked(false);
+                    holder.image.setAlpha(0.5f);
+                }else{
+                    holder.checkBox.setChecked(true);
+                    holder.image.setAlpha(1f);
+                }
+
+
                 if (holder.checkBox.isChecked()) {
                     addToRealm(arrayList.get(position).getInternetLink());
-
                 } else {
                     removeFromRealm(arrayList.get(position).getInternetLink());
                 }

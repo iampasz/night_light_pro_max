@@ -49,11 +49,8 @@ public class Subscription extends Fragment {
     LinearLayout subscribeButton;
     TextView bottom_text;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.subscription, container, false);
+    public Subscription() {
+        super(R.layout.subscription);
     }
 
     @SuppressLint("ClickableViewAccessibility")

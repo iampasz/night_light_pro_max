@@ -31,7 +31,7 @@ public class ImageOnlineGridFragment extends Fragment  {
     ImageView close_button;
 
     public ImageOnlineGridFragment() {
-        super(R.layout.image_list_fragment);
+        super(R.layout.list_fragment);
     }
 
     @Override
@@ -48,7 +48,8 @@ public class ImageOnlineGridFragment extends Fragment  {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.widthPixels;
         height = height/spanCount;
-        json = requireArguments().getString("json");
+        //json = requireArguments().getString("json");
+        json = getArguments().getString("json");
         ArrayList<Light> lightsArray = new ArrayList<>();
 
         try {
@@ -79,7 +80,12 @@ public class ImageOnlineGridFragment extends Fragment  {
                         .findFragmentByTag("MAIN_FRAGMENT");
                 mainFragment.refresh();
 
-                getParentFragmentManager().beginTransaction().remove(ImageOnlineGridFragment.this).commit();
+               // getParentFragmentManager().beginTransaction().remove(ImageOnlineGridFragment.this).commit();
+
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.empty, new ImageOnlineListFragment())
+                        .commit();
 
             }
         });

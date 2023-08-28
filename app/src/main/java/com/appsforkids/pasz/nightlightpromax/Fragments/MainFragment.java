@@ -201,33 +201,33 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         Log.i("BRIGHTS", "notifyDataSetChanged");
     }
 
-    public void showToast(String string) {
-
-        bottom_text.setVisibility(View.VISIBLE);
-
-        if (offMessage == null) {
-            offMessage = new CountDownTimer(3000, 1000) {
-                @Override
-                public void onTick(long l) {
-
-                }
-
-                @Override
-                public void onFinish() {
-                    if (!timerStatus) {
-                        bottom_text.setVisibility(View.INVISIBLE);
-                        bottom_text.setText("");
-                    }
-
-                }
-            }.start();
-        } else {
-            offMessage.cancel();
-            offMessage.start();
-        }
-
-        bottom_text.setText(string);
-    }
+//    public void showToast(String string) {
+//
+//        bottom_text.setVisibility(View.VISIBLE);
+//
+//        if (offMessage == null) {
+//            offMessage = new CountDownTimer(3000, 1000) {
+//                @Override
+//                public void onTick(long l) {
+//
+//                }
+//
+//                @Override
+//                public void onFinish() {
+//                    if (!timerStatus) {
+//                        bottom_text.setVisibility(View.INVISIBLE);
+//                        bottom_text.setText("");
+//                    }
+//
+//                }
+//            }.start();
+//        } else {
+//            offMessage.cancel();
+//            offMessage.start();
+//        }
+//
+//        bottom_text.setText(string);
+//    }
 
     public void lockButton() {
 
@@ -259,7 +259,6 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             lockScrean.setClickable(false);
             chekMenu = true;
             show = true;
-
         }
 
     }
@@ -408,7 +407,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         if (v.getId() == R.id.gallery_bt) {
             getParentFragmentManager()
                     .beginTransaction()
-                    .add(R.id.main_fragment, new TabImageFragment(), "TAB_IMAGES_FRAGMENT")
+                    .add(R.id.main_fragment, new TabImageFragment(), "TAB_IMAGE_FRAGMENT")
                     .commit();
         }
 
@@ -478,7 +477,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
         RotateAnimation rotate = new RotateAnimation(0, 360,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); //2
-        ScaleAnimation scale = new ScaleAnimation(4.0f, 4.0f, 4.0f, 4.0f,
+        ScaleAnimation scale = new ScaleAnimation(3.0f, 3.0f, 3.0f, 3.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(100000); //3
         rotate.setRepeatMode(Animation.INFINITE); //4
@@ -542,7 +541,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setVisibility(View.VISIBLE);
                 fon3.setVisibility(View.VISIBLE);
 
-                showToast(getString(R.string.star_on));
+               // showToast(getString(R.string.star_on));
                 break;
 
             case 1:
@@ -552,7 +551,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 fon3.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                showToast(getString(R.string.star_anim_off));
+               // showToast(getString(R.string.star_anim_off));
                 break;
 
             case 2:
@@ -560,7 +559,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon1.setVisibility(View.GONE);
                 fon2.setVisibility(View.GONE);
                 fon3.setVisibility(View.GONE);
-                showToast(getString(R.string.star_off));
+               // showToast(getString(R.string.star_off));
 
                 break;
         }
@@ -575,7 +574,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_green);
                 fon3.setImageResource(R.drawable.lg_green);
                 fonLayout.setBackgroundResource(R.color.green);
-                showToast(getString(R.string.bgcolor_green));
+               // showToast(getString(R.string.bgcolor_green));
                 break;
 
             case 1:
@@ -583,7 +582,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_purple);
                 fon3.setImageResource(R.drawable.lg_purple);
                 fonLayout.setBackgroundResource(R.color.purpl);
-                showToast(getString(R.string.bgcolor_purple));
+               // showToast(getString(R.string.bgcolor_purple));
                 break;
 
             case 2:
@@ -591,7 +590,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_red);
                 fon3.setImageResource(R.drawable.lg_red);
                 fonLayout.setBackgroundResource(R.color.orange);
-                showToast(getString(R.string.bgcolor_orange));
+               // showToast(getString(R.string.bgcolor_orange));
                 break;
 
             case 3:
@@ -599,7 +598,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_blue);
                 fon3.setImageResource(R.drawable.lg_blue);
                 fonLayout.setBackgroundResource(R.color.blue);
-                showToast(getString(R.string.bgcolor_c));
+                //showToast(getString(R.string.bgcolor_c));
                 break;
 
             case 4:
@@ -607,7 +606,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_gray);
                 fon3.setImageResource(R.drawable.lg_gray);
                 fonLayout.setBackgroundResource(R.color.black);
-                showToast(getString(R.string.bgcolor_durk));
+                //showToast(getString(R.string.bgcolor_durk));
                 break;
 
             case 5:
@@ -615,7 +614,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_dark_blue);
                 fon3.setImageResource(R.drawable.lg_dark_blue);
                 fonLayout.setBackgroundResource(R.color.darkblue);
-                showToast(getString(R.string.bgcolor_blue));
+               // showToast(getString(R.string.bgcolor_blue));
                 break;
         }
     }

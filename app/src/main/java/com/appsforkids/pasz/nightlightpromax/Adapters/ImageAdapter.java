@@ -49,30 +49,37 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
-        holder.frame.setLayoutParams(params);
+       // FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
+       // holder.frame.setLayoutParams(params);
 
-        if(items.get(holder.getAbsoluteAdapterPosition()).getStatus()){
+        if (items.get(holder.getAbsoluteAdapterPosition()).getStatus()) {
             holder.checkBox.isChecked();
+            holder.image.setAlpha(1f);
         }
 
-        if(items.get(holder.getAbsoluteAdapterPosition()).getMypic()==-1){
+        if (items.get(holder.getAbsoluteAdapterPosition()).getMypic() == -1) {
             Picasso.get().load(items.get(holder.getAbsoluteAdapterPosition()).getInternetLink()).into(holder.image);
-            Log.i("PICASO", items.get(holder.getAbsoluteAdapterPosition()).getInternetLink()+"");
-        }else{
+            Log.i("PICASO", items.get(holder.getAbsoluteAdapterPosition()).getInternetLink() + "");
+        } else {
             holder.image.setImageResource(items.get(holder.getAbsoluteAdapterPosition()).getMypic());
         }
 
-        if(items.get(holder.getAbsoluteAdapterPosition()).getStatus()){
+        if (items.get(holder.getAbsoluteAdapterPosition()).getStatus()) {
             holder.checkBox.setChecked(true);
         }
 
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+        holder.frame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Log.i("REALM_CHEKBOX", items.get(position).getInternetLink()+"");
-                Log.i("REALM_CHEKBOX", holder.checkBox.isChecked()+"");
-                    changeRealmImages( items.get(holder.getAbsoluteAdapterPosition()).getId(), holder.checkBox.isChecked());
+                if(holder.checkBox.isChecked()){
+                    holder.checkBox.setChecked(false);
+                    holder.image.setAlpha(0.5f);
+                }else{
+                    holder.checkBox.setChecked(true);
+                    holder.image.setAlpha(1f);
+                }
+
+                changeRealmImages(items.get(holder.getAbsoluteAdapterPosition()).getId(), holder.checkBox.isChecked());
             }
         });
 
@@ -84,9 +91,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-         ImageView image;
-         FrameLayout frame;
-         CheckBox checkBox;
+        ImageView image;
+        FrameLayout frame;
+        CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,13 +103,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
     }
 
-    private void changeRealmImages(String id,  boolean status) {
+    private void changeRealmImages(String id, boolean status) {
         realm.beginTransaction();
-       Light light =  realm.where(Light.class).equalTo("id",id).findFirst();
+        Light light = realm.where(Light.class).equalTo("id", id).findFirst();
 
-       Log.i("CHANGESTATUS", id+" id");
+        Log.i("CHANGESTATUS", id + " id");
 
-       light.setStatus(status);
+        light.setStatus(status);
 
         realm.commitTransaction();
     }

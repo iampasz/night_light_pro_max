@@ -43,7 +43,7 @@ public class MelodyListFragment extends Fragment {
     GetMediaPlayerUseCase getMediaPlayerUseCase = new GetMediaPlayerUseCase();
 
     public MelodyListFragment() {
-        super(R.layout.my_music_list);
+        super(R.layout.list_fragment);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MelodyListFragment extends Fragment {
 
         ImageView close_button = (ImageView) view.findViewById(R.id.close_button);
         myMediaPlayer = getMediaPlayerUseCase.getPlayer(getActivity());
-        RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv_images);
+        RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv_cards);
         LinearLayoutManager llm = new WrapContentLinearLayoutManager(getContext());
         RealmResults<AudioFile> arrayList = getAudioFilesFromRealm.getArray(realm);
         ActionCalback actionCalback = new ActionCalback() {

@@ -2,7 +2,6 @@ package com.appsforkids.pasz.nightlightpromax.Fragments.Images;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,18 +12,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.ImageAdapter;
-import com.appsforkids.pasz.nightlightpromax.Adapters.ImageOnlineAdapter;
 import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Objects;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -38,10 +29,13 @@ public class ImageGridFragment extends Fragment  {
     int height;
     ImageView close_button;
     RealmResults<Light> imageFiles;
+  //  ConstraintLayout constrain_image;
+
+    ImageAdapter imageAdapter;
 
     Realm realm = new InstanceRealmConfigurationUseCase().connect();
     public ImageGridFragment() {
-        super(R.layout.image_list_fragment);
+        super(R.layout.list_fragment);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -51,16 +45,26 @@ public class ImageGridFragment extends Fragment  {
         gm = new GridLayoutManager(getContext(),spanCount, RecyclerView.VERTICAL, false);
         rv_cards = view.findViewById(R.id.rv_cards);
         close_button = view.findViewById(R.id.close_button);
+       // constrain_image = view.findViewById(R.id.constrain_image);
+
         rv_cards.setLayoutManager(gm);
 
         imageFiles = getFromRealm();
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int padding = (int) getResources().getDimension(R.dimen.padding);
         height = displayMetrics.widthPixels;
+        height = height-(padding*2);
+
+//        float scale = getResources().getDisplayMetrics().density;
+//        int dpAsPixels = (int) (sizeInDp*scale + 0.5f);
+
         height = height/spanCount;
 
-        ImageAdapter imageAdapter = new ImageAdapter(imageFiles, height);
+
+
+         imageAdapter = new ImageAdapter(imageFiles, height);
         rv_cards.setAdapter(imageAdapter);
 
         close_button.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +72,7 @@ public class ImageGridFragment extends Fragment  {
             public void onClick(View v) {
 
                 TabImageFragment tabImageFragment = (TabImageFragment) getParentFragmentManager()
-                        .findFragmentByTag("TAB_IMAGES_FRAGMENT");
+                        .findFragmentByTag("TAB_IMAGE_FRAGMENT");
 
                 MainFragment mainFragment = (MainFragment) getParentFragmentManager()
                         .findFragmentByTag("MAIN_FRAGMENT");
@@ -79,8 +83,6 @@ public class ImageGridFragment extends Fragment  {
                         .beginTransaction()
                         .remove(tabImageFragment)
                         .commit();
-
-
             }
         });
     }
@@ -94,6 +96,12 @@ public class ImageGridFragment extends Fragment  {
     public void onDestroy() {
         super.onDestroy();
         realm.close();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        imageAdapter.notifyDataSetChanged();
     }
 }
 

@@ -32,7 +32,6 @@ public class TabAudiotFragment extends Fragment {
 
         List<Fragment> list = new ArrayList<>();
 
-
         list.add(new MelodyListFragment());
         list.add(new InternetListFragment());
         String[] tabTitle = {"Downloaded", "Gallery"};
