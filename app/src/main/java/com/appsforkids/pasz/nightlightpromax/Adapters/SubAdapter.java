@@ -24,7 +24,7 @@ import java.util.List;
 public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
 
     List<ProductDetails.SubscriptionOfferDetails> list;
-    int pressedPosition = -1;
+    int pressedPosition = 1;
     int currentMusicPosition = -1;
     ChoseSub choseSub;
 
@@ -64,6 +64,8 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
 
             case "month12":
                 holder.s_m_text.setText("12 месяцев");
+
+
 
                 break;
         }

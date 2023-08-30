@@ -25,6 +25,8 @@ import com.android.billingclient.api.QueryPurchasesParams;
 import com.appsforkids.pasz.nightlightpromax.Adapters.SubAdapter;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ChekProductList;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ChoseSub;
+import com.appsforkids.pasz.nightlightpromax.Interfaces.GetProductListCallback;
+import com.appsforkids.pasz.nightlightpromax.Interfaces.GetPurcheseListCallback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.MyCallback;
 
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ import java.util.List;
 
 public class BillingClientWrapper implements PurchasesUpdatedListener {
     BillingClient billingClient;
-Activity activity;
+    Activity activity;
 
     public BillingClientWrapper(Activity activity) {
         this.billingClient = createBillingClient(activity);
@@ -47,15 +49,18 @@ Activity activity;
             @Override
             public void onBillingServiceDisconnected() {
                 //connectToGooglePlayBilling();
-                myCallback.isShown(false);
+               // myCallback.isShown(false);
                 Log.i("LEARNBILLING", "onBillingServiceDisconnected");
+
+
+
             }
 
             @Override
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
 
-                    myCallback.isShown(true);
+                    myCallback.isShown(billingResult);
                     Log.i("LEARNBILLING", "onBillingSetupFinished");
                     //getProductDetails();
 
@@ -78,10 +83,7 @@ Activity activity;
                 .setProductId("nlpm_sub")
                 .setProductType(BillingClient.ProductType.SUBS)
                 .build();
-
         productList.add(qpdp);
-
-
 
         QueryProductDetailsParams queryProductDetailsParams = QueryProductDetailsParams
                 .newBuilder()
@@ -95,10 +97,9 @@ Activity activity;
             public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
 
 
+                Log.i("LEARNBILLING", billingResult + " billingResult");
 
-                Log.i("LEARNBILLING", billingResult+" billingResult");
-
-                Log.i("LEARNBILLING", list.size()+" list.size()");
+                Log.i("LEARNBILLING", list.size() + " list.size()");
 
                 List<ProductDetails.SubscriptionOfferDetails> sub_list = list.get(0).getSubscriptionOfferDetails();
 
@@ -106,12 +107,11 @@ Activity activity;
                 ProductDetails productDetails = list.get(0);
 
 
-                subButton(productDetails,  list.get(0).getSubscriptionOfferDetails().get(0).getOfferToken(), billingClient);
+                subButton(productDetails, list.get(0).getSubscriptionOfferDetails().get(0).getOfferToken(), billingClient);
 
                 SubAdapter subAdapter = new SubAdapter(sub_list, new ChoseSub() {
                     @Override
                     public void setToken(String offerToken) {
-
 
 
                         //   token = offerToken;
@@ -140,7 +140,7 @@ Activity activity;
     }
 
     public BillingClient createBillingClient(Activity activity) {
-        return  billingClient = BillingClient.newBuilder(activity).enablePendingPurchases().setListener(this).build();
+        return billingClient = BillingClient.newBuilder(activity).enablePendingPurchases().setListener(this).build();
     }
 
     //Метод який показує список покупок після оновлення
@@ -206,7 +206,7 @@ Activity activity;
         BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder().setProductDetailsParamsList(Collections.singletonList(list)).build();
         // Launch the billing flow
         Log.i("LEARNBILLING", "Виставляємо рахунок");
-          BillingResult billingResult = billingClient.launchBillingFlow(activity, billingFlowParams);
+        BillingResult billingResult = billingClient.launchBillingFlow(activity, billingFlowParams);
     }
 
     public void getPurchaseList(ChekProductList productList) {
@@ -231,8 +231,7 @@ Activity activity;
 //        };
 
 
-
-  //      ArrayList<QueryProductDetailsParams.Product> productList2 = new ArrayList<>();
+        //      ArrayList<QueryProductDetailsParams.Product> productList2 = new ArrayList<>();
 
 //        QueryProductDetailsParams.Product qpdp2 = QueryProductDetailsParams
 //                .Product
@@ -244,23 +243,20 @@ Activity activity;
 //        productList2.add(qpdp2);
 
 
-
         QueryPurchasesParams queryPurchasesParams = QueryPurchasesParams
                 .newBuilder()
                 .setProductType(BillingClient.ProductType.SUBS)
                 .build();
 
 
-
         PurchasesResponseListener purchasesResponseListener = new PurchasesResponseListener() {
             @Override
             public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
 
-                Log.i("LEARNBILLING", list.size()+" purches list.size()");
-                Log.i("LEARNBILLING", list.get(0)+" list.get(0).getPackageName()");
+                Log.i("LEARNBILLING", list.size() + " purches list.size()");
+                Log.i("LEARNBILLING", list.get(0) + " list.get(0).getPackageName()");
 
                 productList.setList(list);
-
 
 
             }
@@ -271,6 +267,97 @@ Activity activity;
 
         //billingClient.queryProductDetailsAsync(queryProductDetailsParams, productDetailsResponseListener);
 
+
+    }
+
+
+    public List<ProductDetails.SubscriptionOfferDetails> getProductr(List<ProductDetails> list){
+
+        List<ProductDetails.SubscriptionOfferDetails> sub_list = list.get(0).getSubscriptionOfferDetails();
+
+        return sub_list;
+    }
+
+
+    public void getProductDetailsList(GetProductListCallback getProductListCallback){
+
+        ArrayList<QueryProductDetailsParams.Product> productList = new ArrayList<>();
+
+        QueryProductDetailsParams.Product qpdp = QueryProductDetailsParams
+                .Product
+                .newBuilder()
+                .setProductId("nlpm_sub")
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build();
+        productList.add(qpdp);
+
+        QueryProductDetailsParams queryProductDetailsParams = QueryProductDetailsParams
+                .newBuilder()
+                .setProductList(productList)
+                .build();
+
+        Log.i("LEARNBILLING", "Створюємо");
+
+        ProductDetailsResponseListener productDetailsResponseListener = new ProductDetailsResponseListener() {
+            @Override
+            public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
+                getProductListCallback.get(list);
+            }
+        };
+
+        billingClient.queryProductDetailsAsync(queryProductDetailsParams, productDetailsResponseListener);
+        Log.i("LEARNBILLING", " What next?");
+    }
+
+    public void chekSubsccriptions(GetPurcheseListCallback purcheseListCallback){
+
+
+
+        connectToGooglePlayBilling(new MyCallback() {
+            @Override
+            public void isShown(BillingResult billingResult) {
+                switch (billingResult.getResponseCode()){
+                    case 0:
+
+
+
+
+                        QueryPurchasesParams queryPurchasesParams = QueryPurchasesParams
+                                .newBuilder()
+                                .setProductType(BillingClient.ProductType.SUBS)
+                                .build();
+                        PurchasesResponseListener purchasesResponseListener = new PurchasesResponseListener() {
+                            @Override
+                            public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
+
+                                if(billingResult.getResponseCode() == 0){
+
+                                   // billingClient.endConnection();
+
+                                    purcheseListCallback.get(list);
+                                }
+                            }
+                        };
+                        billingClient.queryPurchasesAsync(queryPurchasesParams, purchasesResponseListener);
+
+                        break;
+
+                    case 1:
+                        break;
+
+                    case 2:
+                        break;
+
+                }
+            }
+        });
+
+
+
+    }
+
+
+    public void subscribe(String token){
 
     }
 }
