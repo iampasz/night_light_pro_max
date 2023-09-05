@@ -76,7 +76,11 @@ public class ImageGridFragment extends Fragment  {
 
                 MainFragment mainFragment = (MainFragment) getParentFragmentManager()
                         .findFragmentByTag("MAIN_FRAGMENT");
-                mainFragment.refresh();
+
+                if(mainFragment!=null){
+                    mainFragment.refresh();
+                }
+
 
                 assert tabImageFragment != null;
                 getParentFragmentManager()

@@ -20,6 +20,7 @@ import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.RealmResults;
 
@@ -30,9 +31,23 @@ import io.realm.RealmResults;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
 
     public static ArrayList<Light> mylights;
+    private static ArrayList<Light> newList;
 
     public MyAdapter(ArrayList<Light> lights) {
         mylights = lights;
+        this.newList = generateNewList(lights);
+    }
+
+    private ArrayList<Light> generateNewList(ArrayList<Light> originalList) {
+        Light firstSample = originalList.get(0);
+        Light lastSample = originalList.get(originalList.size() - 1);
+
+        newList = new ArrayList<>(originalList.size() + 2);
+        newList.add(lastSample);
+        newList.addAll(originalList);
+        newList.add(firstSample);
+
+        return newList;
     }
 
 

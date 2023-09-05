@@ -128,5 +128,8 @@
     <string name="minutes" translatable="false">Minutes</string>
 
 
+    <string name="internet" translatable="false">Pleas, chek your internet connection...\n ʕ ᵔᴥᵔ ʔ</string>
+
+
 
 </resources>

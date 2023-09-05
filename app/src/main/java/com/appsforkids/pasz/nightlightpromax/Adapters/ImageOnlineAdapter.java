@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,7 +37,8 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bg, parent, false);
-        //renewPoint(true, view.getContext());
+        int width = parent.getWidth()/3;
+        view.setLayoutParams(new LinearLayout.LayoutParams(width, (int) (width*1.5)));
         return new ViewHolder(view);
     }
 

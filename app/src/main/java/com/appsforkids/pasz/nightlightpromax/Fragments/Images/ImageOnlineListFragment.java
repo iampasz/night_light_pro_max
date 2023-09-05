@@ -1,9 +1,15 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments.Images;
 
+
+
+import static com.appsforkids.pasz.nightlightpromax.MainActivity.internetStatus;
+import static com.appsforkids.pasz.nightlightpromax.MainActivity.subscribleStatus;
+
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,8 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyCategoryImageAdapter;
+import com.appsforkids.pasz.nightlightpromax.Fragments.Subscription;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
+import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.ReadJson;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
@@ -34,6 +42,8 @@ public class ImageOnlineListFragment extends Fragment {
 
     MyCategoryImageAdapter myCategoryImageAdapter;
 
+    TextView error_text;
+
 
     public ImageOnlineListFragment() {
         super(R.layout.list_fragment);
@@ -43,12 +53,19 @@ public class ImageOnlineListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         int spanCount = 3;
         LinearLayoutManager lm = new LinearLayoutManager(getContext());
 
         rv_cards = view.findViewById(R.id.rv_cards);
         close_button = view.findViewById(R.id.close_button);
         rv_cards.setLayoutManager(lm);
+
+        error_text = view.findViewById(R.id.error_text);
+
+        if(internetStatus==0){
+            error_text.setVisibility(View.VISIBLE);
+        }
 
         getJson("https://koko-oko.com/json/nlpm.json");
 

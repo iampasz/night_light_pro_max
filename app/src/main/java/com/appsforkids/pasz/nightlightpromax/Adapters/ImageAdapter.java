@@ -4,12 +4,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +35,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     int size;
     Realm realm = new InstanceRealmConfigurationUseCase().connect();
 
+    int width;
+    int height;
+
 
     public ImageAdapter(RealmResults<Light> items, int size) {
         this.items = items;
@@ -42,7 +49,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bg, parent, false);
-        //renewPoint(true, view.getContext());
+        int width = parent.getWidth()/3;
+        view.setLayoutParams(new LinearLayout.LayoutParams(width, (int) (width*1.5)));
         return new ViewHolder(view);
     }
 
@@ -51,6 +59,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
        // FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, (int) (size * 1.5));
        // holder.frame.setLayoutParams(params);
+
+
+
+
+
+
+
+
 
         if (items.get(holder.getAbsoluteAdapterPosition()).getStatus()) {
             holder.checkBox.isChecked();
@@ -123,4 +139,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     public int getItemViewType(int position) {
         return position;
     }
+
+
+
+
+
+
 }

@@ -70,12 +70,12 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
                 break;
         }
 
-                int microPrice = (int) list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceAmountMicros();
-                microPrice=microPrice/1000000;
-                int priceDiscount = ((microPrice*70)/30)+microPrice;
-                String currenc = list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceCurrencyCode();
+        int microPrice = (int) list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceAmountMicros();
+        microPrice=microPrice/1000000;
+        int priceDiscount = ((microPrice*70)/30)+microPrice;
+        String currenc = list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceCurrencyCode();
 
-                Log.i("HELOU", list.get(position).getPricingPhases().getPricingPhaseList().get(0).getFormattedPrice()+" ");
+        Log.i("HELOU", list.get(position).getPricingPhases().getPricingPhaseList().get(0).getFormattedPrice()+" ");
 
 
 //                crossed_text1.setText();
@@ -117,7 +117,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
 
             holder.s_m_text.setText(holder.s_m_text.getText()+" ✔ ");
 
-             //Subscription.productDetails = ;
+            //Subscription.productDetails = ;
             choseSub.setToken(list.get(position).getOfferToken());
             //choseSub.setProduckt(list.get(position).);
 

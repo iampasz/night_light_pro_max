@@ -1,9 +1,13 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments.Melodies;
 
+import static com.appsforkids.pasz.nightlightpromax.MainActivity.internetStatus;
+import static com.appsforkids.pasz.nightlightpromax.MainActivity.subscribleStatus;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appsforkids.pasz.nightlightpromax.Adapters.JsonMusicAdapter;
 import com.appsforkids.pasz.nightlightpromax.DownloadFileFromURL;
 import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
+import com.appsforkids.pasz.nightlightpromax.Fragments.Subscription;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ActionCalback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.FileIsDownloaded;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
@@ -37,6 +42,8 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
     RecyclerView rv;
 
     JsonMusicAdapter jsonMusicAdapter;
+
+    TextView error_text;
     public InternetListFragment() {
         super(R.layout.list_fragment);
     }
@@ -45,7 +52,13 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i("CHEKFRAGMENT","InternetListFragment");
+
+
+        error_text = view.findViewById(R.id.error_text);
+
+        if(internetStatus==0){
+            error_text.setVisibility(View.VISIBLE);
+        }
 
         close_button = (ImageView) view.findViewById(R.id.close_button);
         rv = (RecyclerView) view.findViewById(R.id.rv_cards);

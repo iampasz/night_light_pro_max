@@ -2,6 +2,9 @@ package com.appsforkids.pasz.nightlightpromax.Fragments;
 
 import static android.R.anim.linear_interpolator;
 
+import static com.appsforkids.pasz.nightlightpromax.MainActivity.internetStatus;
+import static com.appsforkids.pasz.nightlightpromax.MainActivity.subscribleStatus;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.ColorMatrix;
@@ -22,14 +25,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.helper.widget.Flow;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.appsforkids.pasz.nightlightpromax.Fragments.Images.ImageGridFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.TabImageFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.TabAudiotFragment;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
@@ -104,6 +110,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     MyAdapter myAdapter;
     CreateMyMediaPlayerUseCase createMyMediaPlayerUseCase = new CreateMyMediaPlayerUseCase();
     GetMediaPlayerUseCase getMediaPlayerUseCase = new GetMediaPlayerUseCase();
+
     public MainFragment() {
         super(R.layout.main_fragment);
     }
@@ -111,6 +118,13 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
+        if (!subscribleStatus) {
+            getParentFragmentManager().beginTransaction().add(R.id.my_container, new Subscription()).commit();
+        }
+
 
         realm = new InstanceRealmConfigurationUseCase().connect();
 
@@ -371,7 +385,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        if(width>100 && height>2280){
+        if (width > 100 && height > 2280) {
 
             float size = getResources().getDimension(R.dimen.circle_button_tablet);
 
@@ -541,7 +555,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setVisibility(View.VISIBLE);
                 fon3.setVisibility(View.VISIBLE);
 
-               // showToast(getString(R.string.star_on));
+                // showToast(getString(R.string.star_on));
                 break;
 
             case 1:
@@ -551,7 +565,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 fon3.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-               // showToast(getString(R.string.star_anim_off));
+                // showToast(getString(R.string.star_anim_off));
                 break;
 
             case 2:
@@ -559,7 +573,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon1.setVisibility(View.GONE);
                 fon2.setVisibility(View.GONE);
                 fon3.setVisibility(View.GONE);
-               // showToast(getString(R.string.star_off));
+                // showToast(getString(R.string.star_off));
 
                 break;
         }
@@ -574,7 +588,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_green);
                 fon3.setImageResource(R.drawable.lg_green);
                 fonLayout.setBackgroundResource(R.color.green);
-               // showToast(getString(R.string.bgcolor_green));
+                // showToast(getString(R.string.bgcolor_green));
                 break;
 
             case 1:
@@ -582,7 +596,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_purple);
                 fon3.setImageResource(R.drawable.lg_purple);
                 fonLayout.setBackgroundResource(R.color.purpl);
-               // showToast(getString(R.string.bgcolor_purple));
+                // showToast(getString(R.string.bgcolor_purple));
                 break;
 
             case 2:
@@ -590,7 +604,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_red);
                 fon3.setImageResource(R.drawable.lg_red);
                 fonLayout.setBackgroundResource(R.color.orange);
-               // showToast(getString(R.string.bgcolor_orange));
+                // showToast(getString(R.string.bgcolor_orange));
                 break;
 
             case 3:
@@ -614,7 +628,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                 fon2.setImageResource(R.drawable.stars_dark_blue);
                 fon3.setImageResource(R.drawable.lg_dark_blue);
                 fonLayout.setBackgroundResource(R.color.darkblue);
-               // showToast(getString(R.string.bgcolor_blue));
+                // showToast(getString(R.string.bgcolor_blue));
                 break;
         }
     }

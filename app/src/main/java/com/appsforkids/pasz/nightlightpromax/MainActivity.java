@@ -4,15 +4,27 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ProductDetails;
+import com.android.billingclient.api.ProductDetailsResponseListener;
 import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesResponseListener;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.QueryProductDetailsParams;
+import com.android.billingclient.api.QueryPurchasesParams;
 import com.appsforkids.pasz.nightlightpromax.Billing.BillingClientWrapper;
 import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Subscription;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetPurcheseListCallback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.MyCallback;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.ChekInternetConnection;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.CopyAudiosToRealmUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.CopyLightsToRealmUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateDefoltAudioUseCase;
@@ -21,6 +33,7 @@ import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigu
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.LoadToRealmFreeItemsUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.SetFullScreanUseCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -38,13 +51,21 @@ public class MainActivity extends AppCompatActivity {
     CreateDefoltAudioUseCase createDefoltAudioUseCase = new CreateDefoltAudioUseCase();
     InstanceRealmConfigurationUseCase instanceRealmConfigurationUseCase = new InstanceRealmConfigurationUseCase();
     CopyAudiosToRealmUseCase copyAudioToRealmUseCase = new CopyAudiosToRealmUseCase();
+
+    ChekInternetConnection chekInternetConnection = new ChekInternetConnection();
     Realm realm;
+
+   public static int internetStatus;
+   public static boolean subscribleStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+
         Realm.init(this);
+        internetStatus = chekInternetConnection.execute(this);
 
         prefs = getSharedPreferences("com.appsforkids.pasz.nightlightpromax", MODE_PRIVATE);
         myMediaPlayer = new MyMediaPlayer(this);
@@ -61,78 +82,106 @@ public class MainActivity extends AppCompatActivity {
             prefs.edit().putBoolean("firstrun", false).commit();
         }
 
-        // getSupportFragmentManager().beginTransaction().add(R.id.my_container, new Subscription(), "SUB_FRAGMENT").commit();
-
-
-        BillingClientWrapper billingClientWrapper = new BillingClientWrapper(this);
-
-
-
-
-        billingClientWrapper.chekSubsccriptions(new GetPurcheseListCallback() {
+        PurchasesUpdatedListener purchasesUpdatedListener = new PurchasesUpdatedListener() {
             @Override
-            public void get(List<Purchase> list) {
+            public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> list) {
 
-                if(list.size()>0){
-                    subStatus = true;
-                }
+               // Log.i("BillingClientWrapper", list.size() + " hghg");
+
             }
-        });
+        };
 
 
-        if(subStatus){
-            getSupportFragmentManager().beginTransaction().add(R.id.my_container, new MainFragment(), "SUB_FRAGMENT").commit();
-        }else{
-            getSupportFragmentManager().beginTransaction().add(R.id.my_container, new Subscription(), "SUB_FRAGMENT").commit();
-        }
-
-
-
-//        billingClientWrapper.connectToGooglePlayBilling(new MyCallback() {
+        BillingClient bc = BillingClient.newBuilder(this).enablePendingPurchases().setListener(purchasesUpdatedListener).build();
+//
+//        bc.startConnection(new BillingClientStateListener() {
 //            @Override
-//            public void isShown(BillingResult billingResult) {
+//            public void onBillingServiceDisconnected() {
 //
-//                Log.i("LEARNBILLING", billingResult.getResponseCode() + " billingResult.getResponseCode() 00");
+//            }
 //
-//                switch (billingResult.getResponseCode()) {
-//                    case 0:
-//                        billingClientWrapper.chekSubsccriptions(new GetPurcheseListCallback() {
-//                            @Override
-//                            public void get(List<Purchase> list) {
-//                                if (list.size() > 0) {
-//                                    getSupportFragmentManager().beginTransaction().add(R.id.my_container, new MainFragment(), "MAIN_FRAGMENT").commit();
-//                                } else {
-//                                    getSupportFragmentManager().beginTransaction().add(R.id.my_container, new Subscription(), "SUB_FRAGMENT").commit();
-//                                }
-//                            }
-//                        });
+//            @Override
+//            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
 //
-//                        break;
-//                    case 8:
-//                        break;
-//                }
+//                ArrayList<QueryProductDetailsParams.Product> productList = new ArrayList<>();
 //
-////                int SERVICE_TIMEOUT = -3;
-////                int FEATURE_NOT_SUPPORTED = -2;
-////                int SERVICE_DISCONNECTED = -1;
-////                int OK = 0;
-////                int USER_CANCELED = 1;
-////                int SERVICE_UNAVAILABLE = 2;
-////                int BILLING_UNAVAILABLE = 3;
-////                int ITEM_UNAVAILABLE = 4;
-////                int DEVELOPER_ERROR = 5;
-////                int ERROR = 6;
-////                int ITEM_ALREADY_OWNED = 7;
-////                int ITEM_NOT_OWNED = 8;
+//                QueryProductDetailsParams.Product product = QueryProductDetailsParams
+//                        .Product
+//                        .newBuilder()
+//                        .setProductId("nlpm_sub")
+//                        .setProductType(BillingClient.ProductType.SUBS)
+//                        .build();
+//
+//                productList.add(product);
+//
+//                Log.i("BillingClientWrapper", productList.size() + " productList.size()");
 //
 //
-//                Log.i("LEARNBILLING", billingResult + "subResult");
+//                QueryProductDetailsParams queryProductDetailsParams =
+//                        QueryProductDetailsParams.newBuilder()
+//                                .setProductList(productList)
+//                                .build();
+//
+//
+//                bc.queryProductDetailsAsync(queryProductDetailsParams, new ProductDetailsResponseListener() {
+//                    @Override
+//                    public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
+//
+//                        Log.i("BillingClientWrapper", billingResult.getResponseCode() + " billingResult.getResponseCode()");
+//                        Log.i("BillingClientWrapper", list.size() + " list.size()");
+//
+//                    }
+//                });
 //
 //
 //            }
 //        });
+//
+//        bc.endConnection();
+
+        bc.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingServiceDisconnected() {
+
+            }
+
+            @Override
+            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
+
+                QueryPurchasesParams queryPurchasesParams = QueryPurchasesParams
+                        .newBuilder()
+                        .setProductType(BillingClient.ProductType.SUBS)
+                        .build();
+
+                bc.queryPurchasesAsync(queryPurchasesParams, new PurchasesResponseListener() {
+                    @Override
+                    public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
 
 
+                        if (list.size() > 0) {
+
+                            subscribleStatus = true;
+                           // bc.endConnection();
+                           // getSupportFragmentManager().beginTransaction().add(R.id.my_container, new MainFragment()).commit();
+                        } else {
+
+                            subscribleStatus = false;
+//                            if(internetStatus==0){
+//                                getSupportFragmentManager().beginTransaction().add(R.id.my_container, new MainFragment()).commit();
+//                            }else{
+//                                getSupportFragmentManager().beginTransaction().add(R.id.my_container, new Subscription()).commit();
+//                            }
+
+
+                        }
+
+                        getSupportFragmentManager().beginTransaction().add(R.id.my_container, new MainFragment(), "MAIN_FRAGMENT").commit();
+
+                    }
+                });
+
+            }
+        });
     }
 
     public MyMediaPlayer getPlayer() {

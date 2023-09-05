@@ -1,6 +1,7 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -14,7 +15,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,9 +39,14 @@ import com.android.billingclient.api.QueryProductDetailsParams;
 import com.appsforkids.pasz.nightlightpromax.Adapters.SubAdapter;
 import com.appsforkids.pasz.nightlightpromax.Billing.BillingClientWrapper;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ChoseSub;
+import com.appsforkids.pasz.nightlightpromax.Interfaces.GetProductDetailsListCallBack;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetProductListCallback;
+import com.appsforkids.pasz.nightlightpromax.Interfaces.IsLoadDataCallback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.MyCallback;
+import com.appsforkids.pasz.nightlightpromax.MyViewModel;
+import com.appsforkids.pasz.nightlightpromax.Objects.Test;
 import com.appsforkids.pasz.nightlightpromax.R;
+import com.appsforkids.pasz.nightlightpromax.TestLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,30 +59,74 @@ import java.util.List;
 
 public class Subscription extends Fragment {
 
-    BillingClient billingClient;
+    BillingClient bc;
     RecyclerView rv;
     String token;
     LinearLayout subscribeButton;
     TextView bottom_text;
     Button close;
+    Activity activity;
+    ProductDetails productDetails;
+
+    ArrayList<Test> testArrayList;
+
+    SubAdapter subAdapter;
+
+    MotionLayout motionLayout;
+
 
     public Subscription() {
         super(R.layout.subscription);
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+         motionLayout = view.findViewById(R.id.motionLayout);
+// Розпочніть анімацію
+
+        motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
+            @Override
+            public void onTransitionStarted(MotionLayout motionLayout, int startId, int endId) {}
+
+            @Override
+            public void onTransitionChange(MotionLayout motionLayout, int startId, int endId, float progress) {}
+
+            @Override
+            public void onTransitionCompleted(MotionLayout motionLayout, int currentId) {}
+
+            @Override
+            public void onTransitionTrigger(MotionLayout motionLayout, int triggerId, boolean positive, float progress) {}
+        });
+
+
+
+        MyViewModel model = new ViewModelProvider(this).get(MyViewModel.class);
+
+
+        model.getValue().observe(getActivity(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+
+                Log.i("VIEWMODEL", integer + " aaa");
+
+            }
+        });
+        model.execute();
+
+
         rv = view.findViewById(R.id.rv);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
         bottom_text = view.findViewById(R.id.bottom_text);
         close = view.findViewById(R.id.close);
         subscribeButton = view.findViewById(R.id.subscribeButton);
         Date currentTime = Calendar.getInstance().getTime();
 
-       // String dt = "2012-01-04";  // Start date
+        activity = getActivity();
+
+        // String dt = "2012-01-04";  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         c.setTime(currentTime);
@@ -80,79 +136,213 @@ public class Subscription extends Fragment {
 
         bottom_text.setText("*Пробный период 7 дней. Подписку можно отменить в любое время. Первое списание после оформления подписки " + output);
 
-
-
-
-        BillingClientWrapper bc = new BillingClientWrapper(getActivity());
-        bc.connectToGooglePlayBilling(new MyCallback() {
-            @Override
-            public void isShown(BillingResult billingResult) {
-                //Log.i("LEARNBILLING", shown+" Billing answer");
-
-
-                switch (billingResult.getResponseCode()) {
-                    case 0:
-
-                        bc.getProductDetailsList(new GetProductListCallback() {
-                            @Override
-                            public void get(List<ProductDetails> list) {
-
-                                Log.i("LEARNBILLING", list.size()+" list.size");
-
-
-                                List<ProductDetails.SubscriptionOfferDetails> listSub = bc.getProductr(list);
-
-                                ChoseSub choseSub = new ChoseSub() {
-                                    @Override
-                                    public void setToken(String offerToken) {
-
-                                        Log.i("LEARNBILLING", offerToken+" offerToken");
-
-                                        token = offerToken;
-
-                                    }
-                                };
-                                SubAdapter subAdapter = new SubAdapter(listSub, choseSub);
-
-                                rv.setAdapter(subAdapter);
-
-
-
-
-
-                            }
-                        });
-
-                        break;
-                    case 8:
-
-                        break;
-                }
-
-
-            }
-        });
+        setAdapterList();
 
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("LEARNBILLING", token+" it is my token");
-
-
-
-//
+                someMethod();
             }
         });
+
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.my_container, new MainFragment(), "MAIN_FRAGMENT").commit();
+                getParentFragmentManager().beginTransaction().remove(Subscription.this).commit();
 
                 Log.i("LEARNBILLING", " it is my token");
+
+                //  settMyadapter();
+            }
+        });
+    }
+
+
+    public void someMethod() {
+
+        BillingFlowParams.ProductDetailsParams params = BillingFlowParams.ProductDetailsParams.newBuilder()
+                .setProductDetails(productDetails)
+                .setOfferToken(token).build();
+
+        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder().setProductDetailsParamsList(Collections.singletonList(params)).build();
+        // Launch the billing flow
+        Log.i("LEARNBILLING", "Виставляємо рахунок");
+        bc.launchBillingFlow(activity, billingFlowParams);
+
+    }
+
+    public void getList(GetProductDetailsListCallBack getProductDetailsListCallBack) {
+
+        ArrayList<QueryProductDetailsParams.Product> productList = new ArrayList<>();
+
+        QueryProductDetailsParams.Product product = QueryProductDetailsParams
+                .Product
+                .newBuilder()
+                .setProductId("nlpm_sub")
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build();
+
+        productList.add(product);
+
+        QueryProductDetailsParams queryProductDetailsParams =
+                QueryProductDetailsParams.newBuilder()
+                        .setProductList(productList)
+                        .build();
+
+        bc = BillingClient.newBuilder(getContext()).enablePendingPurchases().setListener(new PurchasesUpdatedListener() {
+            @Override
+            public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> list) {
+
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
+                    for (Purchase purchase : list) {
+                        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED && !purchase.isAcknowledged()) {
+                            handlePurchase(purchase);
+                            //bottom_text.setText(list.get(0).getPurchaseState()+"");
+                            //Toast.makeText(activity, "onPurchasesUpdated", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }
+
+            }
+        }).build();
+
+        bc.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingServiceDisconnected() {
+                Log.i("BILLINGRESULT", " onBillingServiceDisconnected");
+            }
+
+            @Override
+            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
+
+                Log.i("BILLINGRESULT", billingResult.getResponseCode() + " billingResult");
+                bc.queryProductDetailsAsync(queryProductDetailsParams, new ProductDetailsResponseListener() {
+                    @Override
+                    public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
+
+
+                        if(list.size()>0){
+                            productDetails = list.get(0);
+                        }
+
+
+                        //Log.i("BILLINGRESULT", list.size() + " list");
+
+                        // Toast.makeText(activity, "aaa", Toast.LENGTH_SHORT).show();
+
+                        //Log.i("BILLINGRESULT", list.size() + "ekjehbehbvewhbfewhkbvehw list");
+
+                        if(list.size()>0){
+                            settMyadapter(list.get(0).getSubscriptionOfferDetails());
+                        }
+
+
+
+                       // Log.i("BILLINGRESULT", list.size() + "ffffff list");
+
+                    }
+                });
             }
         });
 
+    }
+
+    void handlePurchase(Purchase purchase) {
+        //Подтвердите прослушиватель ответа на покупку
+
+        Log.i("LEARNBILLING", "Якщо купили то треба обробити покупкую Підтвердивши що покупка була здійсненна");
+
+        AcknowledgePurchaseParams acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build();
+
+
+        Log.i("LEARNBILLING", "Створюємо параметри на підтвердження покупки додаючи токен товару який купили в нас");
+
+
+        bc.acknowledgePurchase(acknowledgePurchaseParams, new AcknowledgePurchaseResponseListener() {
+            @Override
+            public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
+
+                //Ось тут збережемо куплену підписку
+
+                Log.i("LEARNBILLING", "Підтверджуємо куплений товар");
+                Log.i("LEARNBILLING", billingResult.getResponseCode() + " Яка тут відповідь? onAcknowledgePurchaseResponse");
+                //BillingClient.BillingResponseCode.
+                //на ответ о подтверждении покупки
+            }
+        });
+
+        //признано
+
 
     }
+
+    void setAdapterList() {
+
+        getList(new GetProductDetailsListCallBack() {
+            @Override
+            public void getProductLit(List<ProductDetails> list) {
+
+//                microPrice=microPrice/1000000;
+//                int priceDiscount = ((microPrice*70)/30)+microPrice;
+//
+//                choseSub.setToken(list.get(position).getOfferToken());
+//                int microPrice = (int) list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceAmountMicros();
+//                String currenc = list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceCurrencyCode();
+//
+//
+//                List<ProductDetails.SubscriptionOfferDetails> sub_list = list.get(0).getSubscriptionOfferDetails();
+
+
+                //settMyadapter();
+//
+
+            }
+        });
+    }
+
+
+    public void settMyadapter(List<ProductDetails.SubscriptionOfferDetails> list) {
+
+        Log.i("BILLINGRESULT", " settMyadapter ");
+
+        getActivity().runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                subAdapter = new SubAdapter(list, new ChoseSub() {
+                    @Override
+                    public void setToken(String offerToken) {
+                        token = offerToken;
+                        Log.i("BILLINGRESULT", offerToken + " offerToken");
+                    }
+                });
+
+                rv.setLayoutManager(new LinearLayoutManager(getContext()));
+                rv.setAdapter(subAdapter);
+                //subAdapter.notifyDataSetChanged();
+
+
+                motionLayout.transitionToState(R.id.end);
+
+                // LoaderFragment loaderFragment = (LoaderFragment) getParentFragmentManager().findFragmentByTag("LOADER_FRAGMENT");
+                // getParentFragmentManager().beginTransaction().remove(loaderFragment).commit();
+                //  subAdapter.notifyDataSetChanged();
+                // Stuff that updates the UI
+
+            }
+
+
+
+
+        });
+
+        //subAdapter.notifyDataSetChanged();
+
+
+    }
+
+
 }

@@ -142,7 +142,12 @@ public class Brights extends Fragment {
          @Override
          public void onClick(View view) {
             seekBar_b.setProgress(50);
-            lighter.setColorFilter(0);
+
+            if(lighter!=null){
+               lighter.setColorFilter(0);
+            }
+
+
             text_prcent_b.setText(50+"%");
             BRIGHTS=0;
          }

@@ -42,6 +42,10 @@ public class BillingClientWrapper implements PurchasesUpdatedListener {
         this.activity = activity;
     }
 
+    public BillingClient getBillingClient(){
+        return billingClient;
+    }
+
     public void connectToGooglePlayBilling(MyCallback myCallback) {
 
 
@@ -70,72 +74,40 @@ public class BillingClientWrapper implements PurchasesUpdatedListener {
     }
 
     //Отримати деталі щодо покупок
-    public void getProductDetails() {
-
-        //connectToGooglePlayBilling();
-
-
+    public QueryProductDetailsParams getQueryProductDetailsParams() {
+        
         ArrayList<QueryProductDetailsParams.Product> productList = new ArrayList<>();
 
-        QueryProductDetailsParams.Product qpdp = QueryProductDetailsParams
+        QueryProductDetailsParams.Product product = QueryProductDetailsParams
                 .Product
                 .newBuilder()
                 .setProductId("nlpm_sub")
                 .setProductType(BillingClient.ProductType.SUBS)
                 .build();
-        productList.add(qpdp);
+
+        productList.add(product);
 
         QueryProductDetailsParams queryProductDetailsParams = QueryProductDetailsParams
                 .newBuilder()
                 .setProductList(productList)
                 .build();
 
-        Log.i("LEARNBILLING", "Створюємо");
+        return queryProductDetailsParams;
 
-        ProductDetailsResponseListener productDetailsResponseListener = new ProductDetailsResponseListener() {
+    }
+
+    public ProductDetailsResponseListener getProductDetailsResponseListener(){
+        return new ProductDetailsResponseListener() {
             @Override
             public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
 
-
-                Log.i("LEARNBILLING", billingResult + " billingResult");
-
-                Log.i("LEARNBILLING", list.size() + " list.size()");
-
                 List<ProductDetails.SubscriptionOfferDetails> sub_list = list.get(0).getSubscriptionOfferDetails();
-
-
                 ProductDetails productDetails = list.get(0);
-
 
                 subButton(productDetails, list.get(0).getSubscriptionOfferDetails().get(0).getOfferToken(), billingClient);
 
-                SubAdapter subAdapter = new SubAdapter(sub_list, new ChoseSub() {
-                    @Override
-                    public void setToken(String offerToken) {
-
-
-                        //   token = offerToken;
-
-                    }
-                });
-                // rv.setAdapter(subAdapter);
-
-
-//                subscribeButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        subButton(productDetails, token);
-//
-//
-//                    }
-//                });
-
             }
         };
-
-
-        billingClient.queryProductDetailsAsync(queryProductDetailsParams, productDetailsResponseListener);
 
     }
 
@@ -212,36 +184,6 @@ public class BillingClientWrapper implements PurchasesUpdatedListener {
     public void getPurchaseList(ChekProductList productList) {
 
 
-//        ArrayList<QueryProductDetailsParams.Product> productList = new ArrayList<>();
-//
-//        productList.add(QueryProductDetailsParams.Product.newBuilder().setProductId("nlpm_sub").setProductType(BillingClient.ProductType.SUBS).build());
-//
-//
-//        QueryProductDetailsParams queryProductDetailsParams = QueryProductDetailsParams.newBuilder().setProductList(productList).build();
-//
-//        ProductDetailsResponseListener productDetailsResponseListener = new ProductDetailsResponseListener() {
-//            @Override
-//            public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
-//
-//
-//                Log.i("LEARNBILLING", list.size()+" list.size()");
-//
-//
-//            }
-//        };
-
-
-        //      ArrayList<QueryProductDetailsParams.Product> productList2 = new ArrayList<>();
-
-//        QueryProductDetailsParams.Product qpdp2 = QueryProductDetailsParams
-//                .Product
-//                .newBuilder()
-//                .setProductId("nlpm_sub")
-//                .setProductType(BillingClient.ProductType.SUBS)
-//                .build();
-//
-//        productList2.add(qpdp2);
-
 
         QueryPurchasesParams queryPurchasesParams = QueryPurchasesParams
                 .newBuilder()
@@ -269,7 +211,6 @@ public class BillingClientWrapper implements PurchasesUpdatedListener {
 
 
     }
-
 
     public List<ProductDetails.SubscriptionOfferDetails> getProductr(List<ProductDetails> list){
 
@@ -355,7 +296,6 @@ public class BillingClientWrapper implements PurchasesUpdatedListener {
 
 
     }
-
 
     public void subscribe(String token){
 
