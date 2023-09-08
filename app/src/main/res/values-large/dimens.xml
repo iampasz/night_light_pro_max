@@ -12,4 +12,14 @@
     <dimen name="spiner_minutes">70sp</dimen>
     <dimen name="title_text">40sp</dimen>
     <dimen name="tab_text_size">40sp</dimen>
+    <dimen name="text_large">70sp</dimen>
+
+    <dimen name="sub_bottom_height">140dp</dimen>
+    <dimen name="sub_close_size">60dp</dimen>
+    <dimen name="sub_item_padding">20dp</dimen>
+
+    <dimen name="text_medium">30sp</dimen>
+    <dimen name="text_small">16sp</dimen>
+
+
 </resources>

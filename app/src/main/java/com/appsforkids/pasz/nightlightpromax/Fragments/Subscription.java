@@ -104,14 +104,28 @@ public class Subscription extends Fragment {
         });
         model.execute();
 
+        motionLayout.transitionToState(R.id.end);
+
         rv = view.findViewById(R.id.rv);
+
+
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setAdapter(new SubAdapter(new ArrayList<>(), new ChoseSub() {
+            @Override
+            public void setToken(String offerToken) {
+
+            }
+        }));
+
+
+
+
         bottom_text = view.findViewById(R.id.bottom_text);
         close = view.findViewById(R.id.close);
         subscribeButton = view.findViewById(R.id.subscribeButton);
         Date currentTime = Calendar.getInstance().getTime();
 
         activity = getActivity();
-
         // String dt = "2012-01-04";  // Start date
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
@@ -127,11 +141,9 @@ public class Subscription extends Fragment {
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(myBillingResult.getResponseCode()==0){
                     someMethod();
                 }
-
             }
         });
 
@@ -146,7 +158,6 @@ public class Subscription extends Fragment {
 
                 Log.i("LEARNBILLING", " it is my token");
 
-                //  settMyadapter();
             }
         });
     }
@@ -240,7 +251,6 @@ public class Subscription extends Fragment {
                         .beginTransaction()
                         .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
                         .remove(Subscription.this).commit();
-
             }
         });
 
@@ -283,16 +293,4 @@ public class Subscription extends Fragment {
             }
         });
     }
-
-//    @Nullable
-//    @Override
-//    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-//        if (enter) {
-//            Log.i("ENTERANIM", enter+"");
-//            return AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
-//        }
-//        return super.onCreateAnimation(transit, enter, nextAnim);
-//    }
-
-
 }

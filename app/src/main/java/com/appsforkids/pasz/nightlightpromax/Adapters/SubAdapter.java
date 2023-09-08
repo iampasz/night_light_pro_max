@@ -51,39 +51,38 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
         holder.s_m_text.setAlpha(0.5f);
         holder.sub_month.setAlpha(0.5f);
 
-        Log.i("LEARNBILLING", list.get(0)+"");
+       // Log.i("LEARNBILLING", list.get(0)+"");
 
-        switch (list.get(position).getBasePlanId()){
-            case "nl3month":
-                holder.s_m_text.setText("3 месяца");
-                break;
+//        switch (list.get(position).getBasePlanId()){
+//            case "nl3month":
+//                holder.s_m_text.setText("3 месяца");
+//                break;
+//
+//            case "main0sub":
+//                holder.s_m_text.setText("1 месяц");
+//                break;
+//
+//            case "month12":
+//                holder.s_m_text.setText("12 месяцев");
+//
+//
+//
+//                break;
+//        }
 
-            case "main0sub":
-                holder.s_m_text.setText("1 месяц");
-                break;
-
-            case "month12":
-                holder.s_m_text.setText("12 месяцев");
-
-
-
-                break;
-        }
-
-        int microPrice = (int) list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceAmountMicros();
-        microPrice=microPrice/1000000;
-        int priceDiscount = ((microPrice*70)/30)+microPrice;
-        String currenc = list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceCurrencyCode();
-
-        Log.i("HELOU", list.get(position).getPricingPhases().getPricingPhaseList().get(0).getFormattedPrice()+" ");
-
+//        int microPrice = (int) list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceAmountMicros();
+//        microPrice=microPrice/1000000;
+//        int priceDiscount = ((microPrice*70)/30)+microPrice;
+//        String currenc = list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceCurrencyCode();
+//
+//
 
 //                crossed_text1.setText();
 //
 //                price1.setText(microPrice+" "+currenc);
 
-        holder.crossed_text.setText(priceDiscount+" "+currenc);
-        holder.price.setText(microPrice+" "+currenc);
+//        holder.crossed_text.setText(priceDiscount+" "+currenc);
+//        holder.price.setText(microPrice+" "+currenc);
 
         holder.sub_month.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,9 +116,9 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
 
             holder.s_m_text.setText(holder.s_m_text.getText()+" ✔ ");
 
-            //Subscription.productDetails = ;
-            choseSub.setToken(list.get(position).getOfferToken());
-            //choseSub.setProduckt(list.get(position).);
+//
+           // choseSub.setToken(list.get(position).getOfferToken());
+//
 
 
         }else{
@@ -134,7 +133,8 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+      //  return list.size();
+        return 3;
     }
 
     public class ListSubHolder extends RecyclerView.ViewHolder {

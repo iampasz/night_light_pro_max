@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ActionCalback;
+import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
 
@@ -20,20 +21,19 @@ import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 
 public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.ListMusicHolder> {
 
     ActionCalback actionCalback;
-    ArrayList<AudioFile> realmResults;
+    ArrayList<AudioFile> arrayList;
     private String nameSong;
 
     int pressedPosition = -1;
     int currentMusicPosition = -1;
 
-    public JsonMusicAdapter(ActionCalback actionCalback, ArrayList<AudioFile> realmResults) {
+    public JsonMusicAdapter(ActionCalback actionCalback, ArrayList<AudioFile> arrayList) {
         this.actionCalback = actionCalback;
-        this.realmResults = realmResults;
+        this.arrayList = arrayList;
     }
 
 
@@ -51,21 +51,21 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
         int absolutePosition = position;
 
-        if (chekAudio(realmResults.get(absolutePosition).getInternetLink())) {
+        if (chekAudio(arrayList.get(absolutePosition).getInternetLink())) {
             holder.download_bt.setVisibility(View.INVISIBLE);
         }
 
-        holder.music_name.setText(realmResults.get(absolutePosition).getNameSong());
-        holder.music_author.setText(realmResults.get(absolutePosition).getAuthorSong());
+        holder.music_name.setText(arrayList.get(absolutePosition).getNameSong());
+        holder.music_author.setText(arrayList.get(absolutePosition).getAuthorSong());
 
-        if (realmResults.get(absolutePosition).getStatus()) {
+        if (arrayList.get(absolutePosition).getStatus()) {
             holder.download_bt.setVisibility(View.INVISIBLE);
         }
 
         holder.download_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (chekAudio(realmResults.get(absolutePosition).getInternetLink())) {
+                if (chekAudio(arrayList.get(absolutePosition).getInternetLink())) {
                     Log.i("CHEK_DOWNLOAD_BUTTON", " true2");
                     try {
                         actionCalback.delete(absolutePosition);
@@ -118,7 +118,13 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
     @Override
     public int getItemCount() {
-        return realmResults.size();
+
+        if(MainActivity.subscribleStatus){
+            return arrayList.size();
+        }else{
+            return 3;
+        }
+
     }
 
     public class ListMusicHolder extends RecyclerView.ViewHolder {

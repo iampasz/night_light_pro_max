@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         setFullScreanUseCase.fullscrean(this);
 
         MainFragment mainFragment = new MainFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.my_container, mainFragment, "MAIN_FRAGMENT").commit();
+        //getSupportFragmentManager().beginTransaction().add(R.id.my_container, mainFragment, "MAIN_FRAGMENT").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.my_container, new Subscription()).commit();
 
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
@@ -110,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
 
                         if (billingResult.getResponseCode()==0) {
                             if (list.size() > 0) {
-                                //subscribleStatus = true;
+                                subscribleStatus = true;
                             } else {
-                                //subscribleStatus = false;
+                                subscribleStatus = false;
                                 mainFragment.loaded(true);
                             }
                         }

@@ -10,13 +10,14 @@
 
     <Button
         android:id="@+id/close"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/sub_close_size"
+        android:layout_height="@dimen/sub_close_size"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/sub_close_button"
         android:text="x"
         android:textColor="@color/sub_button_text"
+        android:textSize="@dimen/text_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,7 @@
         android:layout_marginEnd="35dp"
         android:text="Летняя распродажа"
         android:textColor="@color/sub_text"
-        android:textSize="24sp"
+        android:textSize="@dimen/tab_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/close"
         app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
@@ -66,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="До конца лета скидка"
             android:textColor="@color/sub_text"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_medium"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:text="- БЕЗ РЕКЛАМЫ;"
             android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_medium"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -89,6 +91,7 @@
             android:layout_height="wrap_content"
             android:text="- Больше ночников;"
             android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_medium"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -106,7 +109,7 @@
             android:text="-70%"
             android:textAlignment="center"
             android:textColor="@color/sub_text"
-            android:textSize="34sp"
+            android:textSize="@dimen/text_large"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +118,7 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/sub_bottom_height"
         android:background="@drawable/sub_button_bottom"
         app:layout_constraintBottom_toBottomOf="@+id/subscribeButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,7 +142,7 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="#fff"
-            android:textSize="20sp"
+            android:textSize="@dimen/tab_text_size"
             android:textStyle="bold" />
 
         <TextView
@@ -149,7 +152,7 @@
             android:layout_margin="7dp"
             android:padding="5dp"
             android:textColor="#fff"
-            android:textSize="8sp" />
+            android:textSize="@dimen/text_small" />
 
     </LinearLayout>
 

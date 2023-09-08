@@ -23,6 +23,15 @@
     <dimen name="title_text">20sp</dimen>
     <dimen name="tab_text_size">20sp</dimen>
 
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_small">8sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+
+    <dimen name="sub_bottom_height">80dp</dimen>
+    <dimen name="sub_close_size">30dp</dimen>
+    <dimen name="sub_item_padding">20dp</dimen>
+
+
     <dimen name="chek_button_size">20dp</dimen>
 
     <item name="match_parent" format="integer" type="dimen">-1</item>
