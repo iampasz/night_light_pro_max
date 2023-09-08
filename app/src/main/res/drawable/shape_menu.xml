@@ -12,7 +12,7 @@
 
     <stroke
         android:width="4dp"
-        android:color="#feab31" />
+        android:color="@color/box_orange" />
 
     <padding
         android:bottom="15dp"

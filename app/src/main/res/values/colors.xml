@@ -16,6 +16,12 @@
     <color name="sub_text">#432267</color>
     <color name="sub_passive">#818181</color>
 
+    <color name="text_orange">#FAFAFA</color>
+    <color name="text_white">#FFFFFF</color>
 
-    <color name="text_shadow">#272727</color>
+    <color name="box_orange">#FFC107</color>
+
+
+    <color name="text_shadow">#5E4808</color>
+    <color name="text_dark">#352000</color>
 </resources>

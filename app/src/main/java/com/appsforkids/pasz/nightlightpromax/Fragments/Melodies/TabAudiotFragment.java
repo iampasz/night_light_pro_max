@@ -39,12 +39,11 @@ public class TabAudiotFragment extends Fragment {
         SampleFragmentPagerAdapter sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getActivity(), list);
         pager.setAdapter(sampleFragmentPagerAdapter);
 
-        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         TabLayoutMediator tabLayoutMediator= new TabLayoutMediator(tabLayout, pager, new TabLayoutMediator.TabConfigurationStrategy(){
 
             @Override
             public void onConfigureTab(TabLayout.Tab tab, int position) {
-                tab.setText("Страница " + (position + 1));
                 tab.setText(tabTitle[position]);
             }
         });

@@ -1,5 +1,7 @@
 package com.appsforkids.pasz.nightlightpromax.Interfaces;
 
-public interface IsLoadDataCallback {
+import java.io.Serializable;
+
+public interface IsLoadDataCallback extends Serializable {
     void loaded(Boolean result);
 }

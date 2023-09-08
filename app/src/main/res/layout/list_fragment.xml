@@ -45,7 +45,7 @@
         <ImageView
             android:id="@+id/close_button"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="@dimen/close_button_height"
             android:contentDescription="@string/image"
             app:srcCompat="@drawable/ic_bbutton" />
 
@@ -54,12 +54,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:shadowColor="@color/text_shadow"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="2"
+            android:shadowDx="@dimen/button_shadowDx"
+            android:shadowDy="@dimen/button_shadowDy"
+            android:shadowRadius="@dimen/button_shadowRadius"
             android:text="@string/ok"
+            android:textAllCaps="true"
             android:textColor="#FFFFFF"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
     </FrameLayout>
 

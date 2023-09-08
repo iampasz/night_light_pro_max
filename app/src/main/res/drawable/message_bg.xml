@@ -4,11 +4,7 @@
 
     <corners android:radius="15dp"/>
 
-    <solid android:color="#ECFFD7" />
-
-    <stroke
-        android:width="0dp"
-        android:color="#d08b26" />
+    <solid android:color="@color/box_orange" />
 
     <padding
         android:bottom="15dp"

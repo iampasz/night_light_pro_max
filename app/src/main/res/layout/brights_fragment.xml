@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:clickable="true"
         app:cardBackgroundColor="#54FFFFFF"
@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/sun_image"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/square_button"
+                android:layout_height="@dimen/square_button"
                 app:srcCompat="@drawable/bt_sun" />
 
             <SeekBar
@@ -50,14 +50,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="15%"
-                android:textSize="24sp" />
+                android:textSize="@dimen/text_size" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
         app:cardBackgroundColor="#54FFFFFF"
         app:cardCornerRadius="5dp"
@@ -82,8 +82,8 @@
 
             <ImageView
                 android:id="@+id/bear_image"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/square_button"
+                android:layout_height="@dimen/square_button"
                 app:srcCompat="@drawable/bt_bear" />
 
             <SeekBar
@@ -98,7 +98,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="15%"
-                android:textSize="24sp" />
+                android:textSize="@dimen/text_size" />
 
 
         </LinearLayout>

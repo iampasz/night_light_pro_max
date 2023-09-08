@@ -18,4 +18,31 @@
         <item name="android:windowBackground">@drawable/mybg</item>
     </style>
 
+    <style name="CustomTabLayoutText" parent="Widget.AppCompat.Light.ActionBar.TabText">
+        <item name="android:textSize">150sp</item> <!-- Change the text size as per your preference -->
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="MineCustomTabText" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">160sp</item>
+    </style>
+
+
+    <style name="SelectedTabTextAppearance">
+        <item name="android:textSize">70sp</item>
+        <item name="android:textColor">#03A9F4</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/tab_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#A1FFFFFF</item>
+        <item name="android:shadowColor">@color/text_shadow</item>
+        <item name="android:shadowDx">@dimen/button_shadowDx</item>
+        <item name="android:shadowDy">@dimen/button_shadowDy</item>
+        <item name="android:shadowRadius">@dimen/button_shadowRadius</item>
+    </style>
+
+
 </resources>

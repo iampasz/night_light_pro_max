@@ -1,30 +1,22 @@
 package com.appsforkids.pasz.nightlightpromax.Adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.R;
-import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class MyCategoryImageAdapter extends RecyclerView.Adapter<MyCategoryImageAdapter.ViewHolder> {
 
@@ -40,7 +32,7 @@ public class MyCategoryImageAdapter extends RecyclerView.Adapter<MyCategoryImage
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
         return new ViewHolder(view);
     }
 

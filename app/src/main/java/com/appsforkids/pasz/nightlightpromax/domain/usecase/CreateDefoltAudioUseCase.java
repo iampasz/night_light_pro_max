@@ -14,6 +14,7 @@ public class CreateDefoltAudioUseCase {
        audioFile.setResourseLink(R.raw.detskaya);
        audioFile.setStatus(true);
        audioFile.setFileName("Detskaya");
+       audioFile.setNameSong("Lullabies");
        audioFile.setAuthorSong("Detskaya");
        audioFile.setFileName("detskaya");
 

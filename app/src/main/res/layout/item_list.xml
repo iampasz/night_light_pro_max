@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:background="@drawable/item_bg"
     android:padding="10dp">
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/square_button"
+        android:layout_height="@dimen/square_button"
+        android:background="@drawable/item_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/an_ant" />
@@ -23,7 +25,13 @@
         android:text="TextView"
         android:textAlignment="gravity"
         android:textColor="#fff"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_name"
+
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="@dimen/button_shadowDx"
+        android:shadowDy="@dimen/button_shadowDy"
+        android:shadowRadius="@dimen/button_shadowRadius"
+
         app:layout_constraintBottom_toBottomOf="@+id/image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image"

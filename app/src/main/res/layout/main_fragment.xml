@@ -133,6 +133,8 @@
         android:id="@+id/indicator"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:scaleX="@dimen/indicator_scale"
+        android:scaleY="@dimen/indicator_scale"
         ads:layout_constraintBottom_toTopOf="@+id/linearLayout"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent">
@@ -192,7 +194,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:textAlignment="gravity"
         android:textColor="#fff"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size"
         android:textStyle="bold"
         android:visibility="invisible"
         ads:layout_constraintBottom_toBottomOf="@+id/backgrounds"

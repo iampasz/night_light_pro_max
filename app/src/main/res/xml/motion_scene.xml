@@ -13,10 +13,13 @@
 
         <Constraint
             android:id="@id/bear_image"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/rv" />
+            motion:layout_constraintTop_toBottomOf="@id/rv"
+            />
 
         <Constraint
             android:id="@+id/rv"
@@ -30,10 +33,13 @@
 
         <Constraint
             android:id="@id/bear_image"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/rv" />
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/rv"
+           />
 
         <Constraint
             android:id="@+id/rv"

@@ -3,11 +3,14 @@ package com.appsforkids.pasz.nightlightpromax.Fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -74,6 +77,8 @@ public class Subscription extends Fragment {
 
     MotionLayout motionLayout;
 
+    BillingResult myBillingResult;
+
 
     public Subscription() {
         super(R.layout.subscription);
@@ -85,27 +90,9 @@ public class Subscription extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-         motionLayout = view.findViewById(R.id.motionLayout);
-// Розпочніть анімацію
-
-        motionLayout.setTransitionListener(new MotionLayout.TransitionListener() {
-            @Override
-            public void onTransitionStarted(MotionLayout motionLayout, int startId, int endId) {}
-
-            @Override
-            public void onTransitionChange(MotionLayout motionLayout, int startId, int endId, float progress) {}
-
-            @Override
-            public void onTransitionCompleted(MotionLayout motionLayout, int currentId) {}
-
-            @Override
-            public void onTransitionTrigger(MotionLayout motionLayout, int triggerId, boolean positive, float progress) {}
-        });
-
-
+        motionLayout = view.findViewById(R.id.motionLayout);
 
         MyViewModel model = new ViewModelProvider(this).get(MyViewModel.class);
-
 
         model.getValue().observe(getActivity(), new Observer<Integer>() {
             @Override
@@ -116,7 +103,6 @@ public class Subscription extends Fragment {
             }
         });
         model.execute();
-
 
         rv = view.findViewById(R.id.rv);
         bottom_text = view.findViewById(R.id.bottom_text);
@@ -141,7 +127,11 @@ public class Subscription extends Fragment {
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                someMethod();
+
+                if(myBillingResult.getResponseCode()==0){
+                    someMethod();
+                }
+
             }
         });
 
@@ -149,7 +139,10 @@ public class Subscription extends Fragment {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().remove(Subscription.this).commit();
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
+                        .remove(Subscription.this).commit();
 
                 Log.i("LEARNBILLING", " it is my token");
 
@@ -198,8 +191,6 @@ public class Subscription extends Fragment {
                     for (Purchase purchase : list) {
                         if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED && !purchase.isAcknowledged()) {
                             handlePurchase(purchase);
-                            //bottom_text.setText(list.get(0).getPurchaseState()+"");
-                            //Toast.makeText(activity, "onPurchasesUpdated", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -211,65 +202,45 @@ public class Subscription extends Fragment {
         bc.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingServiceDisconnected() {
-                Log.i("BILLINGRESULT", " onBillingServiceDisconnected");
+                Log.i("BILLINGRESULT", " onBillingServiceDisconnected 01");
             }
 
             @Override
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
 
-                Log.i("BILLINGRESULT", billingResult.getResponseCode() + " billingResult");
-                bc.queryProductDetailsAsync(queryProductDetailsParams, new ProductDetailsResponseListener() {
-                    @Override
-                    public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
+                myBillingResult = billingResult;
 
+                if (billingResult.getResponseCode()==0) {
+                    bc.queryProductDetailsAsync(queryProductDetailsParams, new ProductDetailsResponseListener() {
+                        @Override
+                        public void onProductDetailsResponse(@NonNull BillingResult billingResult, @NonNull List<ProductDetails> list) {
+                            if (list.size() > 0) {
+                                productDetails = list.get(0);
+                                settMyadapter(list.get(0).getSubscriptionOfferDetails());
+                            }
 
-                        if(list.size()>0){
-                            productDetails = list.get(0);
                         }
-
-
-                        //Log.i("BILLINGRESULT", list.size() + " list");
-
-                        // Toast.makeText(activity, "aaa", Toast.LENGTH_SHORT).show();
-
-                        //Log.i("BILLINGRESULT", list.size() + "ekjehbehbvewhbfewhkbvehw list");
-
-                        if(list.size()>0){
-                            settMyadapter(list.get(0).getSubscriptionOfferDetails());
-                        }
-
-
-
-                       // Log.i("BILLINGRESULT", list.size() + "ffffff list");
-
-                    }
-                });
+                    });
+                }
             }
         });
-
     }
 
     void handlePurchase(Purchase purchase) {
         //Подтвердите прослушиватель ответа на покупку
-
         Log.i("LEARNBILLING", "Якщо купили то треба обробити покупкую Підтвердивши що покупка була здійсненна");
-
         AcknowledgePurchaseParams acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase.getPurchaseToken()).build();
-
-
         Log.i("LEARNBILLING", "Створюємо параметри на підтвердження покупки додаючи токен товару який купили в нас");
-
 
         bc.acknowledgePurchase(acknowledgePurchaseParams, new AcknowledgePurchaseResponseListener() {
             @Override
             public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
 
-                //Ось тут збережемо куплену підписку
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
+                        .remove(Subscription.this).commit();
 
-                Log.i("LEARNBILLING", "Підтверджуємо куплений товар");
-                Log.i("LEARNBILLING", billingResult.getResponseCode() + " Яка тут відповідь? onAcknowledgePurchaseResponse");
-                //BillingClient.BillingResponseCode.
-                //на ответ о подтверждении покупки
             }
         });
 
@@ -284,29 +255,12 @@ public class Subscription extends Fragment {
             @Override
             public void getProductLit(List<ProductDetails> list) {
 
-//                microPrice=microPrice/1000000;
-//                int priceDiscount = ((microPrice*70)/30)+microPrice;
-//
-//                choseSub.setToken(list.get(position).getOfferToken());
-//                int microPrice = (int) list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceAmountMicros();
-//                String currenc = list.get(position).getPricingPhases().getPricingPhaseList().get(0).getPriceCurrencyCode();
-//
-//
-//                List<ProductDetails.SubscriptionOfferDetails> sub_list = list.get(0).getSubscriptionOfferDetails();
-
-
-                //settMyadapter();
-//
-
             }
         });
     }
 
 
     public void settMyadapter(List<ProductDetails.SubscriptionOfferDetails> list) {
-
-        Log.i("BILLINGRESULT", " settMyadapter ");
-
         getActivity().runOnUiThread(new Runnable() {
 
             @Override
@@ -316,7 +270,6 @@ public class Subscription extends Fragment {
                     @Override
                     public void setToken(String offerToken) {
                         token = offerToken;
-                        Log.i("BILLINGRESULT", offerToken + " offerToken");
                     }
                 });
 
@@ -324,25 +277,22 @@ public class Subscription extends Fragment {
                 rv.setAdapter(subAdapter);
                 //subAdapter.notifyDataSetChanged();
 
-
                 motionLayout.transitionToState(R.id.end);
 
-                // LoaderFragment loaderFragment = (LoaderFragment) getParentFragmentManager().findFragmentByTag("LOADER_FRAGMENT");
-                // getParentFragmentManager().beginTransaction().remove(loaderFragment).commit();
-                //  subAdapter.notifyDataSetChanged();
-                // Stuff that updates the UI
 
             }
-
-
-
-
         });
-
-        //subAdapter.notifyDataSetChanged();
-
-
     }
+
+//    @Nullable
+//    @Override
+//    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+//        if (enter) {
+//            Log.i("ENTERANIM", enter+"");
+//            return AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
+//        }
+//        return super.onCreateAnimation(transit, enter, nextAnim);
+//    }
 
 
 }

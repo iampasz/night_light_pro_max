@@ -5,8 +5,8 @@
     android:id="@+id/music_constrain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
     android:paddingStart="5dp"
     android:paddingTop="10dp"
     android:paddingEnd="5dp"
@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/play_item"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/square_button"
+        android:layout_height="@dimen/square_button"
         android:contentDescription="@string/image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +25,8 @@
     <ImageView
 
         android:id="@+id/download_bt"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/square_button"
+        android:layout_height="@dimen/square_button"
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,8 +38,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/download_bt"
         app:layout_constraintStart_toEndOf="@+id/play_item"
@@ -50,8 +50,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textColor="@color/text_orange"
+            android:textSize="@dimen/text_author"
             android:textStyle="normal" />
 
         <TextView
@@ -59,8 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textColor="@color/text_orange"
+            android:textSize="@dimen/text_name"
             android:textStyle="bold" />
     </LinearLayout>
 

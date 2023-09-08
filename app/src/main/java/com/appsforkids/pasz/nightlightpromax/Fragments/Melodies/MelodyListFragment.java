@@ -95,7 +95,6 @@ public class MelodyListFragment extends Fragment {
         };
 
         Boolean ans = stopPlaying.stop(myMediaPlayer);
-        Log.i("ANS", ans + "");
 
         listMusicAdapter = new ListMusicAdapter(actionCalback, arrayList);
         rv.setLayoutManager(llm);

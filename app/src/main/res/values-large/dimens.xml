@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="circle_button">100dp</dimen>
+    <dimen name="indicator_scale">3</dimen>
+    <dimen name="square_button">100dp</dimen>
+    <dimen name="close_button_height">150dp</dimen>
+    <dimen name="text_size">50dp</dimen>
+    <dimen name="chek_button_size">50dp</dimen>
+    <dimen name="text_author">34sp</dimen>
+    <dimen name="text_name">38sp</dimen>
+    <dimen name="text_minutes">25sp</dimen>
+    <dimen name="spiner_minutes">70sp</dimen>
+    <dimen name="title_text">40sp</dimen>
+    <dimen name="tab_text_size">40sp</dimen>
+</resources>

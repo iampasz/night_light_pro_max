@@ -38,6 +38,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.ImageGridFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.TabImageFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.TabAudiotFragment;
+import com.appsforkids.pasz.nightlightpromax.Interfaces.IsLoadDataCallback;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyAdapter;
 import com.appsforkids.pasz.nightlightpromax.R;
@@ -55,7 +56,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import me.relex.circleindicator.CircleIndicator3;
 
-public class MainFragment extends Fragment implements Brights.MyInterface, View.OnClickListener, View.OnTouchListener {
+public class MainFragment extends Fragment implements Brights.MyInterface, View.OnClickListener, View.OnTouchListener, IsLoadDataCallback {
     //My Buttons
     ImageView starsButton;
     ImageView timerButton;
@@ -111,6 +112,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     CreateMyMediaPlayerUseCase createMyMediaPlayerUseCase = new CreateMyMediaPlayerUseCase();
     GetMediaPlayerUseCase getMediaPlayerUseCase = new GetMediaPlayerUseCase();
 
+
     public MainFragment() {
         super(R.layout.main_fragment);
     }
@@ -118,16 +120,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-        if (!subscribleStatus) {
-            getParentFragmentManager().beginTransaction().add(R.id.my_container, new Subscription()).commit();
-        }
-
-
+        
         realm = new InstanceRealmConfigurationUseCase().connect();
-
 
         init(view);
         startGlobalTimer();
@@ -376,36 +370,6 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         flow = view.findViewById(R.id.flow);
         indicator = view.findViewById(R.id.indicator);
         // automate = view.findViewById(R.id.automate);
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity()
-                .getWindowManager()
-                .getDefaultDisplay()
-                .getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-
-        if (width > 100 && height > 2280) {
-
-            float size = getResources().getDimension(R.dimen.circle_button_tablet);
-
-            lockButton
-                    .setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) size));
-            starsButton
-                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
-            timerButton.setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
-            bgcolorButton
-                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
-            sunButton
-                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
-            gallery_bt
-                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
-            melody_bt
-                    .setLayoutParams(new LinearLayout.LayoutParams((int) size, (int) size));
-
-        }
-
-
     }
 
     @Override
@@ -638,6 +602,16 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         arrayList.clear();
         arrayList.addAll(getLightersFromRealm());
         myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loaded(Boolean result) {
+        if (result) {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.my_container, new Subscription())
+                    .commit();
+        }
     }
 }
 

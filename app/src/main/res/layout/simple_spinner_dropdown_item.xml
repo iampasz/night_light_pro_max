@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:ellipsize="marquee"
-    android:shadowColor="#ccc"
-    android:shadowDx="2"
-
-    android:shadowDy="2"
-    android:shadowRadius="2"
-    android:textColor="#0F953E"
-    android:textSize="24sp"
+    android:shadowColor="@color/text_shadow"
+    android:shadowDx="@dimen/button_shadowDx"
+    android:shadowDy="@dimen/button_shadowDy"
+    android:shadowRadius="@dimen/button_shadowRadius"
+    android:textColor="@color/text_white"
+    android:textSize="@dimen/spiner_minutes"
     android:textStyle="bold"
 
     android:textAlignment="center"

@@ -2,7 +2,39 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
     <dimen name="circle_button">45dp</dimen>
+    <dimen name="square_button">50dp</dimen>
+
+
     <dimen name="circle_button_tablet">100dp</dimen>
     <dimen name="padding">50dp</dimen>
+
+    <dimen name="indicator_scale">0</dimen>
+
+    <dimen name="close_button_height">75dp</dimen>
+
+    <dimen name="text_size">25dp</dimen>
+
+    <dimen name="text_author">14sp</dimen>
+    <dimen name="text_name">18sp</dimen>
+    <dimen name="text_minutes">14sp</dimen>
+    <dimen name="spiner_minutes">24sp</dimen>
+    <dimen name="title_text">20sp</dimen>
+    <dimen name="tab_text_size">20sp</dimen>
+
+    <dimen name="chek_button_size">20dp</dimen>
+
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="button_padding">20dp</dimen>
+    <dimen name="button_height">@dimen/wrap_content</dimen>
+
+    <dimen name="button_shadowDx">2</dimen>
+    <dimen name="button_shadowDy">2</dimen>
+    <dimen name="button_shadowRadius">2</dimen>
+
+    <dimen name="spiner_munHeight">48dp</dimen>
+
 </resources>
