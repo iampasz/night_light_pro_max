@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setFullScreanUseCase.fullscrean(this);
 
         MainFragment mainFragment = new MainFragment();
-        //getSupportFragmentManager().beginTransaction().add(R.id.my_container, mainFragment, "MAIN_FRAGMENT").commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.my_container, new Subscription()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.my_container, mainFragment, "MAIN_FRAGMENT").commit();
 
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false

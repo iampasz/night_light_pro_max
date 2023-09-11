@@ -91,9 +91,7 @@ public class Subscription extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         motionLayout = view.findViewById(R.id.motionLayout);
-
         MyViewModel model = new ViewModelProvider(this).get(MyViewModel.class);
-
         model.getValue().observe(getActivity(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -104,20 +102,8 @@ public class Subscription extends Fragment {
         });
         model.execute();
 
-        motionLayout.transitionToState(R.id.end);
 
         rv = view.findViewById(R.id.rv);
-
-
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setAdapter(new SubAdapter(new ArrayList<>(), new ChoseSub() {
-            @Override
-            public void setToken(String offerToken) {
-
-            }
-        }));
-
-
 
 
         bottom_text = view.findViewById(R.id.bottom_text);
@@ -288,7 +274,6 @@ public class Subscription extends Fragment {
                 //subAdapter.notifyDataSetChanged();
 
                 motionLayout.transitionToState(R.id.end);
-
 
             }
         });

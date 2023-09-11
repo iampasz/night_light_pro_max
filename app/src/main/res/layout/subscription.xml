@@ -5,6 +5,7 @@
     android:id="@+id/thisis"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:elevation="100dp"
     android:padding="10dp">
 
