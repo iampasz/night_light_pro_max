@@ -112,4 +112,30 @@
 
     <string name="positive">GET FREE</string>
 
+    <string name="downloaded">heruntergeladen</string>
+    <string name="galery">Galerie</string>
+    <string name="message_1" translatable="false">message_1</string>
+
+    <string name="set">Satz</string>
+    <string name="cancel">Stornieren</string>
+    <string name="timer">Timer</string>
+    <string name="colon" translatable="false">:</string>
+    <string name="hours" >Std</string>
+    <string name="minutes">Minutenuhr</string>
+
+
+    <string name="internet">Bitte überprüfe deine Internetverbindung...\n ʕ ᵔᴥᵔ ʔ</string>
+
+    <string name="subscription">Abonnement</string>
+    <string name="benefits">Vorteile eines Abonnements: </string>
+    <string name="no_ads">- keine Werbung;</string>
+    <string name="extra_nl">- mehr Nachtlichter;</string>
+    <string name="extra_melody">- mehr Melodie.</string>
+    <string name="month1">1 monat</string>
+    <string name="month3">3 monate</string>
+    <string name="month12">12 monate</string>
+    <string name="subscribe">Abonnieren</string>
+    <string name="subscribe_details">**Probezeit 7 Tage. Sie können Ihren Vertrag kündigen
+         Abonnement jederzeit möglich. Erste Abbuchung nach dem Abonnement </string>
+
 </resources>

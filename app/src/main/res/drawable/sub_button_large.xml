@@ -5,16 +5,9 @@
 
     <item>
         <shape>
-            <solid android:color="@color/sub_button"/>
+<!--            <solid android:color="@color/sub_button"/>-->
+            <solid android:color="#F4E0FA"/>
             <corners android:radius="10.0dip" />
-
-
-
         </shape>
-
-
     </item>
-
-
-
 </selector>

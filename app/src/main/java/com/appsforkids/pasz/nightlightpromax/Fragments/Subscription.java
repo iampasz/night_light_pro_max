@@ -46,6 +46,7 @@ import com.appsforkids.pasz.nightlightpromax.Interfaces.GetProductDetailsListCal
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetProductListCallback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.IsLoadDataCallback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.MyCallback;
+import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.MyViewModel;
 import com.appsforkids.pasz.nightlightpromax.Objects.Test;
 import com.appsforkids.pasz.nightlightpromax.R;
@@ -95,9 +96,6 @@ public class Subscription extends Fragment {
         model.getValue().observe(getActivity(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-
-                Log.i("VIEWMODEL", integer + " aaa");
-
             }
         });
         model.execute();
@@ -120,7 +118,7 @@ public class Subscription extends Fragment {
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd MMMM yyyy");
         String output = sdf1.format(c.getTime());
 
-        bottom_text.setText("*Пробный период 7 дней. Подписку можно отменить в любое время. Первое списание после оформления подписки " + output);
+        bottom_text.setText(getResources().getString(R.string.subscribe_details) +" "+ output);
 
         setAdapterList();
 
@@ -141,9 +139,6 @@ public class Subscription extends Fragment {
                         .beginTransaction()
                         .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
                         .remove(Subscription.this).commit();
-
-                Log.i("LEARNBILLING", " it is my token");
-
             }
         });
     }
@@ -192,7 +187,6 @@ public class Subscription extends Fragment {
                         }
                     }
                 }
-
             }
         }).build();
 
@@ -237,12 +231,17 @@ public class Subscription extends Fragment {
                         .beginTransaction()
                         .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
                         .remove(Subscription.this).commit();
+
+                if( MainFragment.mAdView !=null){
+                    MainFragment.mAdView.setVisibility(View.GONE);
+                }
+
+
+                MainActivity.subscribleStatus = true;
+
             }
         });
-
         //признано
-
-
     }
 
     void setAdapterList() {
@@ -250,7 +249,6 @@ public class Subscription extends Fragment {
         getList(new GetProductDetailsListCallBack() {
             @Override
             public void getProductLit(List<ProductDetails> list) {
-
             }
         });
     }
@@ -261,20 +259,16 @@ public class Subscription extends Fragment {
 
             @Override
             public void run() {
-
                 subAdapter = new SubAdapter(list, new ChoseSub() {
                     @Override
                     public void setToken(String offerToken) {
                         token = offerToken;
                     }
                 });
-
                 rv.setLayoutManager(new LinearLayoutManager(getContext()));
                 rv.setAdapter(subAdapter);
                 //subAdapter.notifyDataSetChanged();
-
                 motionLayout.transitionToState(R.id.end);
-
             }
         });
     }

@@ -47,6 +47,11 @@ import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateDefoltLightsUs
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateMyMediaPlayerUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetMediaPlayerUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 
 import java.util.ArrayList;
@@ -112,6 +117,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     CreateMyMediaPlayerUseCase createMyMediaPlayerUseCase = new CreateMyMediaPlayerUseCase();
     GetMediaPlayerUseCase getMediaPlayerUseCase = new GetMediaPlayerUseCase();
 
+    public static AdView mAdView;
+
 
     public MainFragment() {
         super(R.layout.main_fragment);
@@ -128,6 +135,10 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         setMyAnimations();
         // setMyViewPager();
         setSettings();
+
+
+
+
 
         starsButton.setOnClickListener(this);
         Realm realm = new InstanceRealmConfigurationUseCase().connect();
@@ -353,6 +364,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     }
 
     private void init(View view) {
+
+
         pager = view.findViewById(R.id.pager);
         starsButton = view.findViewById(R.id.stars_button);
         sunButton = view.findViewById(R.id.sunButton);
@@ -611,7 +624,34 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
                     .beginTransaction()
                     .add(R.id.my_container, new Subscription())
                     .commit();
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showAds();
+                }
+            });
+
         }
+
+
+    }
+
+
+    private void showAds(){
+
+        mAdView = getView().findViewById(R.id.adView);
+
+        mAdView.setVisibility(View.VISIBLE);
+        //ADS
+        MobileAds.initialize(getContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 }
 

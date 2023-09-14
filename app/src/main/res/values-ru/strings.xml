@@ -1,0 +1,143 @@
+<resources>
+    <string name="app_name">Ночничок</string>
+
+    <string name="animal0">Медвежонок</string>
+    <string name="animal3">Пингвиненок</string>
+    <string name="animal2">Звуки мира</string>
+    <string name="animal4">Свинка</string>
+    <string name="animal5">Зайчик</string>
+    <string name="animal6">Котенок</string>
+    <string name="animal8">Месяц</string>
+    <string name="animal7">Овечка</string>
+    <string name="animal1">Кролик</string>
+    <string name="animal9">Бабочка</string>
+    <string name="animal10">Панда</string>
+    <string name="animal11">Лев</string>
+    <string name="animal12">Жабка</string>
+    <string name="animal13">Мышка</string>
+    <string name="kaktus">Кактус</string>
+    <string name="hipopotam">Бегемотик</string>
+
+    <string name="dinosaur">Динозавр</string>
+    <string name="unicorn">Единорог</string>
+    <string name="bunny">Кролик</string>
+    <string name="yettie">Йетти</string>
+    <string name="squirrel">Белочка</string>
+    <string name="elephant">Слоник</string>
+
+
+    <string name="answer_yes">Скачать</string>
+    <string name="answer_no">Отмена</string>
+    <string name="question">Новое приложение Английский для деток</string>
+
+    <!--<string name="banner_ad_unit_id">ca-app-pub-1657105281106558/1086836420</string>-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="snail">Улитка</string>
+    <string name="fox">Лисичка</string>
+
+    <string name="giraffe">Жираф</string>
+    <string name="owl">Сова</string>
+
+    <string name="chiken">Цыплёнок</string>
+    <string name="monkey">Обезьянка</string>
+    <string name="santa">Дед мороз</string>
+
+
+
+    <string name="bnl">Best Nightlight</string>
+    <string name="bnld">Приложение Ночника БЕЗ РЕКЛАМЫ</string>
+    <string name="bnll">market://details?id=com.sarnavsky.pasz.nightlight.pro</string>
+
+    <string name="abcru">Азбука цветная с картинками </string>
+    <string name="abcrud">Азбука для деток, озвучка букв + названия животных (Русский алфавит)</string>
+    <string name="abcrul">market://details?id=com.sarnavsky.pasz.azbuka.ru</string>
+
+    <string name="abcua">АБВ Абетка кольорова для дітей</string>
+    <string name="abcuad">Українська абетка для діток, озвучування літер + назви тваринок (Українська абетка)</string>
+    <string name="abcual">market://details?id=com.sarnavsky.pasz.azbuka</string>
+
+    <string name="abcen">Английский алфавит</string>
+    <string name="abcend">Английский алфавит дял детей, озвучивание букв и животных(Английский алфавит)</string>
+    <string name="abcenl">market://details?id=com.sarnavsky.pasz.azbuka.eng</string>
+
+    <string name="abcenс">Английские карточки</string>
+    <string name="abcendс">Английские карточки для детей. Изучение слов на английском языке по карточкам</string>
+    <string name="abcenlс">market://details?id=com.sarnavsky.pasz.english</string>
+
+    <string name="youtube">YouTube</string>
+    <string name="youtubed">Наш канал на ютубе.</string>
+    <string name="youtubel">https://www.youtube.com/channel/UCFLTUyHzDv91C-LV0bPskZA</string>
+
+    <string name="instagram">Instagram</string>
+    <string name="instagramd">Мы в инстаграме.</string>
+    <string name="instagraml">https://www.instagram.com/apps_for_kids2</string>
+
+
+    <string name="star_anim_off">Анимация заднего фона отключена</string>
+    <string name="star_off">Фон отключен</string>
+    <string name="star_on">Фон включен</string>
+
+    <string name="timer5">Таймер включен - 5 минут</string>
+    <string name="timer10">Таймер включен - 10 минут</string>
+    <string name="timer6">Таймер включен - 1 час</string>
+    <string name="timer4">Таймер включен - 4 часа</string>
+    <string name="timer_off">Таймер отключен</string>
+
+    <string name="melody">Колыбельная включена - проиграет 1 раз</string>
+    <string name="melody_loop">Колыбельная включена - играет постоянно</string>
+    <string name="melody_off">Колыбельная отключена</string>
+
+    <string name="bgcolor_green">Цвет фона - зеленый</string>
+    <string name="bgcolor_purple">Цвет фона - фиолетовый</string>
+    <string name="bgcolor_orange">Цвет фона - оранжевый</string>
+    <string name="bgcolor_c">Цвет фона - голубой</string>
+    <string name="bgcolor_durk">Цвет фона - темный</string>
+    <string name="bgcolor_blue">Цвет фона - синий</string>
+
+    <string name="lights">Яркость - 25%</string>
+    <string name="lights2">Яркость - 75%</string>
+    <string name="lights3">Яркость - 100%</string>
+
+    <string name="auto_change">Автоматическая смена ночников - включена</string>
+    <string name="auto_change_off">Автоматическая смена ночников - отключена</string>
+
+    <string name="close">Экран заблокирован</string>
+    <string name="open">Экран разблокирован</string>
+
+    <string name="caution_title">Внимание!</string>
+    <string name="caution">Не исползуйте один и тот же ночник часто</string>
+    <string name="caution_agree">больше не показывать</string>
+    <string name="caution_ok">ПОНЯТНО</string>
+
+    <string name="positive">Получить бесплатно</string>
+
+    <string name="downloaded">Загруженные</string>
+    <string name="galery">Галерея</string>
+    <string name="message_1" translatable="false">message_1</string>
+
+    <string name="set">Установить</string>
+    <string name="cancel">Отмена</string>
+    <string name="timer">Время</string>
+    <string name="colon" translatable="false">:</string>
+    <string name="hours" >Часы</string>
+    <string name="minutes">Минуты</string>
+
+
+    <string name="internet">Пожалуйста, проверте интернет подключение...\n ʕ ᵔᴥᵔ ʔ</string>
+
+    <string name="subscription">Подписка</string>
+    <string name="benefits">Приемущества подписки: </string>
+    <string name="no_ads">- БЕЗ РЕКЛАМЫ;</string>
+    <string name="extra_nl">- больше ночников;</string>
+    <string name="extra_melody">- больше мелодий.</string>
+    <string name="month1">1 месяц</string>
+    <string name="month3">3 месяца</string>
+    <string name="month12">12 месяцев</string>
+    <string name="subscribe">Оформить подписку</string>
+    <string name="subscribe_details">**Пробный период 7 дней. Подписку можно отменить в любое время.
+        Первое снятие денег после  </string>
+
+
+
+</resources>

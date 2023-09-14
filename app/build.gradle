@@ -14,8 +14,8 @@ android {
         applicationId "com.appsforkids.pasz.nightlightpromax"
         minSdk 19
         targetSdk 33
-        versionCode 9
-        versionName "1.8"
+        versionCode 13
+        versionName "2.2"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

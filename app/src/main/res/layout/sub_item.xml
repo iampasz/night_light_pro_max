@@ -38,8 +38,9 @@
             android:layout_weight="1"
             android:text="9 USD"
             android:textAlignment="center"
-            android:textColor="@color/sub_button_text"
-            android:textSize="@dimen/text_size" />
+            android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_size"
+            android:visibility="visible" />
 
         <TextView
 
@@ -49,7 +50,7 @@
             android:layout_weight="1"
             android:text="2,99 USD"
             android:textAlignment="center"
-            android:textColor="@color/sub_button_text"
+            android:textColor="@color/sub_text"
             android:textSize="@dimen/text_size"
             android:textStyle="bold" />
     </LinearLayout>

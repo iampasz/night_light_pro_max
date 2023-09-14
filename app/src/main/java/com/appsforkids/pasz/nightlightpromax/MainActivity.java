@@ -90,14 +90,10 @@ public class MainActivity extends AppCompatActivity {
         bc.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingServiceDisconnected() {
-                Log.i("DDDD", "ggggg");
             }
 
             @Override
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
-
-
-                Log.i("DDDD", "hjhjh ggggg");
 
                 QueryPurchasesParams queryPurchasesParams = QueryPurchasesParams
                         .newBuilder()

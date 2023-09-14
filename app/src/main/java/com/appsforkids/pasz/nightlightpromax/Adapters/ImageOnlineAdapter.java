@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
@@ -93,7 +94,11 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        if(MainActivity.subscribleStatus){
+            return arrayList.size();
+        }else{
+            return 2;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,135 +1,144 @@
 <resources>
-    <string name="app_name">Ночничок</string>
+    <string name="app_name">Night light</string>
 
-    <string name="animal0">Медвежонок</string>
-    <string name="animal3">Пингвиненок</string>
-    <string name="animal2">Звуки мира</string>
-    <string name="animal4">Свинка</string>
-    <string name="animal5">Зайчик</string>
-    <string name="animal6">Котенок</string>
-    <string name="animal8">Месяц</string>
-    <string name="animal7">Овечка</string>
-    <string name="animal1">Кролик</string>
-    <string name="animal9">Бабочка</string>
-    <string name="animal10">Панда</string>
-    <string name="animal11">Лев</string>
-    <string name="animal12">Жабка</string>
-    <string name="animal13">Мышка</string>
-    <string name="kaktus">Кактус</string>
-    <string name="hipopotam">Бегемотик</string>
+    <string name="animal0">Bear</string>
+    <string name="animal3">Penguin</string>
+    <string name="animal2">World of sounds</string>
+    <string name="animal4">Piggy</string>
+    <string name="animal5">Rabbit</string>
+    <string name="animal6">Kitty</string>
+    <string name="animal8">Moon</string>
+    <string name="animal7">Sheep</string>
+    <string name="animal1">Bunny</string>
+    <string name="animal9">Butterfly</string>
+    <string name="animal10">Panda</string>
+    <string name="animal11">Lion</string>
+    <string name="animal12">Frog</string>
+    <string name="animal13">Mouse</string>
+    <string name="kaktus">Cactus</string>
+    <string name="hipopotam">Hippo</string>
 
-    <string name="dinosaur">Динозавр</string>
-    <string name="unicorn">Единорог</string>
-    <string name="bunny">Кролик</string>
-    <string name="yettie">Йетти</string>
-    <string name="squirrel">Белочка</string>
-    <string name="elephant">Слоник</string>
+    <string name="dinosaur">Dinosaur</string>
+    <string name="unicorn">Unicorn</string>
+    <string name="bunny">Bunny</string>
+    <string name="yettie">Yettie</string>
 
+    <string name="squirrel">Squirrel</string>
+    <string name="elephant">Elephant</string>
+    <string name="giraffe">Giraffe</string>
+    <string name="owl">Owl</string>
+    <string name="santa">Santa Claus</string>
 
-    <string name="answer_yes">Скачать</string>
-    <string name="answer_no">Отмена</string>
-    <string name="question">Новое приложение Английский для деток</string>
+    <string name="answer_yes">Download</string>
+    <string name="answer_no">Cancel</string>
+    <string name="question">New app for kids</string>
 
     <!--<string name="banner_ad_unit_id">ca-app-pub-1657105281106558/1086836420</string>-->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
-    <string name="snail">Улитка</string>
-    <string name="fox">Лисичка</string>
-
-    <string name="giraffe">Жираф</string>
-    <string name="owl">Сова</string>
-
-    <string name="chiken">Цыплёнок</string>
-    <string name="monkey">Обезьянка</string>
-    <string name="santa">Дед мороз</string>
-
-
-
-    <string name="bnl">Best Nightlight</string>
-    <string name="bnld">Приложение Ночника БЕЗ РЕКЛАМЫ</string>
-    <string name="bnll">market://details?id=com.sarnavsky.pasz.nightlight.pro</string>
-
-    <string name="abcru">Азбука цветная с картинками </string>
-    <string name="abcrud">Азбука для деток, озвучка букв + названия животных (Русский алфавит)</string>
-    <string name="abcrul">market://details?id=com.sarnavsky.pasz.azbuka.ru</string>
-
-    <string name="abcua">АБВ Абетка кольорова для дітей</string>
-    <string name="abcuad">Українська абетка для діток, озвучування літер + назви тваринок (Українська абетка)</string>
-    <string name="abcual">market://details?id=com.sarnavsky.pasz.azbuka</string>
-
-    <string name="abcen">Английский алфавит</string>
-    <string name="abcend">Английский алфавит дял детей, озвучивание букв и животных(Английский алфавит)</string>
-    <string name="abcenl">market://details?id=com.sarnavsky.pasz.azbuka.eng</string>
-
-    <string name="abcenс">Английские карточки</string>
-    <string name="abcendс">Английские карточки для детей. Изучение слов на английском языке по карточкам</string>
-    <string name="abcenlс">market://details?id=com.sarnavsky.pasz.english</string>
-
     <string name="youtube">YouTube</string>
-    <string name="youtubed">Наш канал на ютубе.</string>
+    <string name="youtubed">Our channel on YouTube.</string>
     <string name="youtubel">https://www.youtube.com/channel/UCFLTUyHzDv91C-LV0bPskZA</string>
 
     <string name="instagram">Instagram</string>
-    <string name="instagramd">Мы в инстаграме.</string>
+    <string name="instagramd">We are in instagram.</string>
     <string name="instagraml">https://www.instagram.com/apps_for_kids2</string>
 
 
-    <string name="star_anim_off">Анимация заднего фона отключена</string>
-    <string name="star_off">Фон отключен</string>
-    <string name="star_on">Фон включен</string>
+    <string name="snail">Snail</string>
 
-    <string name="timer5">Таймер включен - 5 минут</string>
-    <string name="timer10">Таймер включен - 10 минут</string>
-    <string name="timer6">Таймер включен - 1 час</string>
-    <string name="timer4">Таймер включен - 4 часа</string>
-    <string name="timer_off">Таймер отключен</string>
+    <string name="chiken">Chicken</string>
+    <string name="monkey">Monkey</string>
 
-    <string name="melody">Колыбельная включена - проиграет 1 раз</string>
-    <string name="melody_loop">Колыбельная включена - играет постоянно</string>
-    <string name="melody_off">Колыбельная отключена</string>
 
-    <string name="bgcolor_green">Цвет фона - зеленый</string>
-    <string name="bgcolor_purple">Цвет фона - фиолетовый</string>
-    <string name="bgcolor_orange">Цвет фона - оранжевый</string>
-    <string name="bgcolor_c">Цвет фона - голубой</string>
-    <string name="bgcolor_durk">Цвет фона - темный</string>
-    <string name="bgcolor_blue">Цвет фона - синий</string>
+    <string name="fox">Fox</string>
 
-    <string name="lights">Яркость - 25%</string>
-    <string name="lights2">Яркость - 75%</string>
-    <string name="lights3">Яркость - 100%</string>
+    <string name="bnl">Best Nightlight</string>
+    <string name="bnld">App Nightlight WITHOUT ADS</string>
+    <string name="bnll">market://details?id=com.sarnavsky.pasz.nightlight.pro</string>
 
-    <string name="auto_change">Автоматическая смена ночников - включена</string>
-    <string name="auto_change_off">Автоматическая смена ночников - отключена</string>
+    <string name="abcru">ABC color picture (RU)</string>
+    <string name="abcrud">ABC for kids, voice letters + animal names (Russian alphabet)</string>
+    <string name="abcrul">market://details?id=com.sarnavsky.pasz.azbuka.ru</string>
 
-    <string name="close">Экран заблокирован</string>
-    <string name="open">Экран разблокирован</string>
+    <string name="abcua">ABC Alphabet for children color(UA)</string>
+    <string name="abcuad">Ukrainian alphabet for children, sound letters + animal name (Ukrainian alphabet)</string>
+    <string name="abcual">market://details?id=com.sarnavsky.pasz.azbuka</string>
 
-    <string name="caution_title">Внимание!</string>
-    <string name="caution">Не исползуйте один и тот же ночник часто</string>
-    <string name="caution_agree">больше не показывать</string>
-    <string name="caution_ok">ПОНЯТНО</string>
+    <string name="abcen">English alphabet</string>
+    <string name="abcend">English alphabet for children the sound of letters and animals(English alphabet)</string>
+    <string name="abcenl">market://details?id=com.sarnavsky.pasz.azbuka.eng</string>
 
-    <string name="positive">Получить бесплатно</string>
+    <string name="abcenс">English flashcards</string>
+    <string name="abcendс">English flashcards for children. The study of words in the English language on the cards</string>
+    <string name="abcenlс">market://details?id=com.sarnavsky.pasz.english</string>
+
+    <string name="star_anim_off">Background animation is disabled</string>
+    <string name="star_off">Background off</string>
+    <string name="star_on">Background on</string>
+
+    <string name="timer5">Timer on - 5 minutes</string>
+    <string name="timer10">Timer on - 10 minutes</string>
+    <string name="timer6">Timer on - 1 hour</string>
+    <string name="timer4">Timer on - 4 hour</string>
+    <string name="timer_off">Timer is off</string>
+
+    <string name="melody">Lullaby included - 1 time</string>
+    <string name="melody_loop">Lullaby included - loop</string>
+    <string name="melody_off">Lullaby is off</string>
+
+    <string name="bgcolor_green">Background color - green</string>
+    <string name="bgcolor_purple">Background color - purple</string>
+    <string name="bgcolor_orange">Background color - orange</string>
+    <string name="bgcolor_c">Background color - sky blue</string>
+    <string name="bgcolor_durk">Background color - dark</string>
+    <string name="bgcolor_blue">Background color - blue</string>
+
+    <string name="lights">Brightness - 25%</string>
+    <string name="lights2">Brightness - 75%</string>
+    <string name="lights3">Brightness - 100%</string>
+
+    <string name="auto_change">Automatic switch - on</string>
+    <string name="auto_change_off">Automatic switch - off</string>
+
+    <string name="close">Screen locked</string>
+    <string name="open">Screen unlocked</string>
+
+    <string name="caution_title">Warning!</string>
+    <string name="caution">Do not use the same nightlighter for a long time. It can lead to dead pixel on your phone.</string>
+    <string name="caution_agree">dont show again</string>
+    <string name="caution_ok">OKAY</string>
+
+    <string name="positive">GET FREE</string>
 
     <string name="image" translatable="false">image</string>
     <string name="ok" translatable="false">ok</string>
 
 
-    <string name="downloaded" translatable="false">downloaded</string>
-    <string name="galery" translatable="false">galery</string>
+    <string name="downloaded">downloaded</string>
+    <string name="galery">galery</string>
     <string name="message_1" translatable="false">message_1</string>
 
-    <string name="set" translatable="false">Set</string>
-    <string name="cancel" translatable="false">Cancel</string>
-    <string name="timer" translatable="false">Timer</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="timer">Timer</string>
     <string name="colon" translatable="false">:</string>
-    <string name="hours" translatable="false">Hours</string>
-    <string name="minutes" translatable="false">Minutes</string>
+    <string name="hours" >Hours</string>
+    <string name="minutes">Minutes</string>
 
 
-    <string name="internet" translatable="false">Pleas, chek your internet connection...\n ʕ ᵔᴥᵔ ʔ</string>
+    <string name="internet">Please, check your internet connection...\n ʕ ᵔᴥᵔ ʔ</string>
 
-
+    <string name="subscription">Subscription</string>
+    <string name="benefits">Benefits of subscription: </string>
+    <string name="no_ads">- no advertising;</string>
+    <string name="extra_nl">- more nightlights;</string>
+    <string name="extra_melody">- more melody.</string>
+    <string name="month1">1 month</string>
+    <string name="month3">3 month</string>
+    <string name="month12">12 month</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="subscribe_details">**Trial period 7 days. You can cancel your
+        subscription at any time. First debit after subscription </string>
 
 </resources>

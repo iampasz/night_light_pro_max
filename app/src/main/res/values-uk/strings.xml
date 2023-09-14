@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <string name="app_name">Нічник</string>
 
     <string name="animal0">Ведмежа</string>
@@ -117,6 +115,32 @@
     <string name="caution_ok">ЗРОЗУМІЛО</string>
 
     <string name="positive">GET FREE</string>
+
+    <string name="downloaded">Завантажені</string>
+    <string name="galery">Галерея</string>
+    <string name="message_1" translatable="false">message_1</string>
+
+    <string name="set">Встановити</string>
+    <string name="cancel">Відмінити</string>
+    <string name="timer">Таймер</string>
+    <string name="colon" translatable="false">:</string>
+    <string name="hours" >Години</string>
+    <string name="minutes">Хвилини</string>
+
+
+    <string name="internet">Please, check your internet connection...\n ʕ ᵔᴥᵔ ʔ</string>
+
+    <string name="subscription">Підписка</string>
+    <string name="benefits">Переваги підписки: </string>
+    <string name="no_ads">- БЕЗ РЕКЛАМИ;</string>
+    <string name="extra_nl">- більше нічників;</string>
+    <string name="extra_melody">- більше мелодій.</string>
+    <string name="month1">1 місяць</string>
+    <string name="month3">3 місяці</string>
+    <string name="month12">12 місяців</string>
+    <string name="subscribe">Оформити підписку</string>
+    <string name="subscribe_details">**Пробний період 7 днів. Відмінити підписку можливо в будь-який час.
+        Перше списання коштів після  </string>
 
 
 </resources>

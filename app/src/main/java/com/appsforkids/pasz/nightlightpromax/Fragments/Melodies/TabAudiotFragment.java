@@ -34,7 +34,7 @@ public class TabAudiotFragment extends Fragment {
 
         list.add(new MelodyListFragment());
         list.add(new InternetListFragment());
-        String[] tabTitle = {"Downloaded", "Gallery"};
+        String[] tabTitle = {getResources().getString(R.string.downloaded), getResources().getString(R.string.galery)};
 
         SampleFragmentPagerAdapter sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getActivity(), list);
         pager.setAdapter(sampleFragmentPagerAdapter);

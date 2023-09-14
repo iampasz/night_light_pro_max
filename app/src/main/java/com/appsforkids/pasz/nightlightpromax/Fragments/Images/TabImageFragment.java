@@ -44,7 +44,7 @@ public class TabImageFragment extends Fragment {
         list.add(new ImageGridFragment());
         list.add(new EmptyFragment());
 
-        String[] tabTitle = {"Downloaded", "Internet", "ss"};
+        String[] tabTitle = {getResources().getString(R.string.downloaded), getResources().getString(R.string.galery)};
         sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getActivity(), list);
         pager.setAdapter(sampleFragmentPagerAdapter);
 
