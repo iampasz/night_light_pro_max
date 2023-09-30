@@ -15,6 +15,7 @@ import com.appsforkids.pasz.nightlightpromax.Interfaces.ActionCalback;
 import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
     int pressedPosition = -1;
     int currentMusicPosition = -1;
+
+    // Realm realm = new InstanceRealmConfigurationUseCase().connect();
 
     public JsonMusicAdapter(ActionCalback actionCalback, ArrayList<AudioFile> arrayList) {
         this.actionCalback = actionCalback;
@@ -51,58 +54,122 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
         int absolutePosition = position;
 
-        if (chekAudio(arrayList.get(absolutePosition).getInternetLink())) {
-            holder.download_bt.setVisibility(View.INVISIBLE);
+//        if (chekAudio(arrayList.get(absolutePosition).getInternetLink())) {
+//            //holder.download_bt.setVisibility(View.INVISIBLE);
+//            holder.download_bt.setImageResource(R.drawable.bt_close);
+//        }
+//
+//        if (arrayList.get(absolutePosition).getStatus()) {
+//            holder.download_bt.setVisibility(View.INVISIBLE);
+//        }
+
+        if (arrayList.get(absolutePosition).getLockalLink()!=null) {
+            holder.download_bt.setImageResource(R.drawable.bt_close);
+
+            holder.play_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    currentMusicPosition = -1;
+
+                    if (pressedPosition == absolutePosition) {
+                        holder.play_item.setImageResource(R.drawable.bt_pause);
+                        Log.i("MYPLAYER", pressedPosition + " тут должен плей поставить " + holder.getAdapterPosition());
+                        actionCalback.play(-1);
+                        pressedPosition = -1;
+                    } else {
+
+                        actionCalback.play(absolutePosition);
+                        holder.play_item.setImageResource(R.drawable.bt_play);
+                        Log.i("MYPLAYER", pressedPosition + " тут должен стоп поставить " + holder.getAdapterPosition());
+                        pressedPosition = absolutePosition;
+                    }
+                    notifyDataSetChanged();
+                }
+            });
         }
+
+        if (arrayList.get(absolutePosition).getInternetLink()==null) {
+            holder.download_bt.setVisibility(View.INVISIBLE);
+
+            holder.play_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    currentMusicPosition = -1;
+
+                    if (pressedPosition == absolutePosition) {
+                        holder.play_item.setImageResource(R.drawable.bt_pause);
+                        Log.i("MYPLAYER", pressedPosition + " тут должен плей поставить " + holder.getAdapterPosition());
+                        actionCalback.play(-1);
+                        pressedPosition = -1;
+                    } else {
+
+                        actionCalback.play(absolutePosition);
+                        holder.play_item.setImageResource(R.drawable.bt_play);
+                        Log.i("MYPLAYER", pressedPosition + " тут должен стоп поставить " + holder.getAdapterPosition());
+                        pressedPosition = absolutePosition;
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+        }
+
+        if (arrayList.get(absolutePosition).getInternetLink()!=null && arrayList.get(absolutePosition).getLockalLink()==null) {
+            holder.play_item.setAlpha(0.4f);
+            holder.play_item.setClickable(false);
+        }
+
 
         holder.music_name.setText(arrayList.get(absolutePosition).getNameSong());
         holder.music_author.setText(arrayList.get(absolutePosition).getAuthorSong());
 
-        if (arrayList.get(absolutePosition).getStatus()) {
-            holder.download_bt.setVisibility(View.INVISIBLE);
-        }
 
         holder.download_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (chekAudio(arrayList.get(absolutePosition).getInternetLink())) {
-                    Log.i("CHEK_DOWNLOAD_BUTTON", " true2");
-                    try {
-                        actionCalback.delete(absolutePosition);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    actionCalback.download(absolutePosition);
-                    Log.i("CHEK_DOWNLOAD_BUTTON", actionCalback + " false");
-                }
 
-                //notifyDataSetChanged();
+
+                Log.i("CHEKEMPTY", arrayList.get(absolutePosition)+"  arrayList.get(absolutePosition)  " + arrayList.size()+" absolutePosition " +absolutePosition);
+
+                  if(arrayList.get(absolutePosition).getLockalLink()==null){
+                      actionCalback.download(absolutePosition);
+                  }else{
+                      try {
+
+//                          currentMusicPosition = -1;
+//
+//                          if (pressedPosition == absolutePosition) {
+//                              actionCalback.play(-1);
+//                              pressedPosition = -1;
+//                          } else {
+//
+//                              actionCalback.play(absolutePosition);
+//                              holder.play_item.setImageResource(R.drawable.bt_play);
+//
+                            // notifyItemChanged(pressedPosition);
+                              pressedPosition = -1;
+
+                              notifyDataSetChanged();
+//                          }
+
+
+
+                          actionCalback.delete(absolutePosition);
+                      } catch (IOException e) {
+                          throw new RuntimeException(e);
+                      }
+                  }
+
+
+
+
+
             }
         });
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                currentMusicPosition = -1;
-
-                if (pressedPosition == absolutePosition) {
-                    holder.play_item.setImageResource(R.drawable.bt_pause);
-                    Log.i("MYPLAYER", pressedPosition + " тут должен плей поставить " + holder.getAdapterPosition());
-                    actionCalback.play(-1);
-                    pressedPosition = -1;
-                } else {
-
-                    actionCalback.play(absolutePosition);
-                    holder.play_item.setImageResource(R.drawable.bt_play);
-                    Log.i("MYPLAYER", pressedPosition + " тут должен стоп поставить " + holder.getAdapterPosition());
-                    pressedPosition = absolutePosition;
-                }
-                notifyDataSetChanged();
-            }
-        });
 
         if (absolutePosition == pressedPosition) {
             holder.play_item.setImageResource(R.drawable.bt_pause);
@@ -118,13 +185,23 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
     @Override
     public int getItemCount() {
+      //  return arrayList.size();
+//        if(MainActivity.subscribleStatus){
+//            return arrayList.size();
+//        }else{
+//            return 6;
+//        }
 
         if(MainActivity.subscribleStatus){
             return arrayList.size();
         }else{
-            return 3;
-        }
 
+            if(arrayList.size()>5){
+                return 5;
+            }
+            return arrayList.size();
+
+        }
     }
 
     public class ListMusicHolder extends RecyclerView.ViewHolder {
@@ -169,7 +246,7 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
         Realm realm = Realm.getInstance(configuration);
 
-        Log.i("CHEKAUDIO", link);
+       // Log.i("CHEKAUDIO", link);
 
         AudioFile audioFile = realm.where(AudioFile.class).isNotNull("lockalLink").equalTo("internetLink", link).findFirst();
 

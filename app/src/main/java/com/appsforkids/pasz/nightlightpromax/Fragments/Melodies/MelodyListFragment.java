@@ -55,6 +55,7 @@ public class MelodyListFragment extends Fragment {
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv_cards);
         LinearLayoutManager llm = new WrapContentLinearLayoutManager(getContext());
         RealmResults<AudioFile> arrayList = getAudioFilesFromRealm.getArray(realm);
+
         ActionCalback actionCalback = new ActionCalback() {
             @Override
             public void play(int position) {
@@ -71,6 +72,7 @@ public class MelodyListFragment extends Fragment {
                         }
                     }
                 }
+
             }
 
             @Override
@@ -121,4 +123,5 @@ public class MelodyListFragment extends Fragment {
         super.onResume();
         listMusicAdapter.notifyDataSetChanged();
     }
+
 }

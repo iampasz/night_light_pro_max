@@ -1,6 +1,10 @@
 package com.appsforkids.pasz.nightlightpromax.Interfaces;
 
+import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
+
+import java.util.ArrayList;
+
 public interface GetJson {
-    void getJson(String result);
+    ArrayList<AudioFile> getJson(String result);
     void noAnswer(Boolean answer);
 }

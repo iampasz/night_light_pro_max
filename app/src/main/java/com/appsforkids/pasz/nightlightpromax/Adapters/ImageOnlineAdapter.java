@@ -94,11 +94,14 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
 
     @Override
     public int getItemCount() {
-        if(MainActivity.subscribleStatus){
-            return arrayList.size();
-        }else{
-            return 2;
-        }
+
+        return arrayList.size();
+
+//        if(MainActivity.subscribleStatus){
+//            return arrayList.size();
+//        }else{
+//            return 2;
+//        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

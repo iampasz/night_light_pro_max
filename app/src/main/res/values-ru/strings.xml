@@ -135,9 +135,13 @@
     <string name="month3">3 месяца</string>
     <string name="month12">12 месяцев</string>
     <string name="subscribe">Оформить подписку</string>
-    <string name="subscribe_details">**Пробный период 7 дней. Подписку можно отменить в любое время.
-        Первое снятие денег после  </string>
+    <string name="subscribe_details">** Подписку можно отменить в любое время.
+        </string>
 
 
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="title_dialog">Удалить</string>
+    <string name="title_dialog_text">Вы действительно хотите удалить мелодию?</string>
 
 </resources>

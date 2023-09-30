@@ -62,7 +62,7 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ListSubHolder> {
                 holder.s_m_text.setText(R.string.month3);
                 break;
 
-            case "main0sub":
+            case "month1":
                 holder.s_m_text.setText(R.string.month1);
                 break;
 

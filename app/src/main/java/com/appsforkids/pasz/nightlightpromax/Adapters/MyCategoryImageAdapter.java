@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
+import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.squareup.picasso.Picasso;
 
@@ -61,7 +62,13 @@ public class MyCategoryImageAdapter extends RecyclerView.Adapter<MyCategoryImage
 
     @Override
     public int getItemCount() {
-        return jsonArray.length();
+
+        if(MainActivity.subscribleStatus){
+            return jsonArray.length();
+        }else{
+            return 2;
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

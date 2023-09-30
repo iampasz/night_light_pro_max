@@ -21,6 +21,7 @@ import com.android.billingclient.api.QueryProductDetailsParams;
 import com.android.billingclient.api.QueryPurchasesParams;
 import com.appsforkids.pasz.nightlightpromax.Billing.BillingClientWrapper;
 import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
+import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.ComonMelody;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Subscription;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetPurcheseListCallback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.IsLoadDataCallback;
@@ -47,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
     SetFullScreanUseCase setFullScreanUseCase = new SetFullScreanUseCase();
     CopyLightsToRealmUseCase copyLightsToRealmUseCase = new CopyLightsToRealmUseCase();
     CreateDefoltLightsUseCase createDefoltLightsUseCase = new CreateDefoltLightsUseCase();
-    CreateDefoltAudioUseCase createDefoltAudioUseCase = new CreateDefoltAudioUseCase();
+    //CreateDefoltAudioUseCase createDefoltAudioUseCase = new CreateDefoltAudioUseCase();
     InstanceRealmConfigurationUseCase instanceRealmConfigurationUseCase = new InstanceRealmConfigurationUseCase();
     CopyAudiosToRealmUseCase copyAudioToRealmUseCase = new CopyAudiosToRealmUseCase();
-    ChekInternetConnection chekInternetConnection = new ChekInternetConnection();
+
     Realm realm;
 
-    public static int internetStatus;
+
     public static boolean subscribleStatus;
 
     @Override
@@ -62,19 +63,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
 
         Realm.init(this);
-        internetStatus = chekInternetConnection.execute(this);
+
         prefs = getSharedPreferences("com.appsforkids.pasz.nightlightpromax", MODE_PRIVATE);
         myMediaPlayer = new MyMediaPlayer(this);
         setFullScreanUseCase.fullscrean(this);
-
+//
         MainFragment mainFragment = new MainFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.my_container, mainFragment, "MAIN_FRAGMENT").commit();
+
+        //MainFragment mainFragment = new MainFragment();
+        // getSupportFragmentManager().beginTransaction().add(R.id.my_container, new ComonMelody(), "COMON_MELODY").commit();
+
 
         if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
             realm = instanceRealmConfigurationUseCase.connect();
             copyLightsToRealmUseCase.copy(realm, createDefoltLightsUseCase.getLights());
-            copyAudioToRealmUseCase.copy(realm, createDefoltAudioUseCase.getAudio());
+          //  copyAudioToRealmUseCase.copy(realm, createDefoltAudioUseCase.getAudio());
             // using the following line to edit/commit prefs
             prefs.edit().putBoolean("firstrun", false).commit();
         }
@@ -84,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
             public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> list) {
             }
         };
-
-
         BillingClient bc = BillingClient.newBuilder(this).enablePendingPurchases().setListener(purchasesUpdatedListener).build();
         bc.startConnection(new BillingClientStateListener() {
             @Override
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
 
-                        if (billingResult.getResponseCode()==0) {
+                        if (billingResult.getResponseCode() == 0) {
                             if (list.size() > 0) {
                                 subscribleStatus = true;
                             } else {
@@ -117,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+
     }
 
     public MyMediaPlayer getPlayer() {

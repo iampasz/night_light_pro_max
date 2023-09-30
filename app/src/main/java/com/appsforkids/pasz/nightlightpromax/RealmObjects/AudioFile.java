@@ -13,6 +13,7 @@ public class AudioFile extends RealmObject implements Serializable {
     private String lockalLink;
     private String fileName;
     private Boolean isPlay;
+
     public void setPlay(Boolean play) {
         isPlay = play;
     }

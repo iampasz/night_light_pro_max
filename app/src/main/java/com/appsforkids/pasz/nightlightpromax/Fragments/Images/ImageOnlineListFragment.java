@@ -1,10 +1,6 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments.Images;
 
 
-
-import static com.appsforkids.pasz.nightlightpromax.MainActivity.internetStatus;
-import static com.appsforkids.pasz.nightlightpromax.MainActivity.subscribleStatus;
-
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -18,13 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyCategoryImageAdapter;
-import com.appsforkids.pasz.nightlightpromax.Fragments.Subscription;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
-import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.ReadJson;
+import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.ChekInternetConnection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,9 +37,9 @@ public class ImageOnlineListFragment extends Fragment {
     JSONArray jsonArray;
 
     MyCategoryImageAdapter myCategoryImageAdapter;
-
     TextView error_text;
 
+    ChekInternetConnection chekInternetConnection = new ChekInternetConnection();
 
     public ImageOnlineListFragment() {
         super(R.layout.list_fragment);
@@ -63,10 +59,9 @@ public class ImageOnlineListFragment extends Fragment {
 
         error_text = view.findViewById(R.id.error_text);
 
-        if(internetStatus==0){
+        if( chekInternetConnection.execute(getContext())==0){
             error_text.setVisibility(View.VISIBLE);
         }
-
         getJson("https://koko-oko.com/json/nlpm.json");
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -98,12 +93,10 @@ public class ImageOnlineListFragment extends Fragment {
     public void getJson(String url) {
         ReadJson readJson = new ReadJson(new GetJson() {
             @Override
-            public void getJson(String result) {
+            public ArrayList<AudioFile> getJson(String result) {
 
                 ArrayList<Light> lightsArray;
                 lightsArray = new ArrayList<>();
-
-
 
                 try {
                     String image = new JSONObject(result).getString("images");
@@ -137,6 +130,7 @@ public class ImageOnlineListFragment extends Fragment {
                     }
                 });
                 rv_cards.setAdapter(myCategoryImageAdapter);
+                return null;
             }
 
             @Override

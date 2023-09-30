@@ -40,7 +40,7 @@ public class MyMediaPlayer extends MediaPlayer {
     }
 
     public void playAudio(Integer resurseId){
-         mediaPlayer = create(ctx, resurseId);
+        mediaPlayer = create(ctx, resurseId);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 

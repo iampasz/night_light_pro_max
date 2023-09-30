@@ -1,7 +1,6 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments.Melodies;
 
-import static com.appsforkids.pasz.nightlightpromax.MainActivity.internetStatus;
-import static com.appsforkids.pasz.nightlightpromax.MainActivity.subscribleStatus;
+
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,14 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.Adapters.JsonMusicAdapter;
 import com.appsforkids.pasz.nightlightpromax.DownloadFileFromURL;
-import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
-import com.appsforkids.pasz.nightlightpromax.Fragments.Subscription;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.ActionCalback;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.FileIsDownloaded;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.ReadJson;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.ChekInternetConnection;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 
 import org.json.JSONArray;
@@ -34,7 +32,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+
+
+
 
 public class InternetListFragment extends Fragment implements View.OnClickListener {
 
@@ -44,6 +44,11 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
     JsonMusicAdapter jsonMusicAdapter;
 
     TextView error_text;
+
+
+    ChekInternetConnection chekInternetConnection = new ChekInternetConnection();
+
+
     public InternetListFragment() {
         super(R.layout.list_fragment);
     }
@@ -56,7 +61,7 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
 
         error_text = view.findViewById(R.id.error_text);
 
-        if(internetStatus==0){
+        if( chekInternetConnection.execute(getContext())==0){
             error_text.setVisibility(View.VISIBLE);
         }
 
@@ -96,7 +101,7 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
 
         ReadJson readJson = new ReadJson(new GetJson() {
             @Override
-            public void getJson(String result) {
+            public ArrayList<AudioFile> getJson(String result) {
 
                 try {
 
@@ -122,6 +127,7 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return null;
             }
 
             @Override

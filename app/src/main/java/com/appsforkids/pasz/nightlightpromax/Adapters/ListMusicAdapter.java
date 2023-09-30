@@ -145,6 +145,8 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
     @Override
     public long getItemId(int position) {
         return position;
+
+
     }
 
     @Override

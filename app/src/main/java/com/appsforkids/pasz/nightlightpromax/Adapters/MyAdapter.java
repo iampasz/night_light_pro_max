@@ -35,17 +35,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
 
     public MyAdapter(ArrayList<Light> lights) {
         mylights = lights;
-        this.newList = generateNewList(lights);
+        if(lights!=null && lights.size()>0){
+            this.newList = generateNewList(lights);
+        }
     }
 
     private ArrayList<Light> generateNewList(ArrayList<Light> originalList) {
-        Light firstSample = originalList.get(0);
-        Light lastSample = originalList.get(originalList.size() - 1);
 
-        newList = new ArrayList<>(originalList.size() + 2);
-        newList.add(lastSample);
-        newList.addAll(originalList);
-        newList.add(firstSample);
+            Light firstSample = originalList.get(0);
+            Light lastSample = originalList.get(originalList.size() - 1);
+            newList = new ArrayList<>(originalList.size() + 2);
+            newList.add(lastSample);
+            newList.addAll(originalList);
+            newList.add(firstSample);
 
         return newList;
     }

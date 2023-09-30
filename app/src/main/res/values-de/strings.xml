@@ -135,7 +135,12 @@
     <string name="month3">3 monate</string>
     <string name="month12">12 monate</string>
     <string name="subscribe">Abonnieren</string>
-    <string name="subscribe_details">**Probezeit 7 Tage. Sie können Ihren Vertrag kündigen
-         Abonnement jederzeit möglich. Erste Abbuchung nach dem Abonnement </string>
+    <string name="subscribe_details">** Sie können Ihren Vertrag kündigen
+         Abonnement jederzeit möglich.</string>
+
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="title_dialog">Löschen</string>
+    <string name="title_dialog_text">Sind Sie sicher, dass Sie den Klingelton löschen möchten?</string>
 
 </resources>

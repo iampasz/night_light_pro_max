@@ -134,7 +134,12 @@
     <string name="month3">3 month</string>
     <string name="month12">12 month</string>
     <string name="subscribe">Subscribe</string>
-    <string name="subscribe_details">**Trial period 7 days. You can cancel your
-        subscription at any time. First debit after subscription </string>
+    <string name="subscribe_details">** You can cancel your
+        subscription at any time.</string>
+
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="title_dialog">Delete</string>
+    <string name="title_dialog_text">Are you sure you want to delete the ringtone?</string>
 
 </resources>

@@ -14,12 +14,12 @@
 
     <dimen name="close_button_height">75dp</dimen>
 
-    <dimen name="text_size">25dp</dimen>
+    <dimen name="text_size">20dp</dimen>
 
     <dimen name="text_author">14sp</dimen>
     <dimen name="text_name">18sp</dimen>
     <dimen name="text_minutes">14sp</dimen>
-    <dimen name="spiner_minutes">24sp</dimen>
+    <dimen name="spiner_minutes">40sp</dimen>
     <dimen name="title_text">20sp</dimen>
     <dimen name="tab_text_size">20sp</dimen>
 

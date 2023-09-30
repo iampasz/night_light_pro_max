@@ -49,7 +49,7 @@ public class AddToRealm {
 
         ReadJson readJson = new ReadJson(new GetJson() {
             @Override
-            public void getJson(String result) {
+            public ArrayList<AudioFile> getJson(String result) {
 
                 try {
 
@@ -94,6 +94,7 @@ public class AddToRealm {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return null;
             }
 
             @Override
@@ -110,7 +111,7 @@ public class AddToRealm {
         ArrayList<AudioFile> musicItemArrayList = new ArrayList<>();
         ReadJson readJson = new ReadJson(new GetJson() {
             @Override
-            public void getJson(String result) {
+            public ArrayList<AudioFile> getJson(String result) {
                 try {
                     String jsonText = result;
                     JSONObject jsonRoot = new JSONObject(jsonText);
@@ -152,6 +153,7 @@ public class AddToRealm {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return null;
             }
 
             @Override
@@ -167,7 +169,7 @@ public class AddToRealm {
 
         ReadJson readJson = new ReadJson(new GetJson() {
             @Override
-            public void getJson(String result) {
+            public ArrayList<AudioFile> getJson(String result) {
 
                 ArrayList<ImageFile> imageItemArrayList = new ArrayList<>();
 
@@ -208,6 +210,7 @@ public class AddToRealm {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                return null;
             }
 
             @Override

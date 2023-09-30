@@ -61,13 +61,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
        // holder.frame.setLayoutParams(params);
 
 
-
-
-
-
-
-
-
         if (items.get(holder.getAbsoluteAdapterPosition()).getStatus()) {
             holder.checkBox.isChecked();
             holder.image.setAlpha(1f);

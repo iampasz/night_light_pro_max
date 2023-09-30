@@ -4,7 +4,7 @@
     <dimen name="indicator_scale">3</dimen>
     <dimen name="square_button">100dp</dimen>
     <dimen name="close_button_height">150dp</dimen>
-    <dimen name="text_size">50dp</dimen>
+    <dimen name="text_size">40dp</dimen>
     <dimen name="chek_button_size">50dp</dimen>
     <dimen name="text_author">34sp</dimen>
     <dimen name="text_name">38sp</dimen>

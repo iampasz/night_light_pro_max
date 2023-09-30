@@ -139,8 +139,12 @@
     <string name="month3">3 місяці</string>
     <string name="month12">12 місяців</string>
     <string name="subscribe">Оформити підписку</string>
-    <string name="subscribe_details">**Пробний період 7 днів. Відмінити підписку можливо в будь-який час.
-        Перше списання коштів після  </string>
+    <string name="subscribe_details">** Відмінити підписку можливо в будь-який час.
+        </string>
 
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="title_dialog">Видалити</string>
+    <string name="title_dialog_text">Ви дійсно бажаєте видалити мелодію?</string>
 
 </resources>

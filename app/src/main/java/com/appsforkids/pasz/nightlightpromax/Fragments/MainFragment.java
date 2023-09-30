@@ -2,7 +2,6 @@ package com.appsforkids.pasz.nightlightpromax.Fragments;
 
 import static android.R.anim.linear_interpolator;
 
-import static com.appsforkids.pasz.nightlightpromax.MainActivity.internetStatus;
 import static com.appsforkids.pasz.nightlightpromax.MainActivity.subscribleStatus;
 
 import android.annotation.SuppressLint;
@@ -37,8 +36,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.ImageGridFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.TabImageFragment;
+import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.ComonMelody;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.TabAudiotFragment;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.IsLoadDataCallback;
+import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyAdapter;
 import com.appsforkids.pasz.nightlightpromax.R;
@@ -70,6 +71,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     ImageView lockButton;
     ImageView gallery_bt;
     ImageView melody_bt;
+
+    Boolean subscriptionStatus = false;
     //
 
     //My Background
@@ -135,10 +138,6 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         setMyAnimations();
         // setMyViewPager();
         setSettings();
-
-
-
-
 
         starsButton.setOnClickListener(this);
         Realm realm = new InstanceRealmConfigurationUseCase().connect();
@@ -220,34 +219,6 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         Log.i("BRIGHTS", "notifyDataSetChanged");
     }
 
-//    public void showToast(String string) {
-//
-//        bottom_text.setVisibility(View.VISIBLE);
-//
-//        if (offMessage == null) {
-//            offMessage = new CountDownTimer(3000, 1000) {
-//                @Override
-//                public void onTick(long l) {
-//
-//                }
-//
-//                @Override
-//                public void onFinish() {
-//                    if (!timerStatus) {
-//                        bottom_text.setVisibility(View.INVISIBLE);
-//                        bottom_text.setText("");
-//                    }
-//
-//                }
-//            }.start();
-//        } else {
-//            offMessage.cancel();
-//            offMessage.start();
-//        }
-//
-//        bottom_text.setText(string);
-//    }
-
     public void lockButton() {
 
         //closeOpenFragment();
@@ -257,7 +228,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             bottom_text.setVisibility(View.INVISIBLE);
             flow.setVisibility(View.INVISIBLE);
             // adsView.setVisibility(View.INVISIBLE);
-            //mAdView.setVisibility(View.GONE);
+            mAdView.setVisibility(View.GONE);
             indicator.setVisibility(View.INVISIBLE);
             lockButton.setImageResource(R.drawable.bt_closed);
             lockScrean.setClickable(true);
@@ -278,6 +249,13 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             lockScrean.setClickable(false);
             chekMenu = true;
             show = true;
+
+            if(subscribleStatus){
+
+            }else{
+                mAdView.setVisibility(View.VISIBLE);
+            }
+
         }
 
     }
@@ -352,6 +330,11 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         return sharedPref.getInt("BRIGHT", 0);
     }
 
+    public boolean getShowSubPreference() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("MYPREFS", 0);
+        return sharedPref.getBoolean("SUBSCRIPTION", false);
+    }
+
     private void closeOpenFragment() {
         List<Fragment> arrayFragments = getParentFragmentManager().getFragments();
         if (arrayFragments.size() > 0) {
@@ -365,7 +348,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
     private void init(View view) {
 
-
+        mAdView = getView().findViewById(R.id.adView);
         pager = view.findViewById(R.id.pager);
         starsButton = view.findViewById(R.id.stars_button);
         sunButton = view.findViewById(R.id.sunButton);
@@ -389,10 +372,18 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     public void onClick(View v) {
 
         if (v.getId() == R.id.melody_bt) {
+
+//            getParentFragmentManager()
+//                    .beginTransaction()
+//                    .add(R.id.main_fragment, new TabAudiotFragment(), "TAB_AUDIO_FRAGMENT")
+//                    .commit();
+
+
             getParentFragmentManager()
                     .beginTransaction()
-                    .add(R.id.main_fragment, new TabAudiotFragment(), "TAB_AUDIO_FRAGMENT")
+                    .add(R.id.main_fragment, new ComonMelody(), "COMMONMELODY")
                     .commit();
+
         }
 
         if (v.getId() == R.id.gallery_bt) {
@@ -495,6 +486,13 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     @Override
     public void onStop() {
         super.onStop();
+
+        if(subscriptionStatus){
+            saveShowSubPreference(false);
+        }else{
+            saveShowSubPreference(true);
+        }
+
         //saveSettings
         MySettings mySettings = realm.where(MySettings.class).findFirst();
         realm.beginTransaction();
@@ -620,10 +618,14 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     @Override
     public void loaded(Boolean result) {
         if (result) {
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.my_container, new Subscription())
-                    .commit();
+            if(!getShowSubPreference()){
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.my_container, new Subscription())
+                        .commit();
+            }else{
+            }
+
 
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -640,7 +642,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
     private void showAds(){
 
-        mAdView = getView().findViewById(R.id.adView);
+
 
         mAdView.setVisibility(View.VISIBLE);
         //ADS
@@ -652,6 +654,31 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+    }
+
+
+    private void saveShowSubPreference(Boolean status){
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences("MYPREFS", 0);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("SUBSCRIPTION", status);
+        editor.apply();
+
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        subscriptionStatus = getShowSubPreference();
+
+    }
+
+    public void hideAds(){
+        if(mAdView!=null){
+            mAdView.setVisibility(View.GONE);
+        }
     }
 }
 

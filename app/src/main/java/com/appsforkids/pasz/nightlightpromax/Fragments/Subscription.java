@@ -118,7 +118,7 @@ public class Subscription extends Fragment {
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd MMMM yyyy");
         String output = sdf1.format(c.getTime());
 
-        bottom_text.setText(getResources().getString(R.string.subscribe_details) +" "+ output);
+        bottom_text.setText(getResources().getString(R.string.subscribe_details));
 
         setAdapterList();
 
@@ -135,6 +135,7 @@ public class Subscription extends Fragment {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 getParentFragmentManager()
                         .beginTransaction()
                         .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
@@ -227,17 +228,26 @@ public class Subscription extends Fragment {
             @Override
             public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
 
-                getParentFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
-                        .remove(Subscription.this).commit();
 
-                if( MainFragment.mAdView !=null){
-                    MainFragment.mAdView.setVisibility(View.GONE);
-                }
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        MainFragment mainFragment = (MainFragment) getParentFragmentManager().findFragmentByTag("MAIN_FRAGMENT");;
+                        if(mainFragment!=null){
+                            mainFragment.hideAds();
+                        }
+                        MainActivity.subscribleStatus = true;
+
+                        getParentFragmentManager()
+                                .beginTransaction()
+                                .setCustomAnimations(R.anim.fadeout, R.anim.fadein)
+                                .remove(Subscription.this).commit();
 
 
-                MainActivity.subscribleStatus = true;
+                    }
+                });
 
             }
         });
@@ -255,6 +265,7 @@ public class Subscription extends Fragment {
 
 
     public void settMyadapter(List<ProductDetails.SubscriptionOfferDetails> list) {
+
         getActivity().runOnUiThread(new Runnable() {
 
             @Override
