@@ -54,7 +54,6 @@ public class TabImageFragment extends Fragment {
             @Override
             public void onConfigureTab(TabLayout.Tab tab, int position) {
                 tab.setText(tabTitle[position]);
-
             }
         });
         tabLayoutMediator.attach();

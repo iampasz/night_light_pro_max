@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="1 месяц"
+        android:text="@string/month1"
         android:textAlignment="center"
         android:textColor="@color/sub_text"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_size_16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/sub_button_large"
         android:orientation="horizontal"
-        android:padding="@dimen/sub_item_padding"
+        android:padding="@dimen/padding_20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/s_m_text">

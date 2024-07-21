@@ -1,10 +1,11 @@
 package com.appsforkids.pasz.nightlightpromax.Interfaces;
 
-import java.io.IOException;
 
 public interface ActionCalback {
 
-    void play(int position);
+    void play(String fileName);
     void download(int position);
-    void delete(int position) throws IOException;
+    void delete(String fileName, String internetLink);
+
+
 }

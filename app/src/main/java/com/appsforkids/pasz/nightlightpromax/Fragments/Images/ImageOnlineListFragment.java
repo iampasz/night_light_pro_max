@@ -16,11 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyCategoryImageAdapter;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
+import com.appsforkids.pasz.nightlightpromax.JSON.JSONValidator;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.ReadJson;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.ChekInternetConnection;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.ChekInternetConnectionUseCase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,13 +34,10 @@ public class ImageOnlineListFragment extends Fragment {
     RecyclerView rv_cards;
     int height;
     ImageView close_button;
-
     JSONArray jsonArray;
-
     MyCategoryImageAdapter myCategoryImageAdapter;
     TextView error_text;
-
-    ChekInternetConnection chekInternetConnection = new ChekInternetConnection();
+    ChekInternetConnectionUseCase chekInternetConnection = new ChekInternetConnectionUseCase();
 
     public ImageOnlineListFragment() {
         super(R.layout.list_fragment);
@@ -59,7 +57,7 @@ public class ImageOnlineListFragment extends Fragment {
 
         error_text = view.findViewById(R.id.error_text);
 
-        if( chekInternetConnection.execute(getContext())==0){
+        if (chekInternetConnection.execute(getContext()) == 0) {
             error_text.setVisibility(View.VISIBLE);
         }
         getJson("https://koko-oko.com/json/nlpm.json");
@@ -73,10 +71,6 @@ public class ImageOnlineListFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                TabImageFragment tabImageFragment = (TabImageFragment) getParentFragmentManager()
-//                        .findFragmentByTag("TAB_IMAGE_FRAGMENT");
-//
-//                assert tabImageFragment != null;
                 TabImageFragment tabImageFragment = (TabImageFragment) getParentFragmentManager()
                         .findFragmentByTag("TAB_IMAGE_FRAGMENT");
 
@@ -98,38 +92,44 @@ public class ImageOnlineListFragment extends Fragment {
                 ArrayList<Light> lightsArray;
                 lightsArray = new ArrayList<>();
 
-                try {
-                    String image = new JSONObject(result).getString("images");
-                    jsonArray = new JSONArray(image);
+                if (JSONValidator.isJSONValid(result)) {
 
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    try {
+                        String image = new JSONObject(result).getString("images");
+                        jsonArray = new JSONArray(image);
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    Light light = new Light();
+                    light.setMypic(-1);
+
+
+                    if(jsonArray!=null){
+                        myCategoryImageAdapter = new MyCategoryImageAdapter(jsonArray, new DoThis() {
+                            @Override
+                            public void doThis(int position) {
+                                Bundle bundle = new Bundle();
+                                try {
+                                    bundle.putString("json", jsonArray.get(position).toString());
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                getParentFragmentManager().beginTransaction()
+                                        .setReorderingAllowed(true)
+                                        .replace(R.id.empty, ImageOnlineGridFragment.class, bundle)
+                                        .commit();
+                            }
+                        });
+                        rv_cards.setAdapter(myCategoryImageAdapter);
+                    }
+
+
+                } else {
+
                 }
 
-                Light light = new Light();
-                light.setMypic(-1);
-
-                 myCategoryImageAdapter = new MyCategoryImageAdapter(jsonArray, new DoThis() {
-                    @Override
-                    public void doThis(int position) {
-
-                        Bundle bundle = new Bundle();
-                        try {
-                            bundle.putString("json", jsonArray.get(position).toString());
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                        getParentFragmentManager().beginTransaction()
-                                .setReorderingAllowed(true)
-                                .replace(R.id.empty, ImageOnlineGridFragment.class, bundle)
-                                .commit();
-
-
-
-                    }
-                });
-                rv_cards.setAdapter(myCategoryImageAdapter);
                 return null;
             }
 
@@ -139,6 +139,4 @@ public class ImageOnlineListFragment extends Fragment {
         });
         readJson.execute(url);
     }
-
-
 }

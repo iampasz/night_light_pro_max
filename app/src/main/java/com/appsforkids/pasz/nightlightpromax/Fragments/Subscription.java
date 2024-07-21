@@ -147,14 +147,15 @@ public class Subscription extends Fragment {
 
     public void someMethod() {
 
-        BillingFlowParams.ProductDetailsParams params = BillingFlowParams.ProductDetailsParams.newBuilder()
-                .setProductDetails(productDetails)
-                .setOfferToken(token).build();
+        if(productDetails!=null && token!=null){
+            BillingFlowParams.ProductDetailsParams params = BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(productDetails)
+                    .setOfferToken(token).build();
 
-        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder().setProductDetailsParamsList(Collections.singletonList(params)).build();
-        // Launch the billing flow
-        Log.i("LEARNBILLING", "Виставляємо рахунок");
-        bc.launchBillingFlow(activity, billingFlowParams);
+            BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder().setProductDetailsParamsList(Collections.singletonList(params)).build();
+            // Launch the billing flow
+            bc.launchBillingFlow(activity, billingFlowParams);
+        }
 
     }
 

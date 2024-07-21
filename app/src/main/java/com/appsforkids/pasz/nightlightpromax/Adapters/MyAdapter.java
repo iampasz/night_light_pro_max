@@ -15,14 +15,15 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import io.realm.RealmResults;
+import java.util.Random;
 
 /**
  * Created by pasz on 30.10.2016.
@@ -33,7 +34,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
     public static ArrayList<Light> mylights;
     private static ArrayList<Light> newList;
 
-    public MyAdapter(ArrayList<Light> lights) {
+    private DoThis doThis;
+
+    public MyAdapter(ArrayList<Light> lights, DoThis doThis) {
+
+        this.doThis = doThis;
         mylights = lights;
         if(lights!=null && lights.size()>0){
             this.newList = generateNewList(lights);
@@ -70,15 +75,52 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.ViewHolder holder, int position) {
 
-        if(mylights.get(holder.getAbsoluteAdapterPosition()).getMypic()==-1){
-            Picasso.get().load(mylights.get(holder.getAbsoluteAdapterPosition()).getInternetLink()).into(holder.imageView);
-            Log.i("PICASO", mylights.get(holder.getAbsoluteAdapterPosition()).getInternetLink()+"");
-        }else{
-            holder.imageView.setImageResource(mylights.get(holder.getAbsoluteAdapterPosition()).getMypic());
+
+        if(mylights.size()>0){
+            Light myLight = mylights.get(holder.getAbsoluteAdapterPosition());
+
+            if (myLight.isValid()) {
+                int myPicture = myLight.getMypic();
+                String myInternetLink = myLight.getInternetLink();
+
+                if(myPicture==-1){
+                    Picasso.get().load(myInternetLink).into(holder.imageView);
+                }else{
+                    holder.imageView.setImageResource(myPicture);
+                }
+            }
         }
+
+
 
         int value = getBrightsPreference(holder.imageView.getContext());
         holder.imageView.setColorFilter(brightIt(value));
+
+        final ArrayList<Techniques> techniques = new ArrayList<>();
+        techniques.add(Techniques.Bounce);
+        techniques.add(Techniques.BounceIn);
+        techniques.add(Techniques.FadeIn);
+        techniques.add(Techniques.DropOut);
+        techniques.add(Techniques.Shake);
+        techniques.add(Techniques.Flash);
+        techniques.add(Techniques.SlideInLeft);
+        techniques.add(Techniques.Swing);
+        techniques.add(Techniques.FlipInY);
+
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doThis.doThis(holder.getAbsoluteAdapterPosition());
+
+                Random random = new Random();
+                int i = random.nextInt(techniques.size());
+
+                YoYo.with(techniques.get(i))
+                        .duration(700)
+                        .playOn(holder.itemView);
+            }
+        });
 
 
     }

@@ -2,8 +2,10 @@ package com.appsforkids.pasz.nightlightpromax;
 
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
+import com.appsforkids.pasz.nightlightpromax.JSON.JSONValidator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -101,9 +103,16 @@ public class ReadJson extends AsyncTask<String, String, String> {
             getJson.noAnswer(false);
         }else{
             getJson.noAnswer(true);
-            getJson.getJson(result);
 
-            answer = true;
+            if (JSONValidator.isJSONValid(result)) {
+                getJson.getJson(result);
+                answer = true;
+            } else {
+                System.out.println("Данные не являются JSON.");
+                answer = false;
+            }
+
+
         }
 
     }

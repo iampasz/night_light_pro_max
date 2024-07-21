@@ -9,33 +9,57 @@ apply plugin: 'realm-android'
 
 android {
     namespace 'com.appsforkids.pasz.nightlightpromax'
-    compileSdk 33
+    compileSdk 34
+    ndkVersion "21.3.6528147"
+
+    signingConfigs {
+        debug {
+            storeFile file('/Users/macbookair/AndroidStudioProjects/night_light_pro_max/fuck.jks')
+            storePassword '8458295'
+            keyAlias '8458295'
+            keyPassword '8458295'
+        }
+        release {
+            storeFile file('/Users/macbookair/AndroidStudioProjects/night_light_pro_max/fuck.jks')
+            storePassword '8458295'
+            keyAlias '8458295'
+            keyPassword '8458295'
+
+
+        }
+    }
 
     defaultConfig {
         applicationId "com.appsforkids.pasz.nightlightpromax"
         minSdkVersion 19
-        targetSdkVersion 33
-        versionCode 20
-        versionName "2.9"
+        targetSdkVersion 34
+        versionCode 43
+        versionName "5.2"
         multiDexEnabled true
+
+        ndk {
+            debugSymbolLevel 'SYMBOL_TABLE'
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
+            debuggable false
+            jniDebuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
-    buildToolsVersion "30.0.3"
-
-
-
 }
 
 dependencies {
@@ -43,7 +67,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-crashlytics:18.4.3'
     testImplementation 'junit:junit:4.13.2'
@@ -77,5 +101,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation files('libs/easyandroidanimationslibrary-v0.5.jar')
+
+    //YoYo
+    implementation 'com.daimajia.easing:library:2.4@aar'
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
     
 }

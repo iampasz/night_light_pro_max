@@ -41,7 +41,6 @@ public class MyCategoryImageAdapter extends RecyclerView.Adapter<MyCategoryImage
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         try {
-
             String name = new JSONObject(jsonArray.get(position).toString()).getString("name");
             holder.text.setText(name);
             String link_image = new JSONObject(jsonArray.get(position).toString()).getString("image");
@@ -68,6 +67,8 @@ public class MyCategoryImageAdapter extends RecyclerView.Adapter<MyCategoryImage
         }else{
             return 2;
         }
+
+        //return jsonArray.length();
 
     }
 

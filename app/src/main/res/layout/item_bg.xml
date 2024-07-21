@@ -17,8 +17,8 @@
 
         <CheckBox
             android:id="@+id/checkBox"
-            android:layout_width="@dimen/chek_button_size"
-            android:layout_height="@dimen/chek_button_size"
+            android:layout_width="@dimen/size_20dp"
+            android:layout_height="@dimen/size_20dp"
             android:layout_gravity="right"
             android:background="@drawable/chekbox"
             android:button="@null"

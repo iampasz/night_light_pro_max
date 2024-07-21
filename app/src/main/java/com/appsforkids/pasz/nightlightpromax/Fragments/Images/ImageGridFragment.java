@@ -15,9 +15,9 @@ import com.appsforkids.pasz.nightlightpromax.Adapters.ImageAdapter;
 import com.appsforkids.pasz.nightlightpromax.Fragments.MainFragment;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class ImageGridFragment extends Fragment  {
@@ -33,13 +33,24 @@ public class ImageGridFragment extends Fragment  {
 
     ImageAdapter imageAdapter;
 
-    Realm realm = new InstanceRealmConfigurationUseCase().connect();
+    Realm realm;
+
+
+
+
     public ImageGridFragment() {
         super(R.layout.list_fragment);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        RealmConfiguration configuration = new RealmConfiguration
+                .Builder()
+                .name("MyRealm")
+                .allowWritesOnUiThread(true)
+                .build();
+        realm = Realm.getInstance(configuration);
 
         int spanCount = 3;
         gm = new GridLayoutManager(getContext(),spanCount, RecyclerView.VERTICAL, false);

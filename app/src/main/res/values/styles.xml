@@ -35,7 +35,7 @@
     </style>
 
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">@dimen/tab_text_size</item>
+        <item name="android:textSize">@dimen/text_size_20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#A1FFFFFF</item>
         <item name="android:shadowColor">@color/text_shadow</item>

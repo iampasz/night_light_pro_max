@@ -15,7 +15,6 @@ import com.appsforkids.pasz.nightlightpromax.Interfaces.ActionCalback;
 import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
     ActionCalback actionCalback;
     ArrayList<AudioFile> arrayList;
     private String nameSong;
-
     int pressedPosition = -1;
     int currentMusicPosition = -1;
 
@@ -38,7 +36,6 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
         this.actionCalback = actionCalback;
         this.arrayList = arrayList;
     }
-
 
     @NonNull
     @Override
@@ -74,15 +71,13 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
                     if (pressedPosition == absolutePosition) {
                         holder.play_item.setImageResource(R.drawable.bt_pause);
-                        Log.i("MYPLAYER", pressedPosition + " тут должен плей поставить " + holder.getAdapterPosition());
-                        actionCalback.play(-1);
+                        actionCalback.play("");
                         pressedPosition = -1;
                     } else {
 
-                        actionCalback.play(absolutePosition);
+                        actionCalback.play(arrayList.get(position).getFileName());
                         holder.play_item.setImageResource(R.drawable.bt_play);
-                        Log.i("MYPLAYER", pressedPosition + " тут должен стоп поставить " + holder.getAdapterPosition());
-                        pressedPosition = absolutePosition;
+                       pressedPosition = absolutePosition;
                     }
                     notifyDataSetChanged();
                 }
@@ -101,11 +96,11 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
                     if (pressedPosition == absolutePosition) {
                         holder.play_item.setImageResource(R.drawable.bt_pause);
                         Log.i("MYPLAYER", pressedPosition + " тут должен плей поставить " + holder.getAdapterPosition());
-                        actionCalback.play(-1);
+                        actionCalback.play("");
                         pressedPosition = -1;
                     } else {
 
-                        actionCalback.play(absolutePosition);
+                        actionCalback.play(arrayList.get(position).getFileName());
                         holder.play_item.setImageResource(R.drawable.bt_play);
                         Log.i("MYPLAYER", pressedPosition + " тут должен стоп поставить " + holder.getAdapterPosition());
                         pressedPosition = absolutePosition;
@@ -123,6 +118,8 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
         holder.music_name.setText(arrayList.get(absolutePosition).getNameSong());
         holder.music_author.setText(arrayList.get(absolutePosition).getAuthorSong());
+
+
 
 
         holder.download_bt.setOnClickListener(new View.OnClickListener() {
@@ -147,17 +144,16 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 //                              actionCalback.play(absolutePosition);
 //                              holder.play_item.setImageResource(R.drawable.bt_play);
 //
-                            // notifyItemChanged(pressedPosition);
-                              pressedPosition = -1;
+                          // notifyItemChanged(pressedPosition);
+                          pressedPosition = -1;
 
-                              notifyDataSetChanged();
+                          notifyDataSetChanged();
 //                          }
 
 
+                          actionCalback.delete("", "absolutePosition");
+                      } finally {
 
-                          actionCalback.delete(absolutePosition);
-                      } catch (IOException e) {
-                          throw new RuntimeException(e);
                       }
                   }
 
@@ -167,9 +163,6 @@ public class JsonMusicAdapter extends RecyclerView.Adapter<JsonMusicAdapter.List
 
             }
         });
-
-
-
 
         if (absolutePosition == pressedPosition) {
             holder.play_item.setImageResource(R.drawable.bt_pause);

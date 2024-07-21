@@ -16,28 +16,26 @@
 
     <dimen name="text_size">20dp</dimen>
 
-    <dimen name="text_author">14sp</dimen>
-    <dimen name="text_name">18sp</dimen>
-    <dimen name="text_minutes">14sp</dimen>
-    <dimen name="spiner_minutes">40sp</dimen>
-    <dimen name="title_text">20sp</dimen>
-    <dimen name="tab_text_size">20sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_14sp">14sp</dimen>
+    <dimen name="text_size_40sp">40sp</dimen>
+    <dimen name="text_size_20sp">20sp</dimen>
 
-    <dimen name="text_medium">16sp</dimen>
-    <dimen name="text_small">8sp</dimen>
-    <dimen name="text_large">40sp</dimen>
+    <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_8sp">8sp</dimen>
 
-    <dimen name="sub_bottom_height">80dp</dimen>
-    <dimen name="sub_close_size">30dp</dimen>
-    <dimen name="sub_item_padding">20dp</dimen>
+    <dimen name="size_80dp">80dp</dimen>
+    <dimen name="size_30dp">30dp</dimen>
+    <dimen name="padding_20dp">20dp</dimen>
+
+    <dimen name="margin_10dp">10dp</dimen>
 
 
-    <dimen name="chek_button_size">20dp</dimen>
+    <dimen name="size_20dp">20dp</dimen>
 
     <item name="match_parent" format="integer" type="dimen">-1</item>
     <item name="wrap_content" format="integer" type="dimen">-2</item>
 
-    <dimen name="button_padding">20dp</dimen>
     <dimen name="button_height">@dimen/wrap_content</dimen>
 
     <dimen name="button_shadowDx">2</dimen>

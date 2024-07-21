@@ -6,15 +6,14 @@ import static com.appsforkids.pasz.nightlightpromax.MainActivity.subscribleStatu
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -22,32 +21,25 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.helper.widget.Flow;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.appsforkids.pasz.nightlightpromax.Fragments.Images.ImageGridFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Images.TabImageFragment;
 import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.ComonMelody;
-import com.appsforkids.pasz.nightlightpromax.Fragments.Melodies.TabAudiotFragment;
+import com.appsforkids.pasz.nightlightpromax.Interfaces.DoThis;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.IsLoadDataCallback;
-import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
 import com.appsforkids.pasz.nightlightpromax.Adapters.MyAdapter;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.MySettings;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateDefoltLightsUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateMyMediaPlayerUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetMediaPlayerUseCase;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -59,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -80,7 +73,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     ImageView fon1;
     ImageView fon2;
     ImageView fon3;
-    Realm realm;
+
 
     // ImageView automate;
 
@@ -106,6 +99,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     int fonStatus = 0;
     //MyAdapter mAdapter;
 
+
     boolean checkAutomate = true;
     boolean isAuto = false;
     boolean chekMenu = true;
@@ -122,6 +116,8 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
     public static AdView mAdView;
 
+    Realm realm;
+
 
     public MainFragment() {
         super(R.layout.main_fragment);
@@ -130,8 +126,14 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
-        realm = new InstanceRealmConfigurationUseCase().connect();
+
+
+        RealmConfiguration configuration = new RealmConfiguration
+                .Builder()
+                .name("MyRealm")
+                .allowWritesOnUiThread(true)
+                .build();
+        realm = Realm.getInstance(configuration);
 
         init(view);
         startGlobalTimer();
@@ -140,7 +142,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         setSettings();
 
         starsButton.setOnClickListener(this);
-        Realm realm = new InstanceRealmConfigurationUseCase().connect();
+
         timerButton.setOnClickListener(this);
         bgcolorButton.setOnClickListener(this);
         sunButton.setOnClickListener(this);
@@ -153,10 +155,27 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
 
         arrayList = new ArrayList<>();
         arrayList.addAll(getLightersFromRealm());
-        myAdapter = new MyAdapter(arrayList);
+        myAdapter = new MyAdapter(arrayList, new DoThis() {
+            @Override
+            public void doThis(int position) {
+                bgcolorButton.callOnClick();
+            }
+        });
+
         pager.setAdapter(myAdapter);
 
         indicator.setViewPager(pager);
+
+        pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                setAnimalName(position);
+
+
+            }
+        });
 
         myAdapter.registerAdapterDataObserver(indicator.getAdapterDataObserver());
     }
@@ -250,9 +269,9 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
             chekMenu = true;
             show = true;
 
-            if(subscribleStatus){
+            if (subscribleStatus) {
 
-            }else{
+            } else {
                 mAdView.setVisibility(View.VISIBLE);
             }
 
@@ -366,6 +385,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         flow = view.findViewById(R.id.flow);
         indicator = view.findViewById(R.id.indicator);
         // automate = view.findViewById(R.id.automate);
+        
     }
 
     @Override
@@ -487,9 +507,9 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     public void onStop() {
         super.onStop();
 
-        if(subscriptionStatus){
+        if (subscriptionStatus) {
             saveShowSubPreference(false);
-        }else{
+        } else {
             saveShowSubPreference(true);
         }
 
@@ -613,18 +633,32 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         arrayList.clear();
         arrayList.addAll(getLightersFromRealm());
         myAdapter.notifyDataSetChanged();
+
+        if (pager.getCurrentItem() > arrayList.size() && arrayList.size() > 0) {
+            setAnimalName(arrayList.size() - 1);
+        } else {
+            bottom_text.setText("");
+        }
+
+
+        myAdapter.notifyDataSetChanged();
+
+
     }
 
     @Override
     public void loaded(Boolean result) {
+
+        //i hide sub
+
         if (result) {
-            if(!getShowSubPreference()){
-                getParentFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.my_container, new Subscription())
-                        .commit();
-            }else{
-            }
+//            if (!getShowSubPreference()) {
+//                getParentFragmentManager()
+//                        .beginTransaction()
+//                        .add(R.id.my_container, new Subscription())
+//                        .commit();
+//            } else {
+//            }
 
 
             getActivity().runOnUiThread(new Runnable() {
@@ -640,8 +674,7 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
     }
 
 
-    private void showAds(){
-
+    private void showAds() {
 
 
         mAdView.setVisibility(View.VISIBLE);
@@ -656,28 +689,44 @@ public class MainFragment extends Fragment implements Brights.MyInterface, View.
         mAdView.loadAd(adRequest);
     }
 
-
-    private void saveShowSubPreference(Boolean status){
-
+    private void saveShowSubPreference(Boolean status) {
         SharedPreferences sharedPref = getContext().getSharedPreferences("MYPREFS", 0);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("SUBSCRIPTION", status);
         editor.apply();
-
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-
         subscriptionStatus = getShowSubPreference();
-
     }
 
-    public void hideAds(){
-        if(mAdView!=null){
+    public void hideAds() {
+        if (mAdView != null) {
             mAdView.setVisibility(View.GONE);
+        }
+    }
+
+    private void setAnimalName(int position) {
+
+        if(arrayList.size()>0){
+            Light light = arrayList.get(position);
+            if (light.isValid()) {
+
+                if (arrayList.get(position).getMytext() > 0) {
+                    try {
+                        // Попытка получить доступ к ресурсу
+                        String resourceId = getResources().getString(light.getMytext());
+                        bottom_text.setText(resourceId);
+                    } catch (Resources.NotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    bottom_text.setText("");
+                }
+            }
         }
     }
 }

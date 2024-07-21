@@ -1,5 +1,6 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments.Images;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -62,6 +63,15 @@ public class ImageOnlineGridFragment extends Fragment  {
                 light.setInternetLink(jsonObject.getString("internet_link"));
                 light.setMypic(-1);
                 light.setId(jsonObject.getString("internet_link"));
+
+                String animalName = jsonObject.getString("name");
+
+                @SuppressLint("DiscouragedApi") int resourceID = getResources()
+                        .getIdentifier(animalName, "string", getActivity().getPackageName());
+
+
+                light.setMytext(resourceID);
+
                 lightsArray.add(light);
             }
 
@@ -86,11 +96,9 @@ public class ImageOnlineGridFragment extends Fragment  {
                         .beginTransaction()
                         .replace(R.id.empty, new ImageOnlineListFragment())
                         .commit();
-
             }
         });
     }
-
 
     @Override
     public void onDestroy() {

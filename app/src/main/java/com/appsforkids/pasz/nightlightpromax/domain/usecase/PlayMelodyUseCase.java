@@ -8,6 +8,6 @@ import com.appsforkids.pasz.nightlightpromax.MyMediaPlayer;
 public class PlayMelodyUseCase {
 
     public void play(MyMediaPlayer player,  String link){
-        player.playAudio(link);
+        player.playAudioFile(link);
     }
 }

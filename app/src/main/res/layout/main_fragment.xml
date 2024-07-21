@@ -77,7 +77,8 @@
         ads:adUnitId="ca-app-pub-1237459888817948/2153590939"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toTopOf="parent"></com.google.android.gms.ads.AdView>
+        ads:layout_constraintTop_toTopOf="parent">
+    </com.google.android.gms.ads.AdView>
 
 
     <androidx.constraintlayout.helper.widget.Flow

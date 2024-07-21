@@ -21,9 +21,9 @@ import com.appsforkids.pasz.nightlightpromax.Interfaces.FileIsDownloaded;
 import com.appsforkids.pasz.nightlightpromax.Interfaces.GetJson;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.ReadJson;
+import com.appsforkids.pasz.nightlightpromax.RealmConfigManager;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.AudioFile;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.ChekInternetConnection;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
+import com.appsforkids.pasz.nightlightpromax.domain.usecase.ChekInternetConnectionUseCase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,8 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import io.realm.Realm;
-
-
+import io.realm.RealmConfiguration;
 
 
 public class InternetListFragment extends Fragment implements View.OnClickListener {
@@ -46,7 +45,7 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
     TextView error_text;
 
 
-    ChekInternetConnection chekInternetConnection = new ChekInternetConnection();
+    ChekInternetConnectionUseCase chekInternetConnection = new ChekInternetConnectionUseCase();
 
 
     public InternetListFragment() {
@@ -149,7 +148,10 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
                 audioFile.setLockalLink(path);
                 audioFile.setStatus(true);
 
-                Realm realm = new InstanceRealmConfigurationUseCase().connect();
+
+
+                RealmConfiguration configuration = RealmConfigManager.getRealmConfiguration(getActivity());
+                Realm realm = Realm.getInstance(configuration);
 
                 realm.beginTransaction();
                 realm.copyToRealm(audioFile);
@@ -170,16 +172,21 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
 
     private void loadMyList(ArrayList<AudioFile> list){
         ActionCalback actionCalback = new ActionCalback() {
+
             @Override
-            public void play(int position) {
+            public void play(String fileName) {
             }
+
             @Override
             public void download(int position) {
                 pressDownload(list.get(position), position);
             }
+
             @Override
-            public void delete(int position) {
+            public void delete(String fileName, String internetLink) {
+
             }
+
         };
 
         jsonMusicAdapter = new JsonMusicAdapter(actionCalback, list);
@@ -189,25 +196,18 @@ public class InternetListFragment extends Fragment implements View.OnClickListen
     private void reloadLiat(int position){
 
        getActivity().runOnUiThread(new Runnable() {
-
             @Override
             public void run() {
-
                 jsonMusicAdapter.notifyItemChanged(position);
                 // Stuff that updates the UI
-
             }
         });
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         getFromJson();
         Log.i("RESUMEN", "HERE");
-
     }
-
 }

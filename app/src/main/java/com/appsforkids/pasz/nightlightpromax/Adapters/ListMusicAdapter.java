@@ -68,11 +68,7 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
             public void onClick(View view) {
                 if (chekAudio(realmResults.get(absolutePosition).getInternetLink())) {
 
-                    try {
-                        actionCalback.delete(absolutePosition);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    actionCalback.delete("absolutePosition", "");
                 } else {
                     actionCalback.download(absolutePosition);
                 }
@@ -91,11 +87,11 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
                 if (pressedPosition == absolutePosition) {
                     holder.play_item.setImageResource(R.drawable.bt_pause);
                     Log.i("MYPLAYER", pressedPosition + " тут должен плей поставить " + holder.getAdapterPosition());
-                    actionCalback.play(-1);
+                    actionCalback.play("");
                     pressedPosition = -1;
                 } else {
 
-                    actionCalback.play(absolutePosition);
+                    actionCalback.play("absolutePosition");
                     holder.play_item.setImageResource(R.drawable.bt_play);
                     Log.i("MYPLAYER", pressedPosition + " тут должен стоп поставить " + holder.getAdapterPosition());
                     pressedPosition = absolutePosition;

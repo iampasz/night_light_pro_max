@@ -1,7 +1,6 @@
 package com.appsforkids.pasz.nightlightpromax.Fragments.Melodies;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,17 +20,17 @@ import com.appsforkids.pasz.nightlightpromax.domain.usecase.CreateMyMediaPlayerU
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.DeleteFileUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetAudioFilesFromRealmUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.GetMediaPlayerUseCase;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.PlayMelodyUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.RemoveAudioFromRealmUseCase;
 import com.appsforkids.pasz.nightlightpromax.domain.usecase.StopPlayingUseCase;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class MelodyListFragment extends Fragment {
 
-    Realm realm = new InstanceRealmConfigurationUseCase().connect();
+   // Realm realm = new InstanceRealmConfigurationUseCase().connect();
     RemoveAudioFromRealmUseCase removeAudioUseCase = new RemoveAudioFromRealmUseCase();
     StopPlayingUseCase stopPlaying = new StopPlayingUseCase();
     PlayMelodyUseCase playMelodyUseCase = new PlayMelodyUseCase();
@@ -42,6 +41,8 @@ public class MelodyListFragment extends Fragment {
     MyMediaPlayer myMediaPlayer;
     GetMediaPlayerUseCase getMediaPlayerUseCase = new GetMediaPlayerUseCase();
 
+    Realm realm;
+
     public MelodyListFragment() {
         super(R.layout.list_fragment);
     }
@@ -49,6 +50,13 @@ public class MelodyListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        RealmConfiguration configuration = new RealmConfiguration
+                .Builder()
+                .name("MyRealm")
+                .allowWritesOnUiThread(true)
+                .build();
+        realm = Realm.getInstance(configuration);
 
         ImageView close_button = (ImageView) view.findViewById(R.id.close_button);
         myMediaPlayer = getMediaPlayerUseCase.getPlayer(getActivity());
@@ -58,21 +66,20 @@ public class MelodyListFragment extends Fragment {
 
         ActionCalback actionCalback = new ActionCalback() {
             @Override
-            public void play(int position) {
-                if (position == -1) {
-                    stopPlaying.stop(myMediaPlayer);
-                } else {
-                    stopPlaying.stop(myMediaPlayer);
-
-                    if (arrayList.get(position).getLockalLink() != null) {
-                        myMediaPlayer.playAudio(arrayList.get(position).getLockalLink());
-                    } else {
-                        if (arrayList.get(position).getAuthorSong() != null) {
-                            myMediaPlayer.playAudio(arrayList.get(position).getResourceLink());
-                        }
-                    }
-                }
-
+            public void play(String fileName) {
+//                if (position == -1) {
+//                    stopPlaying.stop(myMediaPlayer);
+//                } else {
+//                    stopPlaying.stop(myMediaPlayer);
+//
+//                    if (arrayList.get(position).getLockalLink() != null) {
+//                        myMediaPlayer.playAudio(arrayList.get(position).getLockalLink());
+//                    } else {
+//                        if (arrayList.get(position).getAuthorSong() != null) {
+//                            myMediaPlayer.playAudio(arrayList.get(position).getResourceLink());
+//                        }
+//                    }
+//                }
             }
 
             @Override
@@ -81,17 +88,12 @@ public class MelodyListFragment extends Fragment {
             }
 
             @Override
-            public void delete(int position) {
+            public void delete(String fileName,
+                               String internetLink) {
 
-                AudioFile audioFile = arrayList.get(position);
-                assert audioFile != null;
-
-                String file_name = audioFile.getFileName();
-                String internet_link = audioFile.getInternetLink();
-
-                if (deleteFileUseCase.delete(getActivity(), file_name)) {
-                    removeAudioUseCase.remove(realm, internet_link);
-                    listMusicAdapter.notifyItemChanged(position);
+                if (deleteFileUseCase.delete(getActivity(), fileName)) {
+                    removeAudioUseCase.remove(realm, internetLink);
+                   // listMusicAdapter.notifyItemChanged(position);
                 }
             }
         };

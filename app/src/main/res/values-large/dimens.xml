@@ -5,21 +5,20 @@
     <dimen name="square_button">100dp</dimen>
     <dimen name="close_button_height">150dp</dimen>
     <dimen name="text_size">40dp</dimen>
-    <dimen name="chek_button_size">50dp</dimen>
-    <dimen name="text_author">34sp</dimen>
-    <dimen name="text_name">38sp</dimen>
-    <dimen name="text_minutes">25sp</dimen>
-    <dimen name="spiner_minutes">70sp</dimen>
-    <dimen name="title_text">40sp</dimen>
-    <dimen name="tab_text_size">40sp</dimen>
-    <dimen name="text_large">70sp</dimen>
+    <dimen name="size_20dp">50dp</dimen>
+    <dimen name="text_size_14sp">34sp</dimen>
+    <dimen name="text_size_18sp">38sp</dimen>
 
-    <dimen name="sub_bottom_height">140dp</dimen>
-    <dimen name="sub_close_size">60dp</dimen>
-    <dimen name="sub_item_padding">20dp</dimen>
+    <dimen name="text_size_40sp">70sp</dimen>
+    <dimen name="text_size_20sp">40sp</dimen>
 
-    <dimen name="text_medium">30sp</dimen>
-    <dimen name="text_small">16sp</dimen>
+
+    <dimen name="size_80dp">140dp</dimen>
+    <dimen name="size_30dp">60dp</dimen>
+    <dimen name="padding_20dp">20dp</dimen>
+
+    <dimen name="text_size_16sp">30sp</dimen>
+    <dimen name="text_size_8sp">16sp</dimen>
 
 
 </resources>

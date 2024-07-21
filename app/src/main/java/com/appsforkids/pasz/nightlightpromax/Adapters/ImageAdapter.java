@@ -4,36 +4,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appsforkids.pasz.nightlightpromax.R;
-import com.appsforkids.pasz.nightlightpromax.RealmObjects.ImageFile;
+import com.appsforkids.pasz.nightlightpromax.RealmConfigManager;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
-import io.realm.mongodb.sync.SyncConfiguration;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
     RealmResults<Light> items;
     int size;
-    Realm realm = new InstanceRealmConfigurationUseCase().connect();
+    //Realm realm = new InstanceRealmConfigurationUseCase().connect();
+
+    Realm realm;
 
     int width;
     int height;
@@ -134,7 +128,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
 
-
+    private void initRealm(){
+       // RealmConfiguration configuration = RealmConfigManager.getRealmConfiguration(getActivity());
+       // realm = Realm.getInstance(configuration);
+    }
 
 
 

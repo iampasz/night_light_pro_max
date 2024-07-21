@@ -12,22 +12,20 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appsforkids.pasz.nightlightpromax.MainActivity;
 import com.appsforkids.pasz.nightlightpromax.R;
 import com.appsforkids.pasz.nightlightpromax.RealmObjects.Light;
-import com.appsforkids.pasz.nightlightpromax.domain.usecase.InstanceRealmConfigurationUseCase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.ViewHolder> {
 
     ArrayList<Light> arrayList;
     int size;
-    Realm realm = new InstanceRealmConfigurationUseCase().connect();
+    Realm realm;
+           // = new InstanceRealmConfigurationUseCase().connect();
 
     public ImageOnlineAdapter(ArrayList<Light> arrayList, int size) {
         this.arrayList = arrayList;
@@ -82,7 +80,7 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
 
 
                 if (holder.checkBox.isChecked()) {
-                    addToRealm(arrayList.get(position).getInternetLink());
+                    addToRealm(arrayList.get(position).getInternetLink(), arrayList.get(position).getMytext());
                 } else {
                     removeFromRealm(arrayList.get(position).getInternetLink());
                 }
@@ -129,7 +127,7 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
         return answer;
     }
 
-    private void addToRealm(String link) {
+    private void addToRealm(String link, int name) {
 
         realm.beginTransaction();
 
@@ -139,6 +137,9 @@ public class ImageOnlineAdapter extends RecyclerView.Adapter<ImageOnlineAdapter.
         light.setStatus(true);
         light.setMypic(-1);
         light.setId(link);
+
+
+        light.setMytext(name);
 
         realm.copyToRealm(light);
 
